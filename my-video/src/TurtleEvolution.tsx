@@ -169,7 +169,7 @@ const SHOTS: Shot[] = [
   { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 0, start: 4815, end: 4980, motion: M([1.1, 1]) },
   { kind: "image", src: "turtle-eunotosaurus.jpg", start: 4980, end: 5260, motion: M([1, 1.12]) },
   { kind: "graphic", start: 5260, end: 5714, graphic: "citation", props: { source: "Sci-News.com — Paleontology", excerpt: "The earliest beginnings of the turtle shell was not for protection but rather for digging underground to escape the harsh South African environment where these early proto turtles lived, said lead author Dr. Tyler Lyson.", highlight: "was not for protection but rather for digging underground" } },
-  { kind: "video", src: "turtle-desert-raw.mp4", startFrom: 209, start: 5714, end: 6034, motion: M([1.1, 1]) },
+  { kind: "image", src: "turtle-eunotosaurus-atuchin.jpg", start: 5714, end: 6034, motion: M([1, 1.12]) },
   { kind: "image", src: "turtle-glyptodon.jpg", start: 6034, end: 6260, motion: M([1, 1.12]) },
   { kind: "video", src: "turtle-icefield-raw.mp4", startFrom: 0, start: 6260, end: 6486, motion: M([1.1, 1]) },
   { kind: "video", src: "turtle-predator-raw.mp4", startFrom: 0, start: 6486, end: 6712, motion: M([1, 1.12]) },
@@ -224,7 +224,8 @@ export const TURTLE_EVOLUTION_DURATION = SHOTS[SHOTS.length - 1].end;
 type Callout =
   | { from: number; duration: number; kind: "title"; title: string; subtitle: string }
   | { from: number; duration: number; kind: "stat"; value: string; label: string }
-  | { from: number; duration: number; kind: "quote"; text: string };
+  | { from: number; duration: number; kind: "quote"; text: string }
+  | { from: number; duration: number; kind: "credit"; text: string };
 
 const CALLOUTS: Callout[] = [
   { from: 863, duration: 140, kind: "stat", value: "ĐÔI CÁNH", label: "LỰA CHỌN 1" },
@@ -235,6 +236,7 @@ const CALLOUTS: Callout[] = [
   { from: 3454, duration: 170, kind: "stat", value: "GIẢI PHÁP TỐI ƯU", label: "CHO LỐI SỐNG ĐẦM PHÁ NÔNG" },
   { from: 4338, duration: 130, kind: "title", title: "Pháo Đài Di Động", subtitle: "CHIẾN LƯỢC SINH TỒN" },
   { from: 5000, duration: 170, kind: "title", title: "Eunotosaurus", subtitle: "MỘT TRONG NHỮNG TỔ TIÊN SỚM NHẤT" },
+  { from: 5714, duration: 320, kind: "credit", text: "Minh họa: Andrey Atuchin / Sci-News.com" },
   { from: 6054, duration: 170, kind: "title", title: "Glyptodon", subtitle: "THÚ CÓ VÚ MANG HÌNH RÙA" },
   { from: 6506, duration: 170, kind: "stat", value: "KỶ BĂNG HÀ", label: "CHIM ĂN THỊT KHỔNG LỒ • HỔ RĂNG KIẾM" },
   { from: 7181, duration: 150, kind: "title", title: "Cyamodus", subtitle: "HAI LỚP MAI RIÊNG BIỆT" },
@@ -648,8 +650,32 @@ const CalloutQuote: React.FC<{ text: string; durationInFrames: number }> = ({ te
   );
 };
 
+const CalloutCredit: React.FC<{ text: string; durationInFrames: number }> = ({ text, durationInFrames }) => {
+  const frame = useCurrentFrame();
+  const opacity = interpolate(frame, [0, 15, durationInFrames - 15, durationInFrames], [0, 1, 1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  return (
+    <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "flex-end", padding: "0 28px 22px 0" }}>
+      <div
+        style={{
+          opacity,
+          fontFamily: FONT_BODY,
+          fontWeight: 600,
+          fontSize: 15,
+          fontStyle: "italic",
+          color: "rgba(255,255,255,0.85)",
+          textShadow: "0 2px 6px rgba(0,0,0,0.9)",
+        }}
+      >
+        {text}
+      </div>
+    </AbsoluteFill>
+  );
+};
+
 // ---------------------------------------------------------------------------
-// Vignette + opening/closing fade// ---------------------------------------------------------------------------
 // Vignette + opening/closing fade
 // ---------------------------------------------------------------------------
 
@@ -704,6 +730,7 @@ export const TurtleEvolution: React.FC = () => {
           {c.kind === "title" && <CalloutTitle title={c.title} subtitle={c.subtitle} durationInFrames={c.duration} />}
           {c.kind === "stat" && <CalloutStat value={c.value} label={c.label} durationInFrames={c.duration} />}
           {c.kind === "quote" && <CalloutQuote text={c.text} durationInFrames={c.duration} />}
+          {c.kind === "credit" && <CalloutCredit text={c.text} durationInFrames={c.duration} />}
         </Sequence>
       ))}
       <Audio src={staticFile("turtle-voiceover.mp3")} />
