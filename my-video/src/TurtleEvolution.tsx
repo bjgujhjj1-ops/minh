@@ -9,6 +9,11 @@ import {
   staticFile,
   useCurrentFrame,
 } from "remotion";
+import { loadFont as loadAnton } from "@remotion/google-fonts/Anton";
+import { loadFont as loadInter } from "@remotion/google-fonts/Inter";
+
+const { fontFamily: FONT_HEAD } = loadAnton();
+const { fontFamily: FONT_BODY } = loadInter();
 
 // "Rùa hóa" — Convergent Evolution / why so many unrelated lineages evolve
 // turtle-like shells. Voiceover-driven documentary, fps=30, segmented from
@@ -37,13 +42,40 @@ import {
 //   turtle-odontochelys.jpg  : Odontochelys semitestacea restoration — Nobu Tamura, CC BY 3.0/GFDL
 //   turtle-archelon.jpg      : Archelon ischyros reconstruction — Ghedo, CC BY-SA 4.0
 
-const CROSSFADE = 24;
-const COLOR_GRADE = "contrast(1.08) saturate(1.15) brightness(1.02)";
-const INK = "#eaf6f3";
-const ACCENT = "#ffcf5c";
-const TEAL = "#5cd6c0";
-const DANGER = "#ff6b6b";
-const GRAPHIC_BG = "radial-gradient(ellipse at center, #163a44 0%, #05141a 100%)";
+const CROSSFADE = 18;
+const COLOR_GRADE = "contrast(1.1) saturate(1.1) brightness(1.0)";
+const INK = "#f2f2f2";
+const ACCENT = "#e8342a"; // bold red — the one standout color, used sparingly for the fact that matters
+const TEAL = "#9a9a9a"; // muted steel gray — de-emphasized silhouette/line color (was teal)
+const DANGER = "#7a2b24"; // dull brick red — "cost/negative" tone, distinct from the bright ACCENT red
+const GRAPHIC_BG = "#060606";
+
+// Shared SVG defs (gradients + drop shadow) referenced by url(#id) from every
+// graphic component below — one definition, reused everywhere, so icons and
+// silhouettes read as shaded/lit rather than flat single-color fills.
+const SharedSvgDefs: React.FC = () => (
+  <svg width={0} height={0} style={{ position: "absolute" }}>
+    <defs>
+      <linearGradient id="steelGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#e2e2e2" />
+        <stop offset="55%" stopColor="#9a9a9a" />
+        <stop offset="100%" stopColor="#4d4d4d" />
+      </linearGradient>
+      <linearGradient id="redGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#ff7a6e" />
+        <stop offset="55%" stopColor="#e8342a" />
+        <stop offset="100%" stopColor="#8f1a12" />
+      </linearGradient>
+      <linearGradient id="darkRedGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#9a4038" />
+        <stop offset="100%" stopColor="#4a1613" />
+      </linearGradient>
+      <filter id="dropShadow" x="-60%" y="-60%" width="220%" height="220%">
+        <feDropShadow dx="0" dy="10" stdDeviation="12" floodColor="#000000" floodOpacity="0.55" />
+      </filter>
+    </defs>
+  </svg>
+);
 
 // ---------------------------------------------------------------------------
 // Shot list: 42 shots covering frames 0-23060 (768.65s @ 30fps) contiguously.
@@ -74,83 +106,84 @@ type Shot = MediaShot | GraphicShot;
 const M = (scale: [number, number], extra: Partial<Motion> = {}): Motion => ({ scale, ...extra });
 
 const SHOTS: Shot[] = [
-  { kind: "graphic", start: 0, end: 300, graphic: "title" },
-  { kind: "video", src: "turtle-seaturtle-raw.mp4", startFrom: 0, start: 300, end: 650, motion: M([1, 1.12]) },
-  { kind: "graphic", start: 650, end: 843, graphic: "textcard", props: { text: "TẠI SAO LÀ... RÙA?" } },
-  {
-    kind: "graphic",
-    start: 843,
-    end: 1585,
-    graphic: "iconrow",
-    props: {
+  { kind: "graphic", start: 0, end: 211, graphic: "title" },
+  { kind: "video", src: "turtle-crab-raw.mp4", startFrom: 0, start: 211, end: 422, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-seaturtle-raw.mp4", startFrom: 0, start: 422, end: 633, motion: M([1.1, 1]) },
+  { kind: "graphic", start: 633, end: 843, graphic: "textcard", props: { text: "TẠI SAO LÀ... RÙA?" } },
+  { kind: "graphic", start: 843, end: 1091, graphic: "iconrow", props: {
       title: "BẠN LÀ KỸ SƯ SINH HỌC. BẠN SẼ CHỌN GÌ?",
       items: [
         { icon: "wing", label: "Đôi cánh" },
         { icon: "bolt", label: "Tốc độ phi mã" },
         { icon: "shield", label: "Bộ giáp bất khả xâm phạm", highlighted: true },
       ],
-    },
-  },
-  { kind: "video", src: "turtle-tortoise-long-raw.mp4", startFrom: 0, start: 1585, end: 2145, motion: M([1.1, 1]) },
-  { kind: "graphic", start: 2145, end: 2704, graphic: "ribshell", props: { mode: "formation", title: "MAI RÙA HÌNH THÀNH TỪ XƯƠNG SƯỜN + CỘT SỐNG" } },
-  { kind: "graphic", start: 2704, end: 3213, graphic: "deeptime" },
-  { kind: "image", src: "turtle-henodus.jpg", start: 3213, end: 3765, motion: M([1, 1.12]) },
-  { kind: "image", src: "turtle-henodus.jpg", start: 3765, end: 4318, motion: M([1.15, 1.3], { x: [4, -4] }) },
-  {
-    kind: "graphic",
-    start: 4318,
-    end: 4980,
-    graphic: "iconrow",
-    props: {
+    } },
+  { kind: "video", src: "turtle-beetle-raw.mp4", startFrom: 0, start: 1091, end: 1338, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-crab-raw.mp4", startFrom: 250, start: 1338, end: 1585, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 0, start: 1585, end: 1865, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-fossil3-raw.mp4", startFrom: 0, start: 1865, end: 2145, motion: M([1, 1.12]) },
+  { kind: "graphic", start: 2145, end: 2425, graphic: "ribshell", props: { mode: "formation", title: "MAI RÙA HÌNH THÀNH TỪ XƯƠNG SƯỜN + CỘT SỐNG" } },
+  { kind: "video", src: "turtle-tortoise3-raw.mp4", startFrom: 0, start: 2425, end: 2704, motion: M([1, 1.12]) },
+  { kind: "graphic", start: 2704, end: 2959, graphic: "deeptime" },
+  { kind: "video", src: "turtle-desert-raw.mp4", startFrom: 0, start: 2959, end: 3213, motion: M([1, 1.12]) },
+  { kind: "image", src: "turtle-henodus.jpg", start: 3213, end: 3582, motion: M([1, 1.12]) },
+  { kind: "image", src: "turtle-henodus.jpg", start: 3582, end: 3950, motion: M([1.15, 1.3], { x: [4, -4] }) },
+  { kind: "video", src: "turtle-swamp-raw.mp4", startFrom: 0, start: 3950, end: 4318, motion: M([1.1, 1]) },
+  { kind: "graphic", start: 4318, end: 4539, graphic: "iconrow", props: {
       title: "PHÁO ĐÀI DI ĐỘNG",
       items: [
         { icon: "bolt", label: "Chạy nhanh hơn kẻ săn mồi" },
         { icon: "shield", label: "Trở nên quá khó để nuốt trôi", highlighted: true },
       ],
-    },
-  },
-  { kind: "image", src: "turtle-eunotosaurus.jpg", start: 4980, end: 5507, motion: M([1, 1.12]) },
-  { kind: "graphic", start: 5507, end: 6034, graphic: "ribshell", props: { mode: "anchor", title: "MỎ NEO ĐÀO HANG, TRƯỚC KHI LÀ GIÁP" } },
-  { kind: "image", src: "turtle-glyptodon.jpg", start: 6034, end: 6597, motion: M([1, 1.13]) },
-  {
-    kind: "graphic",
-    start: 6597,
-    end: 7161,
-    graphic: "iconrow",
-    props: {
+    } },
+  { kind: "video", src: "turtle-crab-raw.mp4", startFrom: 500, start: 4539, end: 4760, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 0, start: 4760, end: 4980, motion: M([1.1, 1]) },
+  { kind: "image", src: "turtle-eunotosaurus.jpg", start: 4980, end: 5332, motion: M([1, 1.12]) },
+  { kind: "graphic", start: 5332, end: 5683, graphic: "ribshell", props: { mode: "anchor", title: "MỎ NEO ĐÀO HANG, TRƯỚC KHI LÀ GIÁP" } },
+  { kind: "video", src: "turtle-desert-raw.mp4", startFrom: 290, start: 5683, end: 6034, motion: M([1.1, 1]) },
+  { kind: "image", src: "turtle-glyptodon.jpg", start: 6034, end: 6410, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-icefield-raw.mp4", startFrom: 0, start: 6410, end: 6786, motion: M([1.1, 1]) },
+  { kind: "graphic", start: 6786, end: 7161, graphic: "iconrow", props: {
       title: "KỶ BĂNG HÀ NAM MỸ",
       items: [
         { icon: "claw", label: "Chim ăn thịt khổng lồ" },
         { icon: "claw", label: "Hổ răng kiếm" },
         { icon: "shield", label: "→ Mai vòm khổng lồ", highlighted: true },
       ],
-    },
-  },
-  { kind: "image", src: "turtle-cyamodus.jpg", start: 7161, end: 7750, motion: M([1, 1.1]) },
-  { kind: "graphic", start: 7750, end: 8622, graphic: "shoulderblade" },
-  {
-    kind: "graphic",
-    start: 8622,
-    end: 9691,
-    graphic: "iconrow",
-    props: {
+    } },
+  { kind: "image", src: "turtle-cyamodus.jpg", start: 7161, end: 7456, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-coral2-raw.mp4", startFrom: 0, start: 7456, end: 7750, motion: M([1.1, 1]) },
+  { kind: "graphic", start: 7750, end: 8041, graphic: "shoulderblade" },
+  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 400, start: 8041, end: 8332, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-tortoise-long-raw.mp4", startFrom: 300, start: 8332, end: 8622, motion: M([1.1, 1]) },
+  { kind: "graphic", start: 8622, end: 8979, graphic: "iconrow", props: {
       title: "CÁI GIÁ PHẢI TRẢ",
       items: [
         { icon: "lungs", label: "Không thể hít thở bằng cơ hoành", tone: "negative" },
-        { icon: "thermometer", label: "Một “khối nhiệt” khổng lồ", tone: "negative" },
+        { icon: "thermometer", label: "Một \u201ckhối nhiệt\u201d khổng lồ", tone: "negative" },
       ],
-    },
-  },
-  { kind: "video", src: "turtle-tortoise-long-raw.mp4", startFrom: 100, start: 9691, end: 10195, motion: M([1.08, 1]) },
-  { kind: "graphic", start: 10195, end: 10454, graphic: "textcard", props: { text: "SỐNG CHẬM • THỌ LÂU" } },
-  { kind: "video", src: "turtle-ladybug-raw.mp4", startFrom: 0, start: 10454, end: 11115, motion: M([1, 1.15]) },
-  { kind: "video", src: "turtle-seaturtle-raw.mp4", startFrom: 0, start: 11115, end: 11505, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-tortoise-long-raw.mp4", startFrom: 200, start: 11505, end: 11995, motion: M([1, 1.1]) },
-  { kind: "graphic", start: 11995, end: 12693, graphic: "stablepoints", props: { label: "RÙA", title: "500 TRIỆU NĂM TIẾN HÓA" } },
-  { kind: "video", src: "turtle-space-long-raw.mp4", startFrom: 0, start: 12693, end: 13252, motion: M([1, 1.1]) },
-  { kind: "image", src: "turtle-archelon.jpg", start: 13252, end: 13812, motion: M([1.1, 1.25]) },
-  { kind: "video", src: "turtle-space-long-raw.mp4", startFrom: 180, start: 13812, end: 14379, motion: M([1.08, 1]) },
-  { kind: "video", src: "turtle-coral-raw.mp4", startFrom: 0, start: 14379, end: 14837, motion: M([1, 1.12]) },
+    } },
+  { kind: "video", src: "turtle-tortoise3-raw.mp4", startFrom: 400, start: 8979, end: 9335, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 0, start: 9335, end: 9691, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-tortoise-long-raw.mp4", startFrom: 300, start: 9691, end: 9946, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 100, start: 9946, end: 10200, motion: M([1.1, 1]) },
+  { kind: "graphic", start: 10200, end: 10454, graphic: "textcard", props: { text: "SỐNG CHẬM • THỌ LÂU" } },
+  { kind: "video", src: "turtle-ladybug-raw.mp4", startFrom: 0, start: 10454, end: 10675, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-crab-raw.mp4", startFrom: 750, start: 10675, end: 10895, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 300, start: 10895, end: 11115, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-seaturtle2-raw.mp4", startFrom: 0, start: 11115, end: 11415, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-seaturtle3-raw.mp4", startFrom: 0, start: 11415, end: 11685, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 200, start: 11685, end: 11995, motion: M([1, 1.12]) },
+  { kind: "graphic", start: 11995, end: 12228, graphic: "stablepoints", props: { label: "RÙA", title: "500 TRIỆU NĂM TIẾN HÓA" } },
+  { kind: "video", src: "turtle-space2-raw.mp4", startFrom: 0, start: 12228, end: 12461, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-space3-raw.mp4", startFrom: 0, start: 12461, end: 12693, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-space-long-raw.mp4", startFrom: 0, start: 12693, end: 13066, motion: M([1, 1.12]) },
+  { kind: "image", src: "turtle-archelon.jpg", start: 13066, end: 13439, motion: M([1.1, 1.25]) },
+  { kind: "video", src: "turtle-rainforest-raw.mp4", startFrom: 0, start: 13439, end: 13812, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-space2-raw.mp4", startFrom: 300, start: 13812, end: 14096, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-icefield-raw.mp4", startFrom: 400, start: 14096, end: 14379, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-coral-raw.mp4", startFrom: 0, start: 14379, end: 14608, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 400, start: 14608, end: 14837, motion: M([1.1, 1]) },
   { kind: "graphic", start: 14837, end: 15099, graphic: "outrocta" },
 ];
 
@@ -168,14 +201,14 @@ type Callout =
 const CALLOUTS: Callout[] = [
   { from: 1615, duration: 130, kind: "title", title: "Mai Rùa", subtitle: "XƯƠNG SƯỜN + CỘT SỐNG HỢP NHẤT" },
   { from: 3255, duration: 130, kind: "title", title: "Henodus", subtitle: "PLACODONT — TRIAS, ~230 TRIỆU NĂM TRƯỚC" },
-  { from: 3810, duration: 150, kind: "stat", value: "GIẢI PHÁP TỐI ƯU", label: "CHO LỐI SỐNG ĐẦM PHÁ NÔNG" },
+  { from: 3627, duration: 150, kind: "stat", value: "GIẢI PHÁP TỐI ƯU", label: "CHO LỐI SỐNG ĐẦM PHÁ NÔNG" },
   { from: 5015, duration: 130, kind: "title", title: "Eunotosaurus", subtitle: "MỘT TRONG NHỮNG TỔ TIÊN SỚM NHẤT" },
   { from: 6070, duration: 130, kind: "title", title: "Glyptodon", subtitle: "THÚ CÓ VÚ MANG HÌNH RÙA" },
   { from: 7195, duration: 130, kind: "title", title: "Cyamodus", subtitle: "HAI LỚP MAI RIÊNG BIỆT" },
   { from: 10490, duration: 130, kind: "title", title: "Bọ Rùa", subtitle: "CÁNH CỨNG CHE PHỦ TOÀN THÂN" },
   { from: 11150, duration: 120, kind: "stat", value: "MAI DẸT", label: "GIẢM LỰC CẢN CỦA NƯỚC" },
-  { from: 11545, duration: 120, kind: "stat", value: "MAI VÒM", label: "CHỐNG LỰC CẮN CỦA THÚ DỮ" },
-  { from: 13290, duration: 160, kind: "quote", text: "Chậm mà chắc, bảo thủ nhưng bất diệt." },
+  { from: 11725, duration: 120, kind: "stat", value: "MAI VÒM", label: "CHỐNG LỰC CẮN CỦA THÚ DỮ" },
+  { from: 13104, duration: 160, kind: "quote", text: "Chậm mà chắc, bảo thủ nhưng bất diệt." },
   { from: 13860, duration: 150, kind: "stat", value: "Ở HÀNH TINH KHÁC?", label: "NẾU CÓ SỰ SỐNG, CÓ THỂ CŨNG CÓ “RÙA”" },
 ];
 
@@ -261,11 +294,18 @@ const ICON_PATHS: Record<string, React.ReactNode> = {
   ),
 };
 
-const Icon: React.FC<{ name: string; size?: number; fill: string }> = ({ name, size = 1, fill }) => (
-  <g transform={`scale(${size})`} fill={fill}>
-    {ICON_PATHS[name]}
-  </g>
-);
+const Icon: React.FC<{ name: string; size?: number; tone?: "muted" | "accent" | "negative" }> = ({
+  name,
+  size = 1,
+  tone = "muted",
+}) => {
+  const gradientId = tone === "accent" ? "redGrad" : tone === "negative" ? "darkRedGrad" : "steelGrad";
+  return (
+    <g transform={`scale(${size})`} fill={`url(#${gradientId})`} filter="url(#dropShadow)">
+      {ICON_PATHS[name]}
+    </g>
+  );
+};
 
 // ---------------------------------------------------------------------------
 // Graphic: Title card (intro)
@@ -285,20 +325,20 @@ const GraphicTitle: React.FC<{ durationInFrames: number }> = ({ durationInFrames
           <path
             d={`M20,170 Q180,${170 - 150 * domeArc} 340,170`}
             fill="none"
-            stroke={TEAL}
+            stroke="url(#steelGrad)"
             strokeWidth={10}
             strokeLinecap="round"
             opacity={0.85}
           />
         </svg>
         <div style={{ textAlign: "center", transform: `scale(${titleScale})`, marginTop: 60 }}>
-          <div style={{ fontFamily: "Arial, sans-serif", fontWeight: 900, fontSize: 104, color: INK, letterSpacing: 4 }}>
+          <div style={{ fontFamily: FONT_HEAD, fontWeight: 900, fontSize: 104, color: INK, letterSpacing: 4 }}>
             RÙA HÓA
           </div>
           <div
             style={{
               marginTop: 18,
-              fontFamily: "Arial, sans-serif",
+              fontFamily: FONT_BODY,
               fontSize: 26,
               color: ACCENT,
               letterSpacing: 6,
@@ -327,7 +367,7 @@ const GraphicTextCard: React.FC<{ durationInFrames: number; text: string }> = ({
         <div
           style={{
             transform: `scale(${scale})`,
-            fontFamily: "Arial, sans-serif",
+            fontFamily: FONT_HEAD,
             fontWeight: 800,
             fontSize: 72,
             color: INK,
@@ -367,7 +407,7 @@ const GraphicIconRow: React.FC<{ durationInFrames: number; title: string; items:
             top: 100,
             opacity: titleOpacity,
             transform: `translateY(${titleY}px)`,
-            fontFamily: "Arial, sans-serif",
+            fontFamily: FONT_BODY,
             fontWeight: 800,
             fontSize: 40,
             color: ACCENT,
@@ -397,7 +437,8 @@ const GraphicIconRow: React.FC<{ durationInFrames: number; title: string; items:
                   easing: Easing.out(Easing.cubic),
                 })
               : 1;
-            const fill = item.tone === "negative" ? DANGER : item.highlighted ? ACCENT : "#9fb8bd";
+            const tone: "muted" | "accent" | "negative" =
+              item.tone === "negative" ? "negative" : item.highlighted ? "accent" : "muted";
             return (
               <div
                 key={i}
@@ -411,12 +452,12 @@ const GraphicIconRow: React.FC<{ durationInFrames: number; title: string; items:
                 }}
               >
                 <svg width="140" height="140" viewBox="-70 -70 140 140">
-                  <Icon name={item.icon} fill={fill} />
+                  <Icon name={item.icon} tone={tone} />
                 </svg>
                 <div
                   style={{
                     marginTop: 20,
-                    fontFamily: "Arial, sans-serif",
+                    fontFamily: FONT_BODY,
                     fontWeight: item.highlighted ? 800 : 600,
                     fontSize: 24,
                     color: item.highlighted ? ACCENT : INK,
@@ -461,7 +502,7 @@ const GraphicRibShell: React.FC<{ durationInFrames: number; mode: string; title:
             position: "absolute",
             top: 90,
             opacity: titleOpacity,
-            fontFamily: "Arial, sans-serif",
+            fontFamily: FONT_BODY,
             fontWeight: 800,
             fontSize: 34,
             color: ACCENT,
@@ -488,8 +529,8 @@ const GraphicRibShell: React.FC<{ durationInFrames: number; mode: string; title:
             const y2 = yPos - Math.sin(rad) * length * 0.4;
             return (
               <g key={i}>
-                <line x1={spineX} y1={yPos} x2={x2} y2={y2} stroke={TEAL} strokeWidth={12} strokeLinecap="round" />
-                <line x1={-spineX} y1={yPos} x2={-x2} y2={y2} stroke={TEAL} strokeWidth={12} strokeLinecap="round" />
+                <line x1={spineX} y1={yPos} x2={x2} y2={y2} stroke="url(#steelGrad)" strokeWidth={12} strokeLinecap="round" filter="url(#dropShadow)" />
+                <line x1={-spineX} y1={yPos} x2={-x2} y2={y2} stroke="url(#steelGrad)" strokeWidth={12} strokeLinecap="round" filter="url(#dropShadow)" />
               </g>
             );
           })}
@@ -497,7 +538,7 @@ const GraphicRibShell: React.FC<{ durationInFrames: number; mode: string; title:
           <path
             d="M-280,60 Q0,-260 280,60"
             fill="none"
-            stroke={ACCENT}
+            stroke="url(#redGrad)"
             strokeWidth={8}
             strokeDasharray={800}
             strokeDashoffset={interpolate(progress, [0.7, 1], [800, 0], { extrapolateLeft: "clamp" })}
@@ -505,8 +546,8 @@ const GraphicRibShell: React.FC<{ durationInFrames: number; mode: string; title:
           />
           {mode === "anchor" && (
             <g opacity={interpolate(frame, [30, 55], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>
-              <circle cx={260} cy={30} r={14} fill={ACCENT} />
-              <text x={260} y={80} fill={ACCENT} fontSize={22} fontFamily="Arial, sans-serif" textAnchor="middle">
+              <circle cx={260} cy={30} r={14} fill="url(#redGrad)" filter="url(#dropShadow)" />
+              <text x={260} y={80} fill={ACCENT} fontSize={22} fontFamily={FONT_BODY} textAnchor="middle">
                 MỎ NEO
               </text>
             </g>
@@ -514,7 +555,7 @@ const GraphicRibShell: React.FC<{ durationInFrames: number; mode: string; title:
           {mode === "embryo" && (
             <g opacity={interpolate(frame, [40, 65], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>
               <ellipse cx="0" cy="0" rx="330" ry="330" fill="none" stroke={INK} strokeWidth={3} strokeDasharray="10 12" opacity={0.35} />
-              <text x={0} y={-300} fill={DANGER} fontSize={22} fontFamily="Arial, sans-serif" textAnchor="middle">
+              <text x={0} y={-300} fill={DANGER} fontSize={22} fontFamily={FONT_BODY} textAnchor="middle">
                 PROTEIN CHẶN CƠ GIỮA CÁC XƯƠNG SƯỜN
               </text>
             </g>
@@ -546,7 +587,7 @@ const GraphicShoulderBlade: React.FC<{ durationInFrames: number }> = ({ duration
           style={{
             position: "absolute",
             top: 90,
-            fontFamily: "Arial, sans-serif",
+            fontFamily: FONT_BODY,
             fontWeight: 800,
             fontSize: 34,
             color: ACCENT,
@@ -559,15 +600,15 @@ const GraphicShoulderBlade: React.FC<{ durationInFrames: number }> = ({ duration
         </div>
         <svg width="800" height="600" viewBox="-400 -300 800 600">
           {/* ribcage oval */}
-          <ellipse cx={0} cy={0} rx={230} ry={200} fill="none" stroke={TEAL} strokeWidth={10} />
+          <ellipse cx={0} cy={0} rx={230} ry={200} fill="none" stroke="url(#steelGrad)" strokeWidth={10} />
           {Array.from({ length: 5 }).map((_, i) => (
-            <ellipse key={i} cx={0} cy={-140 + i * 65} rx={220 - i * 6} ry={26} fill="none" stroke={TEAL} strokeWidth={4} opacity={0.5} />
+            <ellipse key={i} cx={0} cy={-140 + i * 65} rx={220 - i * 6} ry={26} fill="none" stroke="url(#steelGrad)" strokeWidth={4} opacity={0.5} />
           ))}
           {/* scapula (paddle shape) sliding from outside the ribcage to inside */}
-          <g transform={`translate(${scapulaX}, -20) rotate(-20)`}>
-            <path d="M0,-70 Q40,-70 40,-20 L40,50 Q40,80 0,80 Q-30,80 -30,40 L-30,-30 Q-30,-70 0,-70 Z" fill={ACCENT} />
+          <g transform={`translate(${scapulaX}, -20) rotate(-20)`} filter="url(#dropShadow)">
+            <path d="M0,-70 Q40,-70 40,-20 L40,50 Q40,80 0,80 Q-30,80 -30,40 L-30,-30 Q-30,-70 0,-70 Z" fill="url(#redGrad)" />
           </g>
-          <text x={scapulaX} y={130} fill={ACCENT} fontSize={22} fontFamily="Arial, sans-serif" textAnchor="middle">
+          <text x={scapulaX} y={130} fill={ACCENT} fontSize={22} fontFamily={FONT_BODY} textAnchor="middle">
             XƯƠNG BẢ VAI
           </text>
           <path
@@ -588,7 +629,7 @@ const GraphicShoulderBlade: React.FC<{ durationInFrames: number }> = ({ duration
           style={{
             position: "absolute",
             bottom: 90,
-            fontFamily: "Arial, sans-serif",
+            fontFamily: FONT_BODY,
             fontSize: 22,
             color: INK,
             opacity: 0.85,
@@ -621,17 +662,17 @@ const GraphicDeepTime: React.FC<{ durationInFrames: number }> = ({ durationInFra
       <AbsoluteFill style={{ background: GRAPHIC_BG, justifyContent: "center", alignItems: "center" }}>
         <svg width="1600" height="120" viewBox="0 0 1600 120" style={{ position: "absolute", top: 560 }}>
           <line x1={200} y1={60} x2={1550} y2={60} stroke={INK} strokeWidth={4} opacity={0.5} />
-          <text x={1550} y={100} fill={INK} fontSize={20} fontFamily="Arial, sans-serif" textAnchor="end" opacity={0.7}>
+          <text x={1550} y={100} fill={INK} fontSize={20} fontFamily={FONT_BODY} textAnchor="end" opacity={0.7}>
             HIỆN TẠI
           </text>
-          <text x={200} y={100} fill={INK} fontSize={20} fontFamily="Arial, sans-serif" textAnchor="start" opacity={0.7}>
+          <text x={200} y={100} fill={INK} fontSize={20} fontFamily={FONT_BODY} textAnchor="start" opacity={0.7}>
             QUÁ KHỨ
           </text>
-          <circle cx={markerX} cy={60} r={16} fill={ACCENT} />
+          <circle cx={markerX} cy={60} r={16} fill="url(#redGrad)" filter="url(#dropShadow)" />
         </svg>
         <div style={{ textAlign: "center", transform: `scale(${numberScale})` }}>
-          <div style={{ fontFamily: "Arial, sans-serif", fontWeight: 900, fontSize: 96, color: INK }}>230 TRIỆU NĂM</div>
-          <div style={{ fontFamily: "Arial, sans-serif", fontSize: 30, color: ACCENT, letterSpacing: 4, marginTop: 10 }}>
+          <div style={{ fontFamily: FONT_HEAD, fontWeight: 900, fontSize: 96, color: INK }}>230 TRIỆU NĂM</div>
+          <div style={{ fontFamily: FONT_BODY, fontSize: 30, color: ACCENT, letterSpacing: 4, marginTop: 10 }}>
             KỶ TRIAS — SỰ BÙNG NỔ HÌNH THÁI BÒ SÁT
           </div>
         </div>
@@ -668,7 +709,7 @@ const GraphicStablePoints: React.FC<{ durationInFrames: number; label: string; t
           style={{
             position: "absolute",
             top: 100,
-            fontFamily: "Arial, sans-serif",
+            fontFamily: FONT_BODY,
             fontWeight: 800,
             fontSize: 34,
             color: ACCENT,
@@ -678,15 +719,15 @@ const GraphicStablePoints: React.FC<{ durationInFrames: number; label: string; t
           {title}
         </div>
         <svg width="1400" height="420" viewBox="0 0 1400 420">
-          <path d={path} fill="none" stroke={TEAL} strokeWidth={6} opacity={0.8} />
-          <circle cx={ballX} cy={ballY - 22} r={20} fill={ACCENT} />
+          <path d={path} fill="none" stroke="url(#steelGrad)" strokeWidth={6} opacity={0.8} />
+          <circle cx={ballX} cy={ballY - 22} r={20} fill="url(#redGrad)" filter="url(#dropShadow)" />
           <text
             x={760}
             y={360}
             fill={ACCENT}
             fontSize={28}
             fontWeight={800}
-            fontFamily="Arial, sans-serif"
+            fontFamily={FONT_HEAD}
             textAnchor="middle"
             opacity={interpolate(t, [0.85, 1], [0, 1], { extrapolateLeft: "clamp" })}
           >
@@ -714,7 +755,7 @@ const GraphicHox: React.FC<{ durationInFrames: number }> = ({ durationInFrames }
           style={{
             position: "absolute",
             top: 90,
-            fontFamily: "Arial, sans-serif",
+            fontFamily: FONT_BODY,
             fontWeight: 800,
             fontSize: 34,
             color: ACCENT,
@@ -738,23 +779,23 @@ const GraphicHox: React.FC<{ durationInFrames: number }> = ({ durationInFrames }
               </g>
             );
           })}
-          <text x={140} y={-192} fill={ACCENT} fontSize={26} fontWeight={800} fontFamily="Arial, sans-serif">
+          <text x={140} y={-192} fill={ACCENT} fontSize={26} fontWeight={800} fontFamily={FONT_HEAD}>
             HOX
           </text>
         </svg>
         <div style={{ display: "flex", gap: 60, alignItems: "center", position: "absolute", bottom: 110 }}>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", opacity: 1 - flip }}>
             <svg width="90" height="90" viewBox="-45 -45 90 90">
-              <rect x={-6} y={-40} width={12} height={80} fill={TEAL} />
+              <rect x={-6} y={-40} width={12} height={80} fill="url(#steelGrad)" filter="url(#dropShadow)" />
             </svg>
-            <div style={{ color: INK, fontFamily: "Arial, sans-serif", fontSize: 20 }}>KHUNG ĐỠ</div>
+            <div style={{ color: INK, fontFamily: FONT_BODY, fontSize: 20 }}>KHUNG ĐỠ</div>
           </div>
           <div style={{ color: INK, fontSize: 40 }}>→</div>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", opacity: flip }}>
             <svg width="90" height="90" viewBox="-45 -45 90 90">
-              <Icon name="shield" fill={ACCENT} size={0.8} />
+              <Icon name="shield" tone="accent" size={0.8} />
             </svg>
-            <div style={{ color: ACCENT, fontFamily: "Arial, sans-serif", fontSize: 20, fontWeight: 700 }}>LỚP BẢO VỆ</div>
+            <div style={{ color: ACCENT, fontFamily: FONT_BODY, fontSize: 20, fontWeight: 700 }}>LỚP BẢO VỆ</div>
           </div>
         </div>
       </AbsoluteFill>
@@ -780,7 +821,7 @@ const GraphicPhBuffer: React.FC<{ durationInFrames: number }> = ({ durationInFra
           style={{
             position: "absolute",
             top: 90,
-            fontFamily: "Arial, sans-serif",
+            fontFamily: FONT_BODY,
             fontWeight: 800,
             fontSize: 34,
             color: ACCENT,
@@ -792,10 +833,10 @@ const GraphicPhBuffer: React.FC<{ durationInFrames: number }> = ({ durationInFra
         </div>
         <svg width="900" height="560" viewBox="-450 -280 900 560">
           {/* shell dome container */}
-          <path d="M-260,140 Q0,-220 260,140 Z" fill="none" stroke={TEAL} strokeWidth={10} />
+          <path d="M-260,140 Q0,-220 260,140 Z" fill="none" stroke="url(#steelGrad)" strokeWidth={10} />
           {/* acid drop */}
           <circle cx={-40} cy={dropY} r={14} fill={DANGER} opacity={dropY < 20 ? 1 : 0} />
-          <text x={0} y={190} fill={INK} fontSize={22} fontFamily="Arial, sans-serif" textAnchor="middle" opacity={0.85}>
+          <text x={0} y={190} fill={INK} fontSize={22} fontFamily={FONT_BODY} textAnchor="middle" opacity={0.85}>
             CaCO₃ + Phốt phát trung hòa axit lactic
           </text>
           {/* pH gauge */}
@@ -811,7 +852,7 @@ const GraphicPhBuffer: React.FC<{ durationInFrames: number }> = ({ durationInFra
               strokeLinecap="round"
             />
             <circle cx={0} cy={0} r={8} fill={gaugeColor} />
-            <text x={0} y={40} fill={gaugeColor} fontSize={22} fontWeight={800} fontFamily="Arial, sans-serif" textAnchor="middle">
+            <text x={0} y={40} fill={gaugeColor} fontSize={22} fontWeight={800} fontFamily={FONT_BODY} textAnchor="middle">
               pH
             </text>
           </g>
@@ -837,7 +878,7 @@ const GraphicScaleCompare: React.FC<{ durationInFrames: number }> = ({ durationI
           style={{
             position: "absolute",
             top: 90,
-            fontFamily: "Arial, sans-serif",
+            fontFamily: FONT_BODY,
             fontWeight: 800,
             fontSize: 34,
             color: ACCENT,
@@ -851,21 +892,21 @@ const GraphicScaleCompare: React.FC<{ durationInFrames: number }> = ({ durationI
           <line x1={100} y1={420} x2={1100} y2={420} stroke={INK} strokeWidth={3} opacity={0.4} />
           {/* human silhouette, fixed scale */}
           <g transform="translate(220, 420)">
-            <circle cx={0} cy={-165} r={22} fill="#9fb8bd" />
-            <rect x={-16} y={-142} width={32} height={110} rx={12} fill="#9fb8bd" />
+            <circle cx={0} cy={-165} r={22} fill="url(#steelGrad)" />
+            <rect x={-16} y={-142} width={32} height={110} rx={12} fill="url(#steelGrad)" />
           </g>
-          <text x={220} y={530} fill="#9fb8bd" fontSize={20} fontFamily="Arial, sans-serif" textAnchor="middle">
+          <text x={220} y={530} fill="#9fb8bd" fontSize={20} fontFamily={FONT_BODY} textAnchor="middle">
             ~1.7 m
           </text>
           {/* archelon silhouette, scaled up to represent ~4m */}
-          <g transform={`translate(700, 420) scale(${grow})`}>
-            <ellipse cx={0} cy={-70} rx={220} ry={90} fill={ACCENT} />
-            <circle cx={-210} cy={-95} r={40} fill={ACCENT} />
-            <polygon points="180,-100 260,-150 250,-60" fill={ACCENT} />
-            <polygon points="-40,10 20,70 -100,60" fill={ACCENT} />
-            <polygon points="60,10 120,60 0,70" fill={ACCENT} />
+          <g transform={`translate(700, 420) scale(${grow})`} filter="url(#dropShadow)">
+            <ellipse cx={0} cy={-70} rx={220} ry={90} fill="url(#redGrad)" />
+            <circle cx={-210} cy={-95} r={40} fill="url(#redGrad)" />
+            <polygon points="180,-100 260,-150 250,-60" fill="url(#redGrad)" />
+            <polygon points="-40,10 20,70 -100,60" fill="url(#redGrad)" />
+            <polygon points="60,10 120,60 0,70" fill="url(#redGrad)" />
           </g>
-          <text x={700} y={530} fill={ACCENT} fontSize={26} fontWeight={800} fontFamily="Arial, sans-serif" textAnchor="middle" opacity={labelOpacity}>
+          <text x={700} y={530} fill={ACCENT} fontSize={26} fontWeight={800} fontFamily={FONT_HEAD} textAnchor="middle" opacity={labelOpacity}>
             4 MÉT
           </text>
         </svg>
@@ -896,7 +937,7 @@ const GraphicCitation: React.FC<{ durationInFrames: number }> = ({ durationInFra
             boxShadow: "0 30px 80px rgba(0,0,0,0.6)",
           }}
         >
-          <div style={{ fontFamily: "Arial, sans-serif", fontSize: 16, color: "#888", marginBottom: 14 }}>
+          <div style={{ fontFamily: FONT_BODY, fontSize: 16, color: "#888", marginBottom: 14 }}>
             HỒ SƠ HÓA THẠCH · TRUNG QUỐC · 2008
           </div>
           <div style={{ fontFamily: "Georgia, serif", fontSize: 28, lineHeight: 1.55, color: "#111", position: "relative" }}>
@@ -923,10 +964,10 @@ const GraphicOutroCta: React.FC<{ durationInFrames: number }> = ({ durationInFra
       <AbsoluteFill style={{ background: GRAPHIC_BG, justifyContent: "center", alignItems: "center" }}>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20, transform: `scale(${pulse})` }}>
           <svg width="120" height="120" viewBox="-60 -60 120 120">
-            <circle r={55} fill={ACCENT} />
+            <circle r={55} fill="url(#redGrad)" filter="url(#dropShadow)" />
             <path d="M-18,10 L-18,-10 L0,-30 Q10,-30 8,-16 L20,-16 Q30,-16 28,-4 L22,10 Q18,20 6,20 L-18,20 Z" fill="#1a2a2e" />
           </svg>
-          <div style={{ fontFamily: "Arial, sans-serif", fontWeight: 800, fontSize: 36, color: INK, letterSpacing: 2 }}>
+          <div style={{ fontFamily: FONT_HEAD, fontWeight: 800, fontSize: 36, color: INK, letterSpacing: 2 }}>
             LIKE • SUBSCRIBE
           </div>
         </div>
@@ -949,7 +990,7 @@ const GraphicOutro: React.FC<{ durationInFrames: number }> = ({ durationInFrames
           <div style={{ fontFamily: "Georgia, serif", fontStyle: "italic", fontSize: 44, color: INK, lineHeight: 1.4 }}>
             &quot;Chiếc vòm là cấu trúc chịu lực tốt nhất trong kiến trúc.&quot;
           </div>
-          <div style={{ marginTop: 24, fontFamily: "Arial, sans-serif", fontSize: 24, color: ACCENT, letterSpacing: 4 }}>
+          <div style={{ marginTop: 24, fontFamily: FONT_BODY, fontSize: 24, color: ACCENT, letterSpacing: 4 }}>
             RÙA HÓA — THẾ GIỚI CỔ ĐẠI
           </div>
         </div>
@@ -998,7 +1039,7 @@ const CalloutTitle: React.FC<{ title: string; subtitle: string; durationInFrames
         }}
       >
         <div style={{ fontFamily: "Georgia, serif", fontStyle: "italic", fontSize: 42, color: "white" }}>{title}</div>
-        <div style={{ fontFamily: "Arial, sans-serif", fontSize: 20, color: ACCENT, letterSpacing: 3, marginTop: 6 }}>{subtitle}</div>
+        <div style={{ fontFamily: FONT_BODY, fontSize: 20, color: ACCENT, letterSpacing: 3, marginTop: 6 }}>{subtitle}</div>
       </div>
     </AbsoluteFill>
   );
@@ -1014,10 +1055,10 @@ const CalloutStat: React.FC<{ value: string; label: string; durationInFrames: nu
   return (
     <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "flex-start", padding: "0 0 130px 90px" }}>
       <div style={{ opacity, transform: `translateY(${y}px)` }}>
-        <div style={{ fontFamily: "Arial, sans-serif", fontWeight: 800, fontSize: 56, color: "white", textShadow: "0 4px 20px rgba(0,0,0,0.8)" }}>
+        <div style={{ fontFamily: FONT_HEAD, fontWeight: 800, fontSize: 56, color: "white", textShadow: "0 4px 20px rgba(0,0,0,0.8)" }}>
           {value}
         </div>
-        <div style={{ fontFamily: "Arial, sans-serif", fontSize: 22, color: ACCENT, letterSpacing: 2, marginTop: 4, maxWidth: 700 }}>
+        <div style={{ fontFamily: FONT_BODY, fontSize: 22, color: ACCENT, letterSpacing: 2, marginTop: 4, maxWidth: 700 }}>
           {label}
         </div>
       </div>
@@ -1080,6 +1121,7 @@ const OpeningCloseFade: React.FC<{ totalDuration: number }> = ({ totalDuration }
 export const TurtleEvolution: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: "black" }}>
+      <SharedSvgDefs />
       {SHOTS.map((shot, i) => {
         if (shot.kind === "graphic") {
           const GraphicComp = GRAPHICS[shot.graphic];
