@@ -386,6 +386,139 @@ reference. This needs several short clips per panel rather than one — plan
 footage sourcing accordingly if a style calls for this (more downloads than
 a normal segment-per-shot edit).
 
+## 7a. Optional module: comparison / scale infographics
+
+From the user's examples: a balance scale weighing a pile of cars against a
+whale, and a depth ruler showing how far underwater a whale dives with
+labeled thresholds. This is the flat-vector infographic style used across
+science/nature explainer channels (Kurzgesagt and similar) for "how big /
+how heavy / how deep is X" beats — draw it with plain SVG, no footage or
+icon library needed (avoids any licensing question entirely: hand-drawn
+silhouettes are yours).
+
+Opt-in like section 7 — reach for it specifically when a script has a
+comparison or scale beat ("bằng trọng lượng của...", "sâu tới...") and the
+style calls for this graphic-explainer look, not for a documentary or
+narrative piece.
+
+### Balance scale (weight/quantity comparison)
+
+A beam rotating around a fixed pivot, with a "pan" of repeated icons on
+each side. Keep the pans level (counter-rotate against the beam) while the
+beam itself tilts toward whichever side should read as heavier:
+
+```tsx
+const CarIcon: React.FC<{ x: number; y: number; scale?: number }> = ({ x, y, scale = 1 }) => (
+  <g transform={`translate(${x}, ${y}) scale(${scale})`} fill="#9a9a9a">
+    <path d="M2,14 L4,14 L7,9 L12,9 L14,6 L24,6 L26,9 L31,9 L33,14 L35,14 L35,17 L2,17 Z" />
+    <circle cx="9" cy="17" r="3" fill="#333" />
+    <circle cx="28" cy="17" r="3" fill="#333" />
+  </g>
+);
+
+const WhaleIcon: React.FC<{ x: number; y: number; scale?: number; rotation?: number }> = ({ x, y, scale = 1, rotation = 0 }) => (
+  <g transform={`translate(${x}, ${y}) rotate(${rotation}) scale(${scale})`} fill="#8a8a8a">
+    <path d="M0,20 Q25,2 65,8 Q95,11 108,20 Q96,15 80,19 L72,32 L64,20 Q30,27 0,20 Z" />
+  </g>
+);
+
+const BalanceScale: React.FC<{ tiltDegrees: number; pyramidRows: number }> = ({ tiltDegrees, pyramidRows }) => {
+  const beamHalfWidth = 260;
+  return (
+    <svg viewBox="0 0 1000 500" style={{ width: "100%", height: "100%" }}>
+      {/* stand */}
+      <rect x="490" y="260" width="20" height="200" fill="white" />
+      <polygon points="470,460 530,460 545,500 455,500" fill="white" />
+      {/* beam, pivoting at (500, 260) */}
+      <g transform={`rotate(${tiltDegrees}, 500, 260)`}>
+        <line x1={500 - beamHalfWidth} y1="260" x2={500 + beamHalfWidth} y2="260" stroke="white" strokeWidth={4} />
+        {/* left pan: counter-rotate to stay level, holds the car pyramid */}
+        <g transform={`translate(${500 - beamHalfWidth}, 260) rotate(${-tiltDegrees})`}>
+          <ellipse cx="0" cy="30" rx="90" ry="14" fill="white" />
+          {Array.from({ length: pyramidRows }).map((_, row) =>
+            Array.from({ length: pyramidRows - row }).map((_, col) => (
+              <CarIcon
+                key={`${row}-${col}`}
+                x={-((pyramidRows - row) * 20) + col * 40 - 18}
+                y={10 - row * 16}
+                scale={0.9}
+              />
+            )),
+          )}
+        </g>
+        {/* right pan: counter-rotate to stay level, holds the whale */}
+        <g transform={`translate(${500 + beamHalfWidth}, 260) rotate(${-tiltDegrees})`}>
+          <ellipse cx="0" cy="30" rx="90" ry="14" fill="white" />
+          <WhaleIcon x={-55} y={-5} scale={1} />
+        </g>
+      </g>
+    </svg>
+  );
+};
+```
+
+Drive `tiltDegrees` with `interpolate(frame, [0, 40], [0, targetTilt])` so it
+settles into position rather than snapping there — a small overshoot-and-
+settle (interpolate through a couple of extra keyframes past the target and
+back) reads as physical weight, a straight linear tilt reads flat. Treat
+the exact path coordinates above as a rough starting silhouette, not a
+final asset — render a still and look at it (same as any other visual
+decision in this pipeline), then adjust the path points until the shape
+reads clearly at the size it'll actually appear on screen.
+
+### Depth / scale ruler
+
+A vertical ruler with tick marks, an ocean gradient background, and a
+to-scale silhouette descending past labeled depth thresholds that fade in
+as they're reached:
+
+```tsx
+const DepthRuler: React.FC<{ diveProgress: number; thresholds: { depth: string; atProgress: number }[] }> = ({
+  diveProgress,
+  thresholds,
+}) => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill>
+      <svg viewBox="0 0 1920 1080" style={{ width: "100%", height: "100%" }}>
+        <defs>
+          <linearGradient id="ocean" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#1a5f7a" />
+            <stop offset="100%" stopColor="#062338" />
+          </linearGradient>
+        </defs>
+        <rect width="1920" height="1080" fill="url(#ocean)" />
+        {/* ruler ticks along the left edge */}
+        {Array.from({ length: 14 }).map((_, i) => (
+          <rect key={i} x={60} y={i * 80} width={40} height={4} fill="white" opacity={0.8} />
+        ))}
+        {/* descending silhouette, position driven by diveProgress (0-1) */}
+        <g transform={`translate(300, ${diveProgress * 900}) rotate(90)`}>
+          <WhaleIcon x={0} y={0} scale={1.6} />
+        </g>
+        {/* depth labels, each fading in once the dive reaches its threshold */}
+        {thresholds.map((t, i) => {
+          const opacity = interpolate(frame, [0, 1], [diveProgress >= t.atProgress ? 1 : 0, diveProgress >= t.atProgress ? 1 : 0]);
+          return (
+            <text key={i} x={1300} y={150 + i * 260} fill="white" fontSize={56} fontWeight={800} opacity={opacity}>
+              {t.depth}
+            </text>
+          );
+        })}
+      </svg>
+    </AbsoluteFill>
+  );
+};
+```
+
+(The label-opacity line above is written as a same-frame step for clarity —
+in practice, drive it with a proper `interpolate(frame, [thresholdFrame,
+thresholdFrame + 15], [0, 1], {extrapolateLeft: "clamp"})` per label using
+each threshold's actual frame number, the same fade-in approach used
+everywhere else in this file.) Compute `diveProgress` from the segment's own
+frame range so the silhouette's descent is paced to the voiceover rather
+than running on a fixed clock independent of what's being said.
+
 ## 8. Render pipeline
 
 Before the full render, cheaply sanity-check with stills at a few segment

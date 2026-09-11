@@ -173,6 +173,14 @@ the style the user actually asked to match calls for that exact curiosity-
 hook structure. For anything else — a documentary, an explainer, a story —
 building it in would be adding a style element nobody asked for.
 
+Section 7a has a second opt-in module: flat-vector comparison/scale
+infographics (a balance scale weighing two things against each other, a
+depth ruler with a to-scale silhouette and labeled thresholds) — the
+Kurzgesagt-style graphic explainer look. Reach for it when a script has a
+comparison or scale beat ("nặng bằng...", "sâu tới...") and the style calls
+for hand-drawn-SVG graphics rather than footage; skip it otherwise for the
+same reason as section 7.
+
 The user has explicitly asked that cuts not feel too fast or abrupt — do
 not turn every `segment_script.py` line into its own cut by default. Read
 `references/remotion-patterns.md` section 1a before deciding the shot list:
