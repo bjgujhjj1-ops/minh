@@ -136,12 +136,33 @@ what goes in the edit, not a photo standing in for it.
 
 ## Downloading and verifying (all methods)
 
-1. **Download.** `curl -sSL -o my-video/public/<descriptive-name>.mp4
-   "<direct-url>"` — always into the Remotion project's `public/` folder,
-   since that's the only place `staticFile()` can resolve from. Check the
-   HTTP status curl reports and run `file <path>` to confirm it's actually
-   video/image data, not an HTML error page saved with a misleading
-   extension.
+Do these three steps for *all* segments' chosen candidates together, not
+one segment fully through the pipeline before starting the next — see
+"Work in batches" in SKILL.md. Concretely: after Step 2 has picked one
+best candidate per segment from search metadata, download all of them in
+one shell block, then run frame extraction once over all the downloaded
+files, then review everything in one pass.
+
+1. **Download, in one batch, with a timeout on every request.**
+
+   ```bash
+   curl -sSL --max-time 60 -o my-video/public/<name-1>.mp4 "<url-1>" -w "1: %{http_code} %{size_download}\n" &
+   curl -sSL --max-time 60 -o my-video/public/<name-2>.mp4 "<url-2>" -w "2: %{http_code} %{size_download}\n" &
+   wait
+   ```
+
+   Always into the Remotion project's `public/` folder, since that's the
+   only place `staticFile()` can resolve from. `--max-time` matters: a
+   stalled CDN connection with no timeout can sit for minutes doing
+   nothing, and the fix is to fail fast and retry (or swap sources), not
+   wait it out. Never point two downloads at the same output path at the
+   same time — if a `run_in_background` download seems stuck, check
+   `ps aux` for a leftover process from an earlier attempt before
+   re-running the same command, since two writers on one file corrupt it
+   and make it look like a slow network instead of the real bug. Check the
+   HTTP status each `curl` reports and run `file <path>` on the results to
+   confirm they're actually video/image data, not an HTML error page saved
+   with a misleading extension.
 2. **Look at the actual footage before committing to it.** A search result's
    title and description are not enough — extract a few frames (`opencv-python`
    works if installed: `cv2.VideoCapture` + `.set(cv2.CAP_PROP_POS_FRAMES, ...)`

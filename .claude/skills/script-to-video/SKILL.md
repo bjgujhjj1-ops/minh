@@ -32,6 +32,49 @@ cuts wastes a full render cycle:
    needs a real render once the audio arrives, since word-count-based
    pacing (see step 2 below) is an approximation.
 
+## Work in batches, not one segment at a time
+
+The user has flagged that this pipeline runs too slow — a 1-minute video
+taking close to half an hour. Looking back at what actually burned the
+time: searching, downloading, and verifying footage one segment at a time,
+sequentially, with speculative extra downloads "just in case," and
+background downloads left to hang with no timeout. None of that buys
+accuracy — it's just unbatched work. Fix it structurally, not by cutting
+corners:
+
+- **Derive every segment's visual concept and search keywords in one pass**
+  before searching anything, so Step 2 starts with a complete list rather
+  than figuring out beat N+1 only after beat N is fully downloaded.
+- **Fire off all the searches for all segments together** (multiple
+  `pexels_search.py` calls, or multiple tool calls in the same turn) instead
+  of one search → one download → one verify → next search. Tool calls that
+  don't depend on each other's output belong in the same batch.
+- **Pick one candidate per segment from the search results' metadata**
+  (duration, description, resolution) before downloading anything — don't
+  download three or four candidates per beat "to compare"; that's the
+  cross-source-comparison habit the user already asked to drop, applied
+  here to candidates within one source. Download the single best-looking
+  match first; only fetch a second if the first fails the frame check.
+- **Download the chosen clips in one batch**, not one `curl` per turn. Always
+  pass `--max-time <n>` (e.g. 30-60s for a clip a few MB to a few dozen MB)
+  so a stalled connection fails fast instead of hanging — this project once
+  lost several minutes to a download that crept up 1MB at a time with no
+  timeout, and separately to two overlapping background downloads racing to
+  write the same file (never start a second download to a path a still-running
+  one is writing to; if a download seems stuck, check `ps aux` for a stray
+  process before assuming the network is just slow).
+- **Extract preview frames for every downloaded candidate in one script
+  call** (loop over all the files, as already shown in
+  `references/footage-sourcing.md`), then review all of them in one pass
+  — not one clip's frames, a judgment call, the next clip's frames, repeat.
+- When something fails inspection, **re-fetch only that one segment's
+  footage**, not the whole batch.
+
+The accuracy-preserving checks stay exactly as they are (frame inspection
+before committing, license checks for named subjects, still-render spot
+checks before a full render) — this is about doing the same checks with
+fewer round trips and less idle waiting, not skipping any of them.
+
 ## Step 1 — Segment the script into timestamps
 
 Get the voiceover's duration first. Try `ffprobe -v error -show_entries
@@ -135,10 +178,13 @@ reference specifically calls for rapid-fire editing.
 ## Step 4 — Verify cheaply, then render
 
 Run `npx remotion still <CompId> <out.png> --frame=<N>` at a few segment
-boundaries first — this catches a bad import, missing asset, or mistimed
-sequence in seconds. Only once those look right, run `npx remotion render
-<CompId> <out.mp4>` for the full video. A full render is the expensive step;
-don't reach it with an unverified composition.
+boundaries — batch these as one shell loop over all the frame numbers you
+want checked, not one `still` command per turn — this catches a bad import,
+missing asset, or mistimed sequence in seconds. Only once those look right,
+run `npx remotion render <CompId> <out.mp4>` for the full video. A full
+render is the expensive step; don't reach it with an unverified composition,
+but don't also re-render the same still twice while eyeballing it — read
+the PNG once, decide, move on.
 
 Send the rendered video to the user. If something needs to change (a wrong
 clip, mistimed cut, wrong color mood), figure out which step it traces back
