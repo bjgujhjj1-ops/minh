@@ -1,4 +1,33 @@
-# Sourcing free footage from Pexels (and Pixabay as fallback)
+# Sourcing free footage from multiple stock sites
+
+Pexels is the fastest source (real API, see below) but it isn't the only
+one, and its library doesn't have the best clip for every beat. Per the
+user's explicit direction, actively check other free, commercial-use-safe
+sources too rather than treating them as a last resort only reached when
+Pexels comes up empty — a mediocre Pexels match and a great Mixkit or
+Pixabay match for the same beat should lose to the better clip. Good
+sources beyond Pexels, all free for this kind of use:
+
+- **Pixabay** (pixabay.com) — CC0-style, no attribution required, huge
+  library that overlaps and diverges from Pexels' in useful ways. Has its
+  own free API (pixabay.com/api/docs/) if the user ever provides a key,
+  same pattern as Pexels; without one, browse it the WebSearch/WebFetch way
+  described below.
+- **Mixkit** (mixkit.co) — curated, no attribution required, generally
+  higher production value per clip (more cinematic grading, smoother
+  motion) than a random Pexels/Pixabay result — worth checking for shots
+  where visual polish matters most (an opening/establishing shot, a hero
+  moment).
+- **Coverr** (coverr.co) — free for commercial use, small but well-shot
+  library, good for abstract/mood b-roll (textures, ambient scenes) when a
+  segment doesn't have a literal visual.
+- **Videezy** (videezy.com) — mixed license terms; many clips require
+  attribution. Only use it if a specific clip is worth crediting, and note
+  the requirement next to the asset (see Naming and mapping below).
+
+Whichever site a clip comes from, run it through the same download →
+verify-by-frame → trim pipeline described later in this file — the source
+doesn't change that part of the process.
 
 ## Preferred method: the Pexels API
 
@@ -24,24 +53,26 @@ this reason. If you ever hit an HTTP 403 with `error code: 1010` calling the
 API directly (e.g. via a one-off curl), add a real User-Agent header rather
 than assuming the key is invalid.
 
-## Fallback: no API key available
+## Browsing method: Pixabay, Mixkit, Coverr, and Pexels without a key
 
-If `my-video/.env` has no key and the user hasn't provided one, fall back to
-browsing the site like a person would with `WebSearch` and `WebFetch`:
+None of these have a bundled API-key script yet (only Pexels does, and only
+because the user provided a key). Browse them like a person would with
+`WebSearch` and `WebFetch`:
 
-1. **Search.** `WebSearch` with `site:pexels.com <keywords>`.
-2. **Resolve the direct file URL.** `WebFetch` the chosen `pexels.com/video/...`
-   or `pexels.com/photo/...` page with a prompt like "Find the direct
-   downloadable file URL (videos.pexels.com/video-files/... or
-   images.pexels.com/photos/...), the author name, and license." This is
-   slower and less reliable than the API (the fetch summary sometimes
-   guesses at a filename pattern instead of quoting the real one — verify
-   by checking the downloaded file, per step below) but works with zero
-   setup. This project's first Pexels edit (`my-video/public/ocean-waves.mp4`,
-   from pexels.com/video/ocean-waves-856204) was sourced this way.
-3. **Fallback to Pixabay.** If Pexels has nothing suitable, repeat with
-   `site:pixabay.com` — same CC0-style free-use terms, same method (or check
-   whether Pixabay also has an API key available before scraping it).
+1. **Search.** `WebSearch` with `site:pixabay.com <keywords>`,
+   `site:mixkit.co <keywords>`, or `site:coverr.co <keywords>` — same
+   pattern as Pexels, just swap the domain. Run more than one site's search
+   when the beat matters enough to be picky about the shot.
+2. **Resolve the direct file URL.** `WebFetch` the chosen page with a prompt
+   like "Find the direct downloadable file URL, the author name, and
+   license." This is slower and less reliable than a real API (the fetch
+   summary sometimes guesses at a filename pattern instead of quoting the
+   real one — verify by checking the downloaded file, per the step below)
+   but works with zero setup. This project's first Pexels edit
+   (`my-video/public/ocean-waves.mp4`, from pexels.com/video/ocean-waves-856204)
+   was sourced this way, before a Pexels API key was available.
+3. This is also the fallback for Pexels itself if `my-video/.env` ever has
+   no key configured — same method, `site:pexels.com`.
 
 ## Downloading and verifying (both methods)
 
