@@ -152,20 +152,6 @@ const SHOTS: Shot[] = [
   { kind: "video", src: "turtle-space-long-raw.mp4", startFrom: 180, start: 13812, end: 14379, motion: M([1.08, 1]) },
   { kind: "video", src: "turtle-coral-raw.mp4", startFrom: 0, start: 14379, end: 14837, motion: M([1, 1.12]) },
   { kind: "graphic", start: 14837, end: 15099, graphic: "outrocta" },
-  { kind: "video", src: "turtle-fossil-raw.mp4", startFrom: 0, start: 15099, end: 15564, motion: M([1.1, 1]) },
-  { kind: "image", src: "turtle-odontochelys.jpg", start: 15564, end: 16135, motion: M([1, 1.15]) },
-  { kind: "graphic", start: 16135, end: 16706, graphic: "citation" },
-  { kind: "graphic", start: 16706, end: 17375, graphic: "ribshell", props: { mode: "embryo", title: "PHÔI RÙA: XƯƠNG SƯỜN MỌC NGANG VÀO DA LƯNG" } },
-  { kind: "graphic", start: 17375, end: 18182, graphic: "hox" },
-  { kind: "graphic", start: 18182, end: 19018, graphic: "stablepoints", props: { label: "NGẮN NHẤT", title: "TIẾN HÓA CÓ ĐỊNH HƯỚNG", variant: 2 } },
-  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 0, start: 19018, end: 19513, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-coral-raw.mp4", startFrom: 100, start: 19513, end: 20007, motion: M([1.1, 1]) },
-  { kind: "graphic", start: 20007, end: 20501, graphic: "phbuffer" },
-  { kind: "graphic", start: 20501, end: 20995, graphic: "scalecompare" },
-  { kind: "image", src: "turtle-cyamodus.jpg", start: 20995, end: 21489, motion: M([1.15, 1.3], { y: [4, -4] }) },
-  { kind: "image", src: "turtle-eunotosaurus.jpg", start: 21489, end: 22122, motion: M([1.15, 1.3], { x: [-4, 4] }) },
-  { kind: "video", src: "turtle-cathedral-raw.mp4", startFrom: 0, start: 22122, end: 22591, motion: M([1, 1.15]) },
-  { kind: "graphic", start: 22591, end: 23060, graphic: "outro" },
 ];
 
 export const TURTLE_EVOLUTION_DURATION = SHOTS[SHOTS.length - 1].end;
@@ -191,12 +177,6 @@ const CALLOUTS: Callout[] = [
   { from: 11545, duration: 120, kind: "stat", value: "MAI VÒM", label: "CHỐNG LỰC CẮN CỦA THÚ DỮ" },
   { from: 13290, duration: 160, kind: "quote", text: "Chậm mà chắc, bảo thủ nhưng bất diệt." },
   { from: 13860, duration: 150, kind: "stat", value: "Ở HÀNH TINH KHÁC?", label: "NẾU CÓ SỰ SỐNG, CÓ THỂ CŨNG CÓ “RÙA”" },
-  { from: 15135, duration: 130, kind: "title", title: "Mắt Xích Thiếu", subtitle: "HỒ SƠ HÓA THẠCH GÂY TRANH CÃI" },
-  { from: 15600, duration: 150, kind: "title", title: "Odontochelys semitestacea", subtitle: "TRUNG QUỐC, PHÁT HIỆN NĂM 2008" },
-  { from: 19055, duration: 140, kind: "stat", value: "CaCO₃ + PHỐT PHÁT", label: "THÀNH PHẦN CHÍNH CỦA MAI RÙA" },
-  { from: 19550, duration: 140, kind: "stat", value: "THIẾU OXY", label: "→ TÍCH TỤ AXIT LACTIC KHI LẶN SÂU" },
-  { from: 21035, duration: 130, kind: "stat", value: "CÁNH NGẦM DƯỚI NƯỚC", label: "BỤNG PHẲNG GIÚP ỔN ĐỊNH KHI BƠI" },
-  { from: 21525, duration: 150, kind: "title", title: "Tổ tiên, hay kẻ bắt chước?", subtitle: "EUNOTOSAURUS ĐÃ GÂY TRANH CÃI HỌC THUẬT" },
 ];
 
 // ---------------------------------------------------------------------------
