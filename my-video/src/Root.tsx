@@ -10,6 +10,10 @@ import {
 import { RISE_OF_ROME_DURATION, RiseOfRome } from "./RiseOfRome";
 import { NZ_JACKFRUIT_DURATION, NZJackfruit } from "./NZJackfruit";
 import { CONCEPT_MAP_DEMO_DURATION, ConceptMapDemo } from "./ConceptMapDemo";
+import {
+  DA_VINCI_SALVATOR_MUNDI_DURATION,
+  DaVinciSalvatorMundi,
+} from "./DaVinciSalvatorMundi";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -89,6 +93,15 @@ export const RemotionRoot: React.FC = () => {
         id="ConceptMapDemo"
         component={ConceptMapDemo}
         durationInFrames={CONCEPT_MAP_DEMO_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      <Composition
+        id="DaVinciSalvatorMundi"
+        component={DaVinciSalvatorMundi}
+        durationInFrames={DA_VINCI_SALVATOR_MUNDI_DURATION}
         fps={30}
         width={1920}
         height={1080}
