@@ -143,76 +143,76 @@ type Shot = MediaShot | GraphicShot;
 const M = (scale: [number, number], extra: Partial<Motion> = {}): Motion => ({ scale, ...extra });
 
 const SHOTS: Shot[] = [
-  { kind: "graphic", start: 0, end: 211, graphic: "title" },
-  { kind: "graphic", start: 211, end: 461, graphic: "citation", props: { source: "Wikipedia — Carcinisation", excerpt: "Carcinisation is a form of convergent evolution in which non-crab crustaceans evolve a crab-like body plan.", highlight: "non-crab crustaceans evolve a crab-like body plan" } },
-  { kind: "video", src: "turtle-seaturtle-raw.mp4", startFrom: 0, start: 461, end: 661, motion: M([1.1, 1]) },
-  { kind: "graphic", start: 661, end: 843, graphic: "textcard", props: { text: "TẠI SAO LÀ... RÙA?" } },
-  { kind: "video", src: "turtle-bird-raw.mp4", startFrom: 0, start: 843, end: 1028, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-cheetah-raw.mp4", startFrom: 0, start: 1028, end: 1213, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 0, start: 1213, end: 1399, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-beetle-raw.mp4", startFrom: 0, start: 1399, end: 1585, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 0, start: 1585, end: 1809, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-shelltexture-raw.mp4", startFrom: 0, start: 1809, end: 2033, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-fossil3-raw.mp4", startFrom: 0, start: 2033, end: 2257, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-ribcage-raw.mp4", startFrom: 0, start: 2257, end: 2481, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-tortoise3-raw.mp4", startFrom: 0, start: 2481, end: 2704, motion: M([1.1, 1]) },
-  { kind: "graphic", start: 2704, end: 3004, graphic: "deeptime" },
-  { kind: "video", src: "turtle-desert-raw.mp4", startFrom: 0, start: 3004, end: 3213, motion: M([1, 1.12]) },
-  { kind: "image", src: "turtle-henodus.jpg", start: 3213, end: 3434, motion: M([1, 1.12]) },
-  { kind: "image", src: "turtle-henodus.jpg", start: 3434, end: 3655, motion: M([1.15, 1.3], { x: [4, -4] }) },
-  { kind: "video", src: "turtle-swamp-raw.mp4", startFrom: 0, start: 3655, end: 3876, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-lagoon-raw.mp4", startFrom: 0, start: 3876, end: 4097, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-oceanfloor-raw.mp4", startFrom: 0, start: 4097, end: 4318, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-crab-raw.mp4", startFrom: 0, start: 4318, end: 4484, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 186, start: 4484, end: 4650, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-beetle-raw.mp4", startFrom: 0, start: 4650, end: 4815, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 0, start: 4815, end: 4980, motion: M([1.1, 1]) },
-  { kind: "image", src: "turtle-eunotosaurus.jpg", start: 4980, end: 5260, motion: M([1, 1.12]) },
-  { kind: "graphic", start: 5260, end: 5714, graphic: "citation", props: { source: "Sci-News.com — Paleontology", excerpt: "The earliest beginnings of the turtle shell was not for protection but rather for digging underground to escape the harsh South African environment where these early proto turtles lived, said lead author Dr. Tyler Lyson.", highlight: "was not for protection but rather for digging underground" } },
-  { kind: "image", src: "turtle-eunotosaurus-atuchin.jpg", start: 5714, end: 6034, motion: M([1, 1.12]) },
-  { kind: "image", src: "turtle-glyptodon.jpg", start: 6034, end: 6260, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-icefield-raw.mp4", startFrom: 0, start: 6260, end: 6486, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-predator-raw.mp4", startFrom: 0, start: 6486, end: 6712, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-cheetah-raw.mp4", startFrom: 185, start: 6712, end: 6937, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-bird-raw.mp4", startFrom: 185, start: 6937, end: 7161, motion: M([1, 1.12]) },
-  { kind: "image", src: "turtle-cyamodus.jpg", start: 7161, end: 7357, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-oceanfloor-raw.mp4", startFrom: 221, start: 7357, end: 7553, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-lagoon-raw.mp4", startFrom: 0, start: 7553, end: 7750, motion: M([1, 1.12]) },
-  { kind: "graphic", start: 7750, end: 8200, graphic: "citation", props: { source: "RIKEN — Research News", excerpt: "Turtle morphology poses a unique puzzle in that the turtle\u2019s scapulae (shoulder blades), situated outside the ribs in other animals, are found inside its shell.", highlight: "situated outside the ribs in other animals, are found inside its shell" } },
-  { kind: "video", src: "turtle-ribcage-raw.mp4", startFrom: 0, start: 8200, end: 8411, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-fossilrock-raw.mp4", startFrom: 0, start: 8411, end: 8622, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-tortoise3-raw.mp4", startFrom: 223, start: 8622, end: 8836, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 352, start: 8836, end: 9050, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-ribcage-raw.mp4", startFrom: 0, start: 9050, end: 9264, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-oceanfloor-raw.mp4", startFrom: 0, start: 9264, end: 9478, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-shelltexture-raw.mp4", startFrom: 224, start: 9478, end: 9691, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-tortoise-long-raw.mp4", startFrom: 0, start: 9691, end: 9881, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 224, start: 9881, end: 10071, motion: M([1.1, 1]) },
-  { kind: "graphic", start: 10071, end: 10261, graphic: "textcard", props: { text: "SỐNG CHẬM • THỌ LÂU" } },
-  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 0, start: 10261, end: 10454, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-ladybug-raw.mp4", startFrom: 0, start: 10454, end: 10619, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-beetle-raw.mp4", startFrom: 0, start: 10619, end: 10784, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 165, start: 10784, end: 10949, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-crab-raw.mp4", startFrom: 166, start: 10949, end: 11115, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-seaturtle2-raw.mp4", startFrom: 0, start: 11115, end: 11335, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-seaturtle3-raw.mp4", startFrom: 0, start: 11335, end: 11555, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 414, start: 11555, end: 11775, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-tortoise3-raw.mp4", startFrom: 437, start: 11775, end: 11995, motion: M([1.1, 1]) },
-  { kind: "graphic", start: 11995, end: 12295, graphic: "deeptime500" },
-  { kind: "video", src: "turtle-space2-raw.mp4", startFrom: 0, start: 12295, end: 12495, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-space3-raw.mp4", startFrom: 0, start: 12495, end: 12693, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-space-long-raw.mp4", startFrom: 0, start: 12693, end: 12917, motion: M([1, 1.12]) },
-  { kind: "image", src: "turtle-archelon.jpg", start: 12917, end: 13141, motion: M([1.1, 1.25]) },
-  { kind: "video", src: "turtle-rainforest-raw.mp4", startFrom: 0, start: 13141, end: 13365, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-lagoon-raw.mp4", startFrom: 0, start: 13365, end: 13589, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-oceanfloor-raw.mp4", startFrom: 214, start: 13589, end: 13812, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-space2-raw.mp4", startFrom: 200, start: 13812, end: 14001, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-icefield-raw.mp4", startFrom: 226, start: 14001, end: 14190, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-bird-raw.mp4", startFrom: 409, start: 14190, end: 14379, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-coral-raw.mp4", startFrom: 0, start: 14379, end: 14532, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 330, start: 14532, end: 14685, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-shelltexture-raw.mp4", startFrom: 437, start: 14685, end: 14837, motion: M([1, 1.12]) },
-  { kind: "graphic", start: 14837, end: 15099, graphic: "outrocta" },
+  { kind: "graphic", start: 0, end: 202, graphic: "title" },
+  { kind: "graphic", start: 202, end: 441, graphic: "citation", props: { source: "Wikipedia — Carcinisation", excerpt: "Carcinisation is a form of convergent evolution in which non-crab crustaceans evolve a crab-like body plan.", highlight: "non-crab crustaceans evolve a crab-like body plan" } },
+  { kind: "video", src: "turtle-seaturtle-raw.mp4", startFrom: 0, start: 441, end: 633, motion: M([1.1, 1]) },
+  { kind: "graphic", start: 633, end: 807, graphic: "textcard", props: { text: "TẠI SAO LÀ... RÙA?" } },
+  { kind: "video", src: "turtle-bird-raw.mp4", startFrom: 0, start: 807, end: 1003, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-cheetah-raw.mp4", startFrom: 0, start: 1003, end: 1199, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 0, start: 1199, end: 1397, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-beetle-raw.mp4", startFrom: 0, start: 1397, end: 1594, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 0, start: 1594, end: 1813, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-shelltexture-raw.mp4", startFrom: 0, start: 1813, end: 2032, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-fossil3-raw.mp4", startFrom: 0, start: 2032, end: 2252, motion: M([1.1, 1]) },
+  { kind: "image", src: "turtle-skeleton-crosssection.jpg", start: 2252, end: 2471, motion: M([1, 1.12], { x: [0, -3] }) },
+  { kind: "video", src: "turtle-tortoise3-raw.mp4", startFrom: 0, start: 2471, end: 2689, motion: M([1.1, 1]) },
+  { kind: "graphic", start: 2689, end: 3013, graphic: "deeptime" },
+  { kind: "video", src: "turtle-desert-raw.mp4", startFrom: 0, start: 3013, end: 3238, motion: M([1, 1.12]) },
+  { kind: "image", src: "turtle-henodus.jpg", start: 3238, end: 3465, motion: M([1, 1.12]) },
+  { kind: "image", src: "turtle-henodus.jpg", start: 3465, end: 3692, motion: M([1.15, 1.3], { x: [4, -4] }) },
+  { kind: "video", src: "turtle-swamp-raw.mp4", startFrom: 0, start: 3692, end: 3918, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-lagoon-raw.mp4", startFrom: 0, start: 3918, end: 4145, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-oceanfloor-raw.mp4", startFrom: 0, start: 4145, end: 4372, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-crab-raw.mp4", startFrom: 0, start: 4372, end: 4541, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 186, start: 4541, end: 4709, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-beetle-raw.mp4", startFrom: 0, start: 4709, end: 4877, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 0, start: 4877, end: 5044, motion: M([1.1, 1]) },
+  { kind: "image", src: "turtle-eunotosaurus.jpg", start: 5044, end: 5317, motion: M([1, 1.12]) },
+  { kind: "graphic", start: 5317, end: 5759, graphic: "citation", props: { source: "Sci-News.com — Paleontology", excerpt: "The earliest beginnings of the turtle shell was not for protection but rather for digging underground to escape the harsh South African environment where these early proto turtles lived, said lead author Dr. Tyler Lyson.", highlight: "was not for protection but rather for digging underground" } },
+  { kind: "image", src: "turtle-eunotosaurus-atuchin.jpg", start: 5759, end: 6071, motion: M([1, 1.12]) },
+  { kind: "image", src: "turtle-glyptodon.jpg", start: 6071, end: 6309, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-icefield-raw.mp4", startFrom: 0, start: 6309, end: 6547, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-predator-raw.mp4", startFrom: 0, start: 6547, end: 6784, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-cheetah-raw.mp4", startFrom: 185, start: 6784, end: 7021, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-bird-raw.mp4", startFrom: 185, start: 7021, end: 7257, motion: M([1, 1.12]) },
+  { kind: "image", src: "turtle-cyamodus.jpg", start: 7257, end: 7462, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-oceanfloor-raw.mp4", startFrom: 221, start: 7462, end: 7667, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-lagoon-raw.mp4", startFrom: 0, start: 7667, end: 7873, motion: M([1, 1.12]) },
+  { kind: "graphic", start: 7873, end: 8311, graphic: "citation", props: { source: "RIKEN — Research News", excerpt: "Turtle morphology poses a unique puzzle in that the turtle\u2019s scapulae (shoulder blades), situated outside the ribs in other animals, are found inside its shell.", highlight: "situated outside the ribs in other animals, are found inside its shell" } },
+  { kind: "image", src: "turtle-skeleton-crosssection.jpg", start: 8311, end: 8517, motion: M([1.15, 1], { x: [-3, 0] }) },
+  { kind: "video", src: "turtle-fossilrock-raw.mp4", startFrom: 0, start: 8517, end: 8722, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-tortoise3-raw.mp4", startFrom: 223, start: 8722, end: 8932, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 352, start: 8932, end: 9141, motion: M([1, 1.12]) },
+  { kind: "image", src: "turtle-skeleton-crosssection.jpg", start: 9141, end: 9351, motion: M([1, 1.15], { y: [0, -2] }) },
+  { kind: "video", src: "turtle-oceanfloor-raw.mp4", startFrom: 0, start: 9351, end: 9560, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-shelltexture-raw.mp4", startFrom: 224, start: 9560, end: 9769, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-tortoise-long-raw.mp4", startFrom: 0, start: 9769, end: 9956, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 224, start: 9956, end: 10143, motion: M([1.1, 1]) },
+  { kind: "graphic", start: 10143, end: 10330, graphic: "textcard", props: { text: "SỐNG CHẬM • THỌ LÂU" } },
+  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 0, start: 10330, end: 10520, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-ladybug-raw.mp4", startFrom: 0, start: 10520, end: 10690, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-beetle-raw.mp4", startFrom: 0, start: 10690, end: 10859, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 165, start: 10859, end: 11029, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-crab-raw.mp4", startFrom: 166, start: 11029, end: 11200, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-seaturtle2-raw.mp4", startFrom: 0, start: 11200, end: 11418, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-seaturtle3-raw.mp4", startFrom: 0, start: 11418, end: 11635, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 414, start: 11635, end: 11852, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-tortoise3-raw.mp4", startFrom: 437, start: 11852, end: 12070, motion: M([1.1, 1]) },
+  { kind: "graphic", start: 12070, end: 12362, graphic: "deeptime500" },
+  { kind: "video", src: "turtle-space2-raw.mp4", startFrom: 0, start: 12362, end: 12557, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-space3-raw.mp4", startFrom: 0, start: 12557, end: 12750, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-space-long-raw.mp4", startFrom: 0, start: 12750, end: 12976, motion: M([1, 1.12]) },
+  { kind: "image", src: "turtle-archelon.jpg", start: 12976, end: 13202, motion: M([1.1, 1.25]) },
+  { kind: "video", src: "turtle-rainforest-raw.mp4", startFrom: 0, start: 13202, end: 13427, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-lagoon-raw.mp4", startFrom: 0, start: 13427, end: 13653, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-oceanfloor-raw.mp4", startFrom: 214, start: 13653, end: 13878, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-space2-raw.mp4", startFrom: 200, start: 13878, end: 14067, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-icefield-raw.mp4", startFrom: 226, start: 14067, end: 14257, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-bird-raw.mp4", startFrom: 409, start: 14257, end: 14446, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-coral-raw.mp4", startFrom: 0, start: 14446, end: 14604, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 330, start: 14604, end: 14763, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-shelltexture-raw.mp4", startFrom: 437, start: 14763, end: 14920, motion: M([1, 1.12]) },
+  { kind: "graphic", start: 14920, end: 15193, graphic: "outrocta" },
 ];
 
 export const TURTLE_EVOLUTION_DURATION = SHOTS[SHOTS.length - 1].end;
@@ -225,28 +225,71 @@ type Callout =
   | { from: number; duration: number; kind: "title"; title: string; subtitle: string }
   | { from: number; duration: number; kind: "stat"; value: string; label: string }
   | { from: number; duration: number; kind: "quote"; text: string }
-  | { from: number; duration: number; kind: "credit"; text: string };
+  | { from: number; duration: number; kind: "credit"; text: string }
+  | {
+      from: number;
+      duration: number;
+      kind: "pointer";
+      fromXPct: number;
+      fromYPct: number;
+      toXPct: number;
+      toYPct: number;
+      label: string;
+    };
 
 const CALLOUTS: Callout[] = [
-  { from: 863, duration: 140, kind: "stat", value: "ĐÔI CÁNH", label: "LỰA CHỌN 1" },
-  { from: 1048, duration: 140, kind: "stat", value: "TỐC ĐỘ PHI MÃ", label: "LỰA CHỌN 2" },
-  { from: 1233, duration: 150, kind: "stat", value: "BỘ GIÁP", label: "TỰ NHIÊN ĐÃ CHỌN PHƯƠNG ÁN NÀY" },
-  { from: 1829, duration: 180, kind: "title", title: "Mai Rùa", subtitle: "XƯƠNG SƯỜN + CỘT SỐNG HỢP NHẤT" },
-  { from: 3233, duration: 170, kind: "title", title: "Henodus", subtitle: "PLACODONT — TRIAS, ~230 TRIỆU NĂM TRƯỚC" },
-  { from: 3454, duration: 170, kind: "stat", value: "GIẢI PHÁP TỐI ƯU", label: "CHO LỐI SỐNG ĐẦM PHÁ NÔNG" },
-  { from: 4338, duration: 130, kind: "title", title: "Pháo Đài Di Động", subtitle: "CHIẾN LƯỢC SINH TỒN" },
-  { from: 5000, duration: 170, kind: "title", title: "Eunotosaurus", subtitle: "MỘT TRONG NHỮNG TỔ TIÊN SỚM NHẤT" },
-  { from: 5714, duration: 320, kind: "credit", text: "Minh họa: Andrey Atuchin / Sci-News.com" },
-  { from: 6054, duration: 170, kind: "title", title: "Glyptodon", subtitle: "THÚ CÓ VÚ MANG HÌNH RÙA" },
-  { from: 6506, duration: 170, kind: "stat", value: "KỶ BĂNG HÀ", label: "CHIM ĂN THỊT KHỔNG LỒ • HỔ RĂNG KIẾM" },
-  { from: 7181, duration: 150, kind: "title", title: "Cyamodus", subtitle: "HAI LỚP MAI RIÊNG BIỆT" },
-  { from: 9070, duration: 170, kind: "stat", value: "KHÔNG CƠ HOÀNH", label: "PHẢI DÙNG CƠ BỤNG ĐỂ THỞ" },
-  { from: 9498, duration: 170, kind: "stat", value: "KHỐI NHIỆT KHỔNG LỒ", label: "MAI LỚN NÓNG/NGUỘI RẤT CHẬM" },
-  { from: 10474, duration: 130, kind: "title", title: "Bọ Rùa", subtitle: "CÁNH CỨNG CHE PHỦ TOÀN THÂN" },
-  { from: 11135, duration: 170, kind: "stat", value: "MAI DẸT", label: "GIẢM LỰC CẢN CỦA NƯỚC" },
-  { from: 11575, duration: 170, kind: "stat", value: "MAI VÒM", label: "CHỐNG LỰC CẮN CỦA THÚ DỮ" },
-  { from: 12947, duration: 170, kind: "quote", text: "Chậm mà chắc, bảo thủ nhưng bất diệt." },
-  { from: 13832, duration: 150, kind: "stat", value: "Ở HÀNH TINH KHÁC?", label: "NẾU CÓ SỰ SỐNG, CÓ THỂ CŨNG CÓ “RÙA”" },
+  { from: 828, duration: 148, kind: "stat", value: "ĐÔI CÁNH", label: "LỰA CHỌN 1" },
+  { from: 1024, duration: 148, kind: "stat", value: "TỐC ĐỘ PHI MÃ", label: "LỰA CHỌN 2" },
+  { from: 1221, duration: 159, kind: "stat", value: "BỘ GIÁP", label: "TỰ NHIÊN ĐÃ CHỌN PHƯƠNG ÁN NÀY" },
+  { from: 1833, duration: 176, kind: "title", title: "Mai Rùa", subtitle: "XƯƠNG SƯỜN + CỘT SỐNG HỢP NHẤT" },
+  {
+    from: 2264,
+    duration: 196,
+    kind: "pointer",
+    fromXPct: 66,
+    fromYPct: 10,
+    toXPct: 17,
+    toYPct: 14,
+    label: "XƯƠNG SƯỜN MỞ RỘNG",
+  },
+  { from: 2264, duration: 196, kind: "credit", text: "Tiêu bản: Bảo tàng Lịch sử Tự nhiên London — Peter Taylor (CC BY 2.0)" },
+  { from: 3259, duration: 174, kind: "title", title: "Henodus", subtitle: "PLACODONT — TRIAS, ~230 TRIỆU NĂM TRƯỚC" },
+  { from: 3485, duration: 174, kind: "stat", value: "GIẢI PHÁP TỐI ƯU", label: "CHO LỐI SỐNG ĐẦM PHÁ NÔNG" },
+  { from: 4392, duration: 132, kind: "title", title: "Pháo Đài Di Động", subtitle: "CHIẾN LƯỢC SINH TỒN" },
+  { from: 5063, duration: 166, kind: "title", title: "Eunotosaurus", subtitle: "MỘT TRONG NHỮNG TỔ TIÊN SỚM NHẤT" },
+  { from: 5759, duration: 312, kind: "credit", text: "Minh họa: Andrey Atuchin / Sci-News.com" },
+  { from: 6092, duration: 179, kind: "title", title: "Glyptodon", subtitle: "THÚ CÓ VÚ MANG HÌNH RÙA" },
+  { from: 6568, duration: 179, kind: "stat", value: "KỶ BĂNG HÀ", label: "CHIM ĂN THỊT KHỔNG LỒ • HỔ RĂNG KIẾM" },
+  { from: 7278, duration: 157, kind: "title", title: "Cyamodus", subtitle: "HAI LỚP MAI RIÊNG BIỆT" },
+  {
+    from: 8324,
+    duration: 185,
+    kind: "pointer",
+    fromXPct: 40,
+    fromYPct: 78,
+    toXPct: 11,
+    toYPct: 55,
+    label: "XƯƠNG BẢ VAI ẨN BÊN TRONG",
+  },
+  { from: 8324, duration: 185, kind: "credit", text: "Tiêu bản: Bảo tàng Lịch sử Tự nhiên London — Peter Taylor (CC BY 2.0)" },
+  { from: 9161, duration: 167, kind: "stat", value: "KHÔNG CƠ HOÀNH", label: "PHẢI DÙNG CƠ BỤNG ĐỂ THỞ" },
+  {
+    from: 9154,
+    duration: 186,
+    kind: "pointer",
+    fromXPct: 68,
+    fromYPct: 8,
+    toXPct: 17,
+    toYPct: 12,
+    label: "LỒNG NGỰC LÀ MỘT KHỐI CỨNG",
+  },
+  { from: 9154, duration: 186, kind: "credit", text: "Tiêu bản: Bảo tàng Lịch sử Tự nhiên London — Peter Taylor (CC BY 2.0)" },
+  { from: 9580, duration: 167, kind: "stat", value: "KHỐI NHIỆT KHỔNG LỒ", label: "MAI LỚN NÓNG/NGUỘI RẤT CHẬM" },
+  { from: 10541, duration: 134, kind: "title", title: "Bọ Rùa", subtitle: "CÁNH CỨNG CHE PHỦ TOÀN THÂN" },
+  { from: 11220, duration: 168, kind: "stat", value: "MAI DẸT", label: "GIẢM LỰC CẢN CỦA NƯỚC" },
+  { from: 11655, duration: 168, kind: "stat", value: "MAI VÒM", label: "CHỐNG LỰC CẮN CỦA THÚ DỮ" },
+  { from: 13006, duration: 171, kind: "quote", text: "Chậm mà chắc, bảo thủ nhưng bất diệt." },
+  { from: 13898, duration: 150, kind: "stat", value: "Ở HÀNH TINH KHÁC?", label: "NẾU CÓ SỰ SỐNG, CÓ THỂ CŨNG CÓ “RÙA”" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -675,6 +718,91 @@ const CalloutCredit: React.FC<{ text: string; durationInFrames: number }> = ({ t
   );
 };
 
+const CalloutPointer: React.FC<{
+  fromXPct: number;
+  fromYPct: number;
+  toXPct: number;
+  toYPct: number;
+  label: string;
+  durationInFrames: number;
+}> = ({ fromXPct, fromYPct, toXPct, toYPct, label, durationInFrames }) => {
+  const frame = useCurrentFrame();
+  const fade = interpolate(frame, [0, 12, durationInFrames - 18, durationInFrames], [0, 1, 1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const draw = interpolate(frame, [4, 28], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.out(Easing.cubic),
+  });
+  const pop = interpolate(frame, [0, 16], [0.7, 1], {
+    extrapolateRight: "clamp",
+    easing: Easing.out(Easing.back(1.7)),
+  });
+  const breathe = 1 + Math.sin(frame / 14) * 0.03;
+
+  const x1 = (fromXPct / 100) * 1920;
+  const y1 = (fromYPct / 100) * 1080;
+  const x2 = (toXPct / 100) * 1920;
+  const y2 = (toYPct / 100) * 1080;
+  const mx = (x1 + x2) / 2;
+  const my = (y1 + y2) / 2;
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const len = Math.sqrt(dx * dx + dy * dy) || 1;
+  const curveAmount = len * 0.18;
+  const cx = mx - (dy / len) * curveAmount;
+  const cy = my + (dx / len) * curveAmount;
+
+  const bez = (t: number): [number, number] => {
+    const px = (1 - t) ** 2 * x1 + 2 * (1 - t) * t * cx + t ** 2 * x2;
+    const py = (1 - t) ** 2 * y1 + 2 * (1 - t) * t * cy + t ** 2 * y2;
+    return [px, py];
+  };
+  const [hx, hy] = bez(Math.min(draw, 1));
+  const [tx, ty] = bez(Math.max(0, Math.min(draw, 1) - 0.04));
+  const angle = Math.atan2(hy - ty, hx - tx) * (180 / Math.PI);
+
+  const steps = 24;
+  let d = `M ${x1} ${y1} `;
+  for (let i = 1; i <= steps; i++) {
+    const t = (i / steps) * draw;
+    const [px, py] = bez(t);
+    d += `L ${px} ${py} `;
+  }
+
+  return (
+    <AbsoluteFill style={{ opacity: fade }}>
+      <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
+        <path d={d} fill="none" stroke="black" strokeWidth={14} strokeLinecap="round" opacity={0.35} filter="url(#dropShadow)" />
+        <path d={d} fill="none" stroke="url(#redGrad)" strokeWidth={7} strokeLinecap="round" />
+        <g transform={`translate(${hx}, ${hy}) rotate(${angle})`}>
+          <path d="M 0 0 L -26 -12 L -18 0 L -26 12 Z" fill="url(#redGrad)" stroke="black" strokeWidth={2} strokeLinejoin="round" />
+        </g>
+        <circle cx={x1} cy={y1} r={10} fill="white" stroke={ACCENT} strokeWidth={4} />
+        <circle cx={x1} cy={y1} r={4} fill={ACCENT} />
+      </svg>
+      <div
+        style={{
+          position: "absolute",
+          left: x1,
+          top: y1,
+          transform: `translate(-50%, -160%) scale(${pop * breathe})`,
+          background: "rgba(6,6,6,0.72)",
+          border: "1px solid rgba(255,255,255,0.18)",
+          borderRadius: 8,
+          padding: "8px 16px",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+          whiteSpace: "nowrap",
+        }}
+      >
+        <span style={{ fontFamily: FONT_BODY, fontWeight: 800, fontSize: 22, color: "white", letterSpacing: 1 }}>{label}</span>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
 // ---------------------------------------------------------------------------
 // Vignette + opening/closing fade
 // ---------------------------------------------------------------------------
@@ -731,6 +859,16 @@ export const TurtleEvolution: React.FC = () => {
           {c.kind === "stat" && <CalloutStat value={c.value} label={c.label} durationInFrames={c.duration} />}
           {c.kind === "quote" && <CalloutQuote text={c.text} durationInFrames={c.duration} />}
           {c.kind === "credit" && <CalloutCredit text={c.text} durationInFrames={c.duration} />}
+          {c.kind === "pointer" && (
+            <CalloutPointer
+              fromXPct={c.fromXPct}
+              fromYPct={c.fromYPct}
+              toXPct={c.toXPct}
+              toYPct={c.toYPct}
+              label={c.label}
+              durationInFrames={c.duration}
+            />
+          )}
         </Sequence>
       ))}
       <Audio src={staticFile("turtle-voiceover.mp3")} />
