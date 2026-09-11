@@ -80,6 +80,14 @@ speed) rather than copying the ocean-edit look verbatim, and register a new
 `<Composition>` in `my-video/src/Root.tsx` with a duration computed from the
 segment data — not hand-counted.
 
+The user has explicitly asked that cuts not feel too fast or abrupt — do
+not turn every `segment_script.py` line into its own cut by default. Read
+`references/remotion-patterns.md` section 1a before deciding the shot list:
+merge adjacent beats onto one held shot where they share an image, keep
+individual shots around ~2.5-3s or longer, and use a longer crossfade
+(~20-30 frames at 30fps). Only cut faster than that when the style
+reference specifically calls for rapid-fire editing.
+
 ## Step 4 — Verify cheaply, then render
 
 Run `npx remotion still <CompId> <out.png> --frame=<N>` at a few segment

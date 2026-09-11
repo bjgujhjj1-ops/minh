@@ -45,6 +45,31 @@ Render with:
 ))}
 ```
 
+## 1a. Pacing: don't cut on every script line
+
+`segment_script.py` gives you one timestamp range per script line, but that
+is not the same thing as one shot per line — the user has explicitly asked
+for cuts that aren't too fast or abrupt, and a line-for-line cut rate reads
+as frantic once footage is playing under narration (confirmed on the first
+`RiseOfRome` draft: 6 shots across 13s of voiceover, several under a second
+long, felt rushed).
+
+Treat the segment list as raw material for editorial decisions, not a cut
+list to execute literally:
+
+- **Merge adjacent segments onto one held shot** when they're part of the
+  same beat or image (e.g. "a small village by the river" + "and from those
+  huts, something rose" can both play over one continuous village shot).
+  A good rough floor is **~2.5-3 seconds per shot** unless the style
+  reference specifically calls for rapid-fire cutting (some do — trust the
+  style analysis over this default).
+- **Lengthen the crossfade** for a calmer feel — 20-30 frames (~0.7-1s) at
+  30fps reads as a deliberate dissolve; under ~15 frames starts to feel like
+  a flicker between shots rather than a transition.
+- When in doubt, cut *less* than the script's line count suggests. It's
+  easy to add a cut back in if a hold drags; it's a full re-render to fix a
+  video that feels edited with a machine gun.
+
 ## 2. A single footage clip: fade in/out + Ken Burns + color grade
 
 This is the core reusable unit — video and still images both go through
