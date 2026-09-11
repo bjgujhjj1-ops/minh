@@ -1,12 +1,15 @@
 # Sourcing free footage from multiple stock sites
 
-Pexels is the fastest source (real API, see below) but it isn't the only
-one, and its library doesn't have the best clip for every beat. Per the
-user's explicit direction, actively check other free, commercial-use-safe
-sources too rather than treating them as a last resort only reached when
-Pexels comes up empty — a mediocre Pexels match and a great Mixkit or
-Pixabay match for the same beat should lose to the better clip. Good
-sources beyond Pexels, all free for this kind of use:
+Default to Pexels via the API below — it's fast (one script call, no
+scraping) and usually has something workable. Don't burn time
+cross-checking every site for every single beat; that's slower for no
+benefit when the first result is already good.
+
+Reach for another source only when Pexels genuinely doesn't have it for a
+*specific* beat — a niche subject, a look Pexels' library doesn't cover, or
+(per Step 2's frame-check) every Pexels candidate failed inspection. At
+that point, pick the next likely source for that particular need rather
+than querying all of them:
 
 - **Pixabay** (pixabay.com) — CC0-style, no attribution required, huge
   library that overlaps and diverges from Pexels' in useful ways. Has its

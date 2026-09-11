@@ -163,7 +163,96 @@ importing its duration constant the same way `EDITED_TRAILER_DURATION` and
 `PEXELS_OCEAN_EDIT_DURATION` are — computed from the segment math, not
 hand-counted, so it stays correct if segments change.
 
-## 7. Render pipeline
+## 7. Optional module: the "viral documentary" hook
+
+One style reference for this project (a faceless nature-facts channel,
+analyzed frame-by-frame from an uploaded clip — no video-viewing tool
+exists here, so this came from extracting and looking at still frames, not
+watching it) opens with two elements neither `RiseOfRome` nor `NZJackfruit`
+use yet. Reach for these specifically when a style reference calls for a
+punchy, curiosity-hook YouTube-facts opening — not the default for every
+video, and not what a documentary or a lighthearted explainer piece
+(this project's other two pieces) should use.
+
+### 8a. Fake video-card hook
+
+A mocked-up YouTube video card (thumbnail + title + metadata), tilted and
+floating on a plain background, straightening out over the first ~2s:
+
+```tsx
+const ThumbnailHookCard: React.FC<{title: string; accentWord: string; duration: string; views: string}> = (
+  {title, accentWord, duration, views},
+) => {
+  const frame = useCurrentFrame();
+  const rotation = interpolate(frame, [0, 45], [8, 0], {extrapolateRight: "clamp", easing: Easing.out(Easing.cubic)});
+  const scale = interpolate(frame, [0, 45], [0.85, 1], {extrapolateRight: "clamp"});
+
+  return (
+    <AbsoluteFill style={{backgroundColor: "#2b2620", justifyContent: "center", alignItems: "center"}}>
+      <div style={{transform: `rotate(${rotation}deg) scale(${scale})`, width: 640, borderRadius: 20, background: "white", boxShadow: "0 30px 60px rgba(0,0,0,0.5)", overflow: "hidden"}}>
+        <div style={{position: "relative", aspectRatio: "16/9", background: "linear-gradient(160deg, #0a3d2e, #041a12)"}}>
+          {/* thumbnail image/video would go here as a background-fill Img/OffthreadVideo */}
+          <div style={{position: "absolute", left: 24, bottom: 24, fontFamily: "Arial, sans-serif", fontWeight: 900, fontSize: 40, lineHeight: 1.05, color: "white", textTransform: "uppercase"}}>
+            {title} <span style={{color: "#e53935"}}>{accentWord}</span>
+          </div>
+          <div style={{position: "absolute", right: 16, bottom: 16, background: "rgba(0,0,0,0.75)", color: "white", fontSize: 18, padding: "3px 8px", borderRadius: 4}}>{duration}</div>
+          <div style={{position: "absolute", left: 0, bottom: 0, height: 4, width: "35%", background: "#e53935"}} />
+        </div>
+        <div style={{padding: "14px 20px", fontFamily: "Arial, sans-serif", color: "#111"}}>
+          <div style={{fontWeight: 700, fontSize: 20}}>{title} {accentWord}</div>
+          <div style={{color: "#666", fontSize: 15, marginTop: 4}}>{views}</div>
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+```
+
+Numbers here are a starting point copied from the analyzed reference, not
+gospel — retheme colors/fonts to the current project, and drop the
+metadata row entirely if the style reference didn't have one.
+
+### 8b. Multi-panel fast montage
+
+Several clips playing at once in vertical strips, each cutting
+independently and faster than the main edit's pace — used right after the
+hook to build curiosity before settling into the real footage:
+
+```tsx
+const MontagePanel: React.FC<{clips: string[]; panelDurationInFrames: number}> = ({clips, panelDurationInFrames}) => {
+  const frame = useCurrentFrame();
+  const clipIndex = Math.floor(frame / panelDurationInFrames) % clips.length;
+  const localFrame = frame % panelDurationInFrames;
+  return (
+    <AbsoluteFill>
+      <OffthreadVideo
+        src={staticFile(clips[clipIndex])}
+        startFrom={0}
+        muted
+        style={{width: "100%", height: "100%", objectFit: "cover", filter: COLOR_GRADE_FILTER}}
+      />
+    </AbsoluteFill>
+  );
+};
+
+const MultiPanelMontage: React.FC<{panels: string[][]; panelDurationInFrames: number}> = ({panels, panelDurationInFrames}) => (
+  <AbsoluteFill style={{flexDirection: "row"}}>
+    {panels.map((clips, i) => (
+      <div key={i} style={{flex: 1, position: "relative", overflow: "hidden"}}>
+        <MontagePanel clips={clips} panelDurationInFrames={panelDurationInFrames} />
+      </div>
+    ))}
+  </AbsoluteFill>
+);
+```
+
+3-4 panels, each cycling through 2-3 short clips every ~15-20 frames
+(~0.5-0.7s at 30fps), reproduces the dense parallel-cutting feel from the
+reference. This needs several short clips per panel rather than one — plan
+footage sourcing accordingly if a style calls for this (more downloads than
+a normal segment-per-shot edit).
+
+## 8. Render pipeline
 
 Before the full render, cheaply sanity-check with stills at a few segment
 boundaries (`npx remotion still <CompId> out.png --frame=<N>`) — this catches

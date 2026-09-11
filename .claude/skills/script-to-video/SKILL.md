@@ -1,6 +1,6 @@
 ---
 name: script-to-video
-description: Turns a script + voiceover audio + a reference video style into a fully-edited Remotion video — segments the script into timestamped beats synced to the voiceover, finds matching free stock footage/photos for each beat across multiple free sources (Pexels, Pixabay, Mixkit, Coverr), assembles everything into a new Remotion composition in my-video/ with title cards, captions, color grade, and transitions matching the reference style, and renders the final video. Use this whenever the user gives (or promises to give) a script and voiceover and wants a video made from it, asks to "edit a video from this script/voiceover", wants footage found and cut together for narration, or references a style video ("làm giống video này", "theo phong cách này") to build a new video around. Also trigger for follow-up requests to add/replace a segment's footage, change the style, or re-render an existing script-to-video composition.
+description: Turns a script + voiceover audio + a reference video style into a fully-edited Remotion video — segments the script into timestamped beats synced to the voiceover, finds matching free stock footage/photos for each beat (Pexels API by default, Pixabay/Mixkit/Coverr when Pexels lacks a good option), assembles everything into a new Remotion composition in my-video/ with title cards, captions, color grade, and transitions matching the reference style, and renders the final video. Use this whenever the user gives (or promises to give) a script and voiceover and wants a video made from it, asks to "edit a video from this script/voiceover", wants footage found and cut together for narration, or references a style video ("làm giống video này", "theo phong cách này") to build a new video around. Also trigger for follow-up requests to add/replace a segment's footage, change the style, or re-render an existing script-to-video composition.
 ---
 
 # Script → Voiceover → Remotion video
@@ -58,13 +58,13 @@ spine the rest of the pipeline hangs off of.
 For every segment, read the text and decide what it should look like on
 screen — not a literal keyword match, but the visual that best serves the
 line's meaning and the style's tone. Then follow
-`references/footage-sourcing.md` to search for footage. Pexels (via
-`scripts/pexels_search.py` and the API key in `my-video/.env`) is the
-fastest option, but check Pixabay, Mixkit, and Coverr too rather than
-settling for a mediocre Pexels match when one of them has something
-better — the user has explicitly asked for this, it isn't just a fallback
-for when Pexels comes up empty. Download each asset into `my-video/public/`.
-That reference file also covers picking video vs. still, handling abstract
+`references/footage-sourcing.md` to search for footage. Default to Pexels
+(via `scripts/pexels_search.py` and the API key in `my-video/.env`) — it's
+fast and usually has something workable, so don't spend time
+cross-checking other sites once it does. Reach for Pixabay, Mixkit, or
+Coverr only when Pexels genuinely doesn't have a good option for a
+particular beat. Download each asset into `my-video/public/`. That
+reference file also covers picking video vs. still, handling abstract
 lines with no literal visual, avoiding repetitive shots, and — importantly
 — actually looking at extracted frames before committing to a clip rather
 than trusting a search result's title (a past run picked footage described
