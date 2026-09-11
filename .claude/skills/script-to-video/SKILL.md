@@ -145,7 +145,13 @@ call-out graphic timed to when they're spoken, per
 voiceover alone. This is on by default, independent of whether the piece
 also uses full-sentence captions (most scripts don't need those, per
 section 3, but call-outs for the actually-important facts are worth doing
-regardless).
+regardless). When a line cites a specific source (an article, a study),
+show the actual source per section 3b, with a highlight sweep over the
+cited phrase — a built citation card by default, a real Playwright
+screenshot when that works out and matters for the piece. And when a
+source image or screenshot doesn't natively fit the 16:9 frame, use the
+blurred-fill technique in section 2a instead of cropping it or leaving
+black bars.
 
 The user has asked for animation to be used generously wherever it makes
 the video better, not held back to the bare minimum — this applies to

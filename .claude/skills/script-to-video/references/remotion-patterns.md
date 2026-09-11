@@ -108,6 +108,41 @@ that gives the whole edit a consistent look across footage from different
 sources; tune it once from the style reference and reuse it on every
 segment rather than grading each clip separately.
 
+## 2a. When an image doesn't fill the 16:9 frame: blurred fill, not black bars
+
+`objectFit: "cover"` (what `FootageClip` uses above) always fills the frame
+but crops the source — fine for most footage, wrong for a source where
+cropping loses the point (a full document, a portrait that must stay whole,
+a screenshot). Per the user's example: a photo that's the wrong aspect
+ratio for 16:9 shouldn't get black bars either (`objectFit: "contain"`
+alone looks unfinished) — fill the empty space with the same image, blurred
+and scaled up, behind the sharp full image:
+
+```tsx
+const BlurredFillMedia: React.FC<{ src: string; isVideo?: boolean }> = ({ src, isVideo }) => {
+  const Media = isVideo ? OffthreadVideo : Img;
+  return (
+    <AbsoluteFill>
+      <AbsoluteFill style={{ filter: "blur(50px) brightness(0.55)", transform: "scale(1.3)" }}>
+        <Media src={src} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      </AbsoluteFill>
+      <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
+        <Media
+          src={src}
+          style={{ maxWidth: "92%", maxHeight: "92%", objectFit: "contain", boxShadow: "0 25px 60px rgba(0,0,0,0.6)" }}
+        />
+      </AbsoluteFill>
+    </AbsoluteFill>
+  );
+};
+```
+
+The `scale(1.3)` on the blurred layer matters — without it, `blur()` softens
+the image's own edges into visible dark fringes at the frame border; scaling
+past 100% pushes those edges outside the visible area. Reach for this
+whenever the source's own composition (a full portrait, a full page, a
+screenshot) needs to stay intact rather than being cropped by `cover`.
+
 ## 3. Captions synced to the script
 
 Since you already have each segment's text and frame range from
@@ -168,6 +203,67 @@ scripts have several. Don't call out every noun; reserve it for the facts
 that are actually the point of the sentence (a record price, the name of
 the artwork, a date that anchors the story) so each one still lands as an
 emphasis rather than becoming visual noise.
+
+## 3b. "Here's the source" — citing an article with a highlight sweep
+
+Per the user's direction: when a line cites a specific source (Wikipedia,
+a news article, a study), show the actual source on screen rather than
+just stating the fact in narration — it reads as credible evidence, not
+just a claim, and is exactly the technique fact-based YouTube channels use.
+
+**Getting the source image, in order of preference:**
+1. A real screenshot of the page, via Playwright (`pip install playwright`,
+   then `playwright install` — or if that reports a version mismatch
+   against the sandbox's pre-installed browser, launch with
+   `executable_path` pointing at whatever's under `/opt/pw-browsers/`
+   directly). Try `browser.new_page().goto(url)` then `.screenshot(path=...)`.
+   **This can fail in this sandbox** — a full browser session tunneled
+   through the agent proxy has been observed to get its connection reset
+   even with the proxy correctly configured (`proxy={"server": os.environ["HTTPS_PROXY"]}`),
+   while plain `curl`/`WebFetch` to the same host work fine. If it fails
+   after one retry, don't burn more time on it — fall back to option 2.
+2. **A built, styled citation card** — not a literal screenshot, but a
+   component that reads as one: source name, a short quoted excerpt (pulled
+   via `WebFetch`), and a URL, laid out like a browser or article card. This
+   is the reliable default — no browser automation to fail, and you control
+   the layout completely:
+
+```tsx
+const SourceCitation: React.FC<{ source: string; excerpt: string; url: string; highlightAt: number }> = ({
+  source, excerpt, url, highlightAt,
+}) => {
+  const frame = useCurrentFrame();
+  const local = frame - highlightAt;
+  const sweep = interpolate(local, [0, 25], [0, 100], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  return (
+    <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", background: "rgba(0,0,0,0.75)" }}>
+      <div style={{ width: 900, background: "white", borderRadius: 12, padding: 40, boxShadow: "0 30px 80px rgba(0,0,0,0.6)" }}>
+        <div style={{ fontFamily: "Arial, sans-serif", fontSize: 16, color: "#888", marginBottom: 12 }}>{source} · {url}</div>
+        <div style={{ fontFamily: "Georgia, serif", fontSize: 26, lineHeight: 1.5, color: "#111", position: "relative" }}>
+          <span style={{ background: `linear-gradient(90deg, #ffe066 ${sweep}%, transparent ${sweep}%)` }}>{excerpt}</span>
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+```
+
+3. If a real screenshot is genuinely important for a specific piece (the
+   user wants the literal page, not a recreation), ask the user to supply
+   it — they clearly can (both example images in this conversation were
+   screenshots they took themselves).
+
+**The highlight itself**, once you have an image either way: a colored box
+or gradient sweeping across the exact phrase being cited, timed to when the
+voiceover says it (the `sweep`/`linear-gradient` approach above works over
+real text; over a flat screenshot image, use a positioned semi-transparent
+rectangle instead, sized to the phrase's pixel location in that specific
+screenshot — read the image first to find those coordinates, they're not
+computable from text). Keep the highlight color true to a highlighter
+(yellow, ~40-50% opacity, `mix-blend-mode: multiply` reads more like ink
+than a flat overlay) and don't leave it up for the entire shot — sweep in
+around when the fact is spoken, hold briefly, let it ride with the rest of
+the shot's fade-out.
 
 ## 4. Voiceover audio
 
