@@ -1,5 +1,19 @@
 # Sourcing free footage from multiple stock sites
 
+First decide what kind of visual the segment needs — this determines where
+to even look:
+
+- **Generic b-roll** (a landscape, an activity, a mood, an object) → stock
+  sites below, Pexels first.
+- **A real, named, identifiable subject** — a specific historical figure
+  (Mao Zedong, not "a 1960s political leader"), a specific event, a specific
+  building or landmark by name → skip stock sites entirely and go straight
+  to "Named subjects" further down. Pexels/Pixabay/Mixkit/Coverr are
+  libraries of generic footage; they structurally don't have photos of a
+  specific real person, so searching them for one just wastes a round trip.
+
+## Generic b-roll: stock sites
+
 Default to Pexels via the API below — it's fast (one script call, no
 scraping) and usually has something workable. Don't burn time
 cross-checking every site for every single beat; that's slower for no
@@ -77,7 +91,43 @@ because the user provided a key). Browse them like a person would with
 3. This is also the fallback for Pexels itself if `my-video/.env` ever has
    no key configured — same method, `site:pexels.com`.
 
-## Downloading and verifying (both methods)
+## Named subjects: real people, historical figures, specific events
+
+Per the user's direction: when a segment needs a specific, identifiable
+subject that stock libraries structurally don't carry (a named historical
+figure like Mao Zedong, a specific battle or event, a named landmark),
+search the open web instead of stock sites:
+
+1. **Wikimedia Commons first** (commons.wikimedia.org). `WebSearch` with
+   `site:commons.wikimedia.org <name or event>`, then `WebFetch` the file
+   page. This is the best starting point for real people/events: a huge
+   archive of public-domain and clearly-CC-licensed photos, and every file
+   page states its exact license and source right there — read it rather
+   than assuming. Anything old enough to be out of copyright, or released
+   by a government/state media archive (many Mao-era Chinese photos,
+   WWII-era photos, etc.), tends to be here with a clear license.
+2. **Government/institutional archives** next — US National Archives,
+   Library of Congress, other national archives. Same reasoning: real
+   photos of real events with an explicit, checkable public-domain or
+   open license.
+3. **General web image search** (plain `WebSearch`, no site filter) is the
+   last resort, not the first choice, for named subjects — most images on
+   the open web are copyrighted press/news photos. Using an unlicensed
+   image is a real legal risk once it's rendered into a video, not just a
+   style nitpick. If a general search is genuinely the only source for a
+   subject, check what the page says about the image's origin/license
+   before using it (many note "public domain" or credit a photographer
+   whose work may or may not be freely licensed) — don't grab the first
+   result that looks visually right.
+4. **Video of a real event/person is rarer than stills** — check Wikimedia
+   Commons' video files first, but if nothing usable turns up, a still
+   photo with a slow Ken Burns pan (same `FootageClip` pattern in
+   `remotion-patterns.md`, `Img` in place of `OffthreadVideo`) is a normal,
+   expected substitute in documentary editing, not a compromise to
+   apologize for — most real documentaries do exactly this for archival
+   subjects.
+
+## Downloading and verifying (all methods)
 
 1. **Download.** `curl -sSL -o my-video/public/<descriptive-name>.mp4
    "<direct-url>"` — always into the Remotion project's `public/` folder,

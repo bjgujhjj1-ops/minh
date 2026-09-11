@@ -57,14 +57,20 @@ spine the rest of the pipeline hangs off of.
 
 For every segment, read the text and decide what it should look like on
 screen — not a literal keyword match, but the visual that best serves the
-line's meaning and the style's tone. Then follow
-`references/footage-sourcing.md` to search for footage. Default to Pexels
-(via `scripts/pexels_search.py` and the API key in `my-video/.env`) — it's
-fast and usually has something workable, so don't spend time
-cross-checking other sites once it does. Reach for Pixabay, Mixkit, or
-Coverr only when Pexels genuinely doesn't have a good option for a
-particular beat. Download each asset into `my-video/public/`. That
-reference file also covers picking video vs. still, handling abstract
+line's meaning and the style's tone, and whether it needs a specific real
+person/event or generic b-roll (see below — they come from different
+places). Then follow `references/footage-sourcing.md` to search for
+footage. For generic b-roll, default to Pexels (via
+`scripts/pexels_search.py` and the API key in `my-video/.env`) — it's fast
+and usually has something workable, so don't spend time cross-checking
+other sites once it does. Reach for Pixabay, Mixkit, or Coverr only when
+Pexels genuinely doesn't have a good option for a particular beat. For a
+named, identifiable real person, historical figure, or specific event
+(stock libraries don't carry these at all — searching them wastes a round
+trip), go straight to Wikimedia Commons and other public-domain archives
+per that file's "Named subjects" section, checking each image's actual
+license rather than assuming. Download each asset into `my-video/public/`.
+That reference file also covers picking video vs. still, handling abstract
 lines with no literal visual, avoiding repetitive shots, and — importantly
 — actually looking at extracted frames before committing to a clip rather
 than trusting a search result's title (a past run picked footage described
