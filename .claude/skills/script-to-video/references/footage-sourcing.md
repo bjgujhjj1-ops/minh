@@ -96,36 +96,43 @@ because the user provided a key). Browse them like a person would with
 Per the user's direction: when a segment needs a specific, identifiable
 subject that stock libraries structurally don't carry (a named historical
 figure like Mao Zedong, a specific battle or event, a named landmark),
-search the open web instead of stock sites:
+search the open web instead of stock sites — and **look for real video
+footage of that real subject first; a still photo is a fallback, not an
+equal option.** If the person or event genuinely exists on film, that's
+what goes in the edit, not a photo standing in for it.
 
-1. **Wikimedia Commons first** (commons.wikimedia.org). `WebSearch` with
-   `site:commons.wikimedia.org <name or event>`, then `WebFetch` the file
-   page. This is the best starting point for real people/events: a huge
-   archive of public-domain and clearly-CC-licensed photos, and every file
-   page states its exact license and source right there — read it rather
-   than assuming. Anything old enough to be out of copyright, or released
-   by a government/state media archive (many Mao-era Chinese photos,
-   WWII-era photos, etc.), tends to be here with a clear license.
-2. **Government/institutional archives** next — US National Archives,
-   Library of Congress, other national archives. Same reasoning: real
-   photos of real events with an explicit, checkable public-domain or
-   open license.
-3. **General web image search** (plain `WebSearch`, no site filter) is the
-   last resort, not the first choice, for named subjects — most images on
-   the open web are copyrighted press/news photos. Using an unlicensed
-   image is a real legal risk once it's rendered into a video, not just a
-   style nitpick. If a general search is genuinely the only source for a
-   subject, check what the page says about the image's origin/license
-   before using it (many note "public domain" or credit a photographer
-   whose work may or may not be freely licensed) — don't grab the first
-   result that looks visually right.
-4. **Video of a real event/person is rarer than stills** — check Wikimedia
-   Commons' video files first, but if nothing usable turns up, a still
-   photo with a slow Ken Burns pan (same `FootageClip` pattern in
-   `remotion-patterns.md`, `Img` in place of `OffthreadVideo`) is a normal,
-   expected substitute in documentary editing, not a compromise to
-   apologize for — most real documentaries do exactly this for archival
-   subjects.
+1. **Search video sources first:**
+   - **Internet Archive** (archive.org) — the best source for this: huge
+     public-domain collections of newsreels, government films, and
+     historical footage (Prelinger Archives among them). `WebSearch` with
+     `site:archive.org <name or event> newsreel` or similar, then `WebFetch`
+     the item page for the direct download link and its rights statement.
+   - **Wikimedia Commons**, filtered to video files (`site:commons.wikimedia.org`,
+     look for `.ogv`/`.webm` file pages rather than image files).
+   - Government/institutional archives (US National Archives, Library of
+     Congress, other national archives) often hold film alongside photos —
+     check for a video/film section, not just images.
+2. **Only if no usable video turns up anywhere**, fall back to a still
+   photo animated with a slow Ken Burns pan (same `FootageClip` pattern in
+   `remotion-patterns.md`, `Img` in place of `OffthreadVideo`) — a genuine
+   fallback for when film footage doesn't exist or isn't findable, not a
+   shortcut reached for before actually looking. For stills:
+   - **Wikimedia Commons** (commons.wikimedia.org) is the best starting
+     point — huge archive of public-domain and clearly-CC-licensed photos,
+     and every file page states its exact license and source right there.
+     Anything old enough to be out of copyright, or released by a
+     government/state media archive (many Mao-era Chinese photos, WWII-era
+     photos, etc.), tends to be here with a clear license.
+   - Government/institutional archives, same as above, for photos too.
+   - **General web image search** (plain `WebSearch`, no site filter) is
+     the last resort, not the first choice — most images on the open web
+     are copyrighted press/news photos, and using an unlicensed one is a
+     real legal risk once it's rendered into a video, not just a style
+     nitpick. If a general search is genuinely the only source, check what
+     the page says about the image's origin/license before using it — many
+     note "public domain" or credit a photographer whose work may or may
+     not be freely licensed — don't grab the first result that looks
+     visually right.
 
 ## Downloading and verifying (all methods)
 
