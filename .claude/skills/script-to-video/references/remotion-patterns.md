@@ -143,6 +143,43 @@ past 100% pushes those edges outside the visible area. Reach for this
 whenever the source's own composition (a full portrait, a full page, a
 screenshot) needs to stay intact rather than being cropped by `cover`.
 
+## 2b. Real-photo cutouts for motion graphics (background removal)
+
+Per the user's direction: a comparison/scale infographic (section 7a) or
+any other graphic composition doesn't have to use hand-drawn SVG for every
+element — a real photo of the actual subject, with its background removed,
+drops into the same composition exactly like a drawn silhouette (position,
+scale, animate it the same way), and looks more concrete than a generic
+icon when the subject is a specific real thing.
+
+`rembg` does this locally, offline, no API key: `pip install rembg
+onnxruntime`, then:
+
+```python
+from rembg import remove
+from PIL import Image
+Image.open("input.jpg").convert("RGB")  # ensure no alpha/CMYK weirdness confuses it
+out = remove(Image.open("input.jpg"))    # returns an RGBA image, subject only
+out.save("my-video/public/cutout-name.png")
+```
+
+The first call downloads a ~1GB model (one-time, cached under
+`~/.rembg/models/` after that — budget a couple minutes for it the first
+time this runs in a fresh sandbox).
+
+**Judge the source image before trusting the result — this only works well
+when the subject stands out from its background.** Tested on two very
+different images in this project: a real photograph with a plain
+background (a marble bust against a dark backdrop) cut out cleanly with a
+crisp edge. A muted red-chalk sketch on parchment of similar tone to its
+own background did not — the model cut holes out of the hair and eyebrows
+instead of removing the backdrop, because it had too little contrast to
+work with. Always open the resulting PNG and check the edges before using
+it (same "look before you commit" habit as footage in Step 2) — a bad cutout
+with ragged holes is worse than no cutout at all, and for a bad case, either
+find a cleaner source photo of the same subject or fall back to a
+hand-drawn silhouette (section 7a) instead of forcing a poor result in.
+
 ## 3. Captions synced to the script
 
 Since you already have each segment's text and frame range from

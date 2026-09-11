@@ -182,7 +182,10 @@ footage/photos for narrative beats as usual, and switch just the specific
 segment to this graphic treatment whenever a script line makes a comparison
 or states a scale ("nặng bằng...", "sâu tới...", "to gấp..."), then return
 to footage for the next beat. Flag these while deciding footage per segment
-in Step 2, not as a whole-video style decision.
+in Step 2, not as a whole-video style decision. These graphics don't have
+to be hand-drawn SVG for every element — section 2b covers cutting a real
+photo's background out (`rembg`, local and free) to drop an actual photo of
+the subject into the same composition in place of a drawn silhouette.
 
 The user has explicitly asked that cuts not feel too fast or abrupt — do
 not turn every `segment_script.py` line into its own cut by default. Read
