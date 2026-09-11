@@ -88,6 +88,13 @@ speed) rather than copying the ocean-edit look verbatim, and register a new
 `<Composition>` in `my-video/src/Root.tsx` with a duration computed from the
 segment data — not hand-counted.
 
+That same reference file's section 7 has a fake-video-card hook + fast
+multi-panel montage module, built for a specific clickbait-facts style seen
+in one reference clip. It is opt-in, not a default: reach for it only when
+the style the user actually asked to match calls for that exact curiosity-
+hook structure. For anything else — a documentary, an explainer, a story —
+building it in would be adding a style element nobody asked for.
+
 The user has explicitly asked that cuts not feel too fast or abrupt — do
 not turn every `segment_script.py` line into its own cut by default. Read
 `references/remotion-patterns.md` section 1a before deciding the shot list:
