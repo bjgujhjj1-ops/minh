@@ -3,6 +3,10 @@ import { Composition } from "remotion";
 import { HelloWorld } from "./HelloWorld";
 import { Logo } from "./HelloWorld/Logo";
 import { EDITED_TRAILER_DURATION, EditedTrailer } from "./EditedTrailer";
+import {
+  PEXELS_OCEAN_EDIT_DURATION,
+  PexelsOceanEdit,
+} from "./PexelsOceanEdit";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -47,6 +51,15 @@ export const RemotionRoot: React.FC = () => {
         component={EditedTrailer}
         durationInFrames={EDITED_TRAILER_DURATION}
         fps={24}
+        width={1280}
+        height={720}
+      />
+
+      <Composition
+        id="PexelsOceanEdit"
+        component={PexelsOceanEdit}
+        durationInFrames={PEXELS_OCEAN_EDIT_DURATION}
+        fps={30}
         width={1280}
         height={720}
       />
