@@ -828,10 +828,20 @@ type SfxCue = { at: number; src: string; volume: number; durationInFrames: numbe
 
 const SFX_CUES: SfxCue[] = [
   { at: 0, src: "sfx-whoosh.mp3", volume: 0.45, durationInFrames: 50 },
+  { at: 202, src: "sfx-camera.mp3", volume: 0.4, durationInFrames: 45 },
+  { at: 633, src: "sfx-whoosh.mp3", volume: 0.35, durationInFrames: 50 },
+  { at: 1793, src: "sfx-riser.mp3", volume: 0.22, durationInFrames: 60 },
   { at: 2689, src: "sfx-braam.mp3", volume: 0.32, durationInFrames: 90 },
+  { at: 3259, src: "sfx-hit.mp3", volume: 0.3, durationInFrames: 45 },
+  { at: 5023, src: "sfx-riser.mp3", volume: 0.22, durationInFrames: 60 },
   { at: 5317, src: "sfx-camera.mp3", volume: 0.4, durationInFrames: 45 },
+  { at: 6092, src: "sfx-hit.mp3", volume: 0.3, durationInFrames: 45 },
+  { at: 7238, src: "sfx-riser.mp3", volume: 0.22, durationInFrames: 60 },
   { at: 7873, src: "sfx-camera.mp3", volume: 0.4, durationInFrames: 45 },
+  { at: 10143, src: "sfx-whoosh.mp3", volume: 0.35, durationInFrames: 50 },
+  { at: 10541, src: "sfx-hit.mp3", volume: 0.3, durationInFrames: 45 },
   { at: 12070, src: "sfx-braam.mp3", volume: 0.32, durationInFrames: 90 },
+  { at: 14920, src: "sfx-whoosh.mp3", volume: 0.4, durationInFrames: 50 },
 ];
 
 // ---------------------------------------------------------------------------
