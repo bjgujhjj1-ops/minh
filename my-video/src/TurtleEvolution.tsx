@@ -9,11 +9,50 @@ import {
   staticFile,
   useCurrentFrame,
 } from "remotion";
-import { loadFont as loadAnton } from "@remotion/google-fonts/Anton";
-import { loadFont as loadInter } from "@remotion/google-fonts/Inter";
+// Self-hosted fonts (downloaded once from Google Fonts into public/fonts/)
+// rather than @remotion/google-fonts' runtime fetch from fonts.gstatic.com —
+// this sandbox's Chrome instance can't validate that host's TLS cert through
+// the outbound proxy (net::ERR_CERT_AUTHORITY_INVALID), which made every
+// render hang on delayRender() waiting for a font that would never load.
+// Self-hosting sidesteps the network entirely. Includes both the "latin" and
+// "vietnamese" Google Fonts subsets so the script's diacritics render
+// correctly (the vietnamese subset only covers the precomposed diacritic
+// glyphs, not base Latin letters — both files are needed together).
+const FONT_HEAD = "Anton";
+const FONT_BODY = "Inter";
 
-const { fontFamily: FONT_HEAD } = loadAnton();
-const { fontFamily: FONT_BODY } = loadInter();
+const FontFaces: React.FC = () => (
+  <style>{`
+    @font-face {
+      font-family: 'Anton';
+      font-style: normal;
+      font-weight: 400;
+      src: url('${staticFile("fonts/anton-latin.woff2")}') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122;
+    }
+    @font-face {
+      font-family: 'Anton';
+      font-style: normal;
+      font-weight: 400;
+      src: url('${staticFile("fonts/anton-vietnamese.woff2")}') format('woff2');
+      unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 100 900;
+      src: url('${staticFile("fonts/inter-latin.woff2")}') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122;
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 100 900;
+      src: url('${staticFile("fonts/inter-vietnamese.woff2")}') format('woff2');
+      unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+    }
+  `}</style>
+);
 
 // "Rùa hóa" — Convergent Evolution / why so many unrelated lineages evolve
 // turtle-like shells. Voiceover-driven documentary, fps=30, segmented from
@@ -1121,6 +1160,7 @@ const OpeningCloseFade: React.FC<{ totalDuration: number }> = ({ totalDuration }
 export const TurtleEvolution: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: "black" }}>
+      <FontFaces />
       <SharedSvgDefs />
       {SHOTS.map((shot, i) => {
         if (shot.kind === "graphic") {
