@@ -8,6 +8,7 @@ import {
   PexelsOceanEdit,
 } from "./PexelsOceanEdit";
 import { RISE_OF_ROME_DURATION, RiseOfRome } from "./RiseOfRome";
+import { NZ_JACKFRUIT_DURATION, NZJackfruit } from "./NZJackfruit";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -69,6 +70,15 @@ export const RemotionRoot: React.FC = () => {
         id="RiseOfRome"
         component={RiseOfRome}
         durationInFrames={RISE_OF_ROME_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      <Composition
+        id="NZJackfruit"
+        component={NZJackfruit}
+        durationInFrames={NZ_JACKFRUIT_DURATION}
         fps={30}
         width={1920}
         height={1080}
