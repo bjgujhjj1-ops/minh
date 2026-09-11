@@ -164,7 +164,7 @@ const SHOTS: Shot[] = [
   { kind: "video", src: "turtle-lagoon-raw.mp4", startFrom: 0, start: 3918, end: 4145, motion: M([1, 1.12]) },
   { kind: "video", src: "turtle-oceanfloor-raw.mp4", startFrom: 0, start: 4145, end: 4372, motion: M([1.1, 1]) },
   { kind: "video", src: "turtle-crab-raw.mp4", startFrom: 0, start: 4372, end: 4541, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 186, start: 4541, end: 4709, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-armadillo2-raw.mp4", startFrom: 20, start: 4541, end: 4709, motion: M([1.1, 1]) },
   { kind: "video", src: "turtle-beetle-raw.mp4", startFrom: 0, start: 4709, end: 4877, motion: M([1, 1.12]) },
   { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 0, start: 4877, end: 5044, motion: M([1.1, 1]) },
   { kind: "image", src: "turtle-eunotosaurus.jpg", start: 5044, end: 5317, motion: M([1, 1.12]) },
@@ -176,7 +176,7 @@ const SHOTS: Shot[] = [
   { kind: "video", src: "turtle-cheetah-raw.mp4", startFrom: 185, start: 6784, end: 7021, motion: M([1.1, 1]) },
   { kind: "video", src: "turtle-bird-raw.mp4", startFrom: 185, start: 7021, end: 7257, motion: M([1, 1.12]) },
   { kind: "image", src: "turtle-cyamodus.jpg", start: 7257, end: 7462, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-oceanfloor-raw.mp4", startFrom: 221, start: 7462, end: 7667, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-oceanfloor2-raw.mp4", startFrom: 0, start: 7462, end: 7667, motion: M([1.1, 1]) },
   { kind: "video", src: "turtle-lagoon-raw.mp4", startFrom: 0, start: 7667, end: 7873, motion: M([1, 1.12]) },
   { kind: "graphic", start: 7873, end: 8311, graphic: "citation", props: { source: "RIKEN — Research News", excerpt: "Turtle morphology poses a unique puzzle in that the turtle\u2019s scapulae (shoulder blades), situated outside the ribs in other animals, are found inside its shell.", highlight: "situated outside the ribs in other animals, are found inside its shell" } },
   { kind: "image", src: "turtle-skeleton-crosssection.jpg", start: 8311, end: 8517, motion: M([1.15, 1], { x: [-3, 0] }) },
@@ -189,7 +189,7 @@ const SHOTS: Shot[] = [
   { kind: "video", src: "turtle-tortoise-long-raw.mp4", startFrom: 0, start: 9769, end: 9956, motion: M([1, 1.12]) },
   { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 224, start: 9956, end: 10143, motion: M([1.1, 1]) },
   { kind: "graphic", start: 10143, end: 10330, graphic: "textcard", props: { text: "SỐNG CHẬM • THỌ LÂU" } },
-  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 0, start: 10330, end: 10520, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-armadillo2-raw.mp4", startFrom: 250, start: 10330, end: 10520, motion: M([1, 1.12]) },
   { kind: "video", src: "turtle-ladybug-raw.mp4", startFrom: 0, start: 10520, end: 10690, motion: M([1, 1.12]) },
   { kind: "video", src: "turtle-beetle-raw.mp4", startFrom: 0, start: 10690, end: 10859, motion: M([1.1, 1]) },
   { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 165, start: 10859, end: 11029, motion: M([1, 1.12]) },
@@ -205,7 +205,7 @@ const SHOTS: Shot[] = [
   { kind: "image", src: "turtle-archelon.jpg", start: 12976, end: 13202, motion: M([1.1, 1.25]) },
   { kind: "video", src: "turtle-rainforest-raw.mp4", startFrom: 0, start: 13202, end: 13427, motion: M([1.1, 1]) },
   { kind: "video", src: "turtle-lagoon-raw.mp4", startFrom: 0, start: 13427, end: 13653, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-oceanfloor-raw.mp4", startFrom: 214, start: 13653, end: 13878, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-oceanfloor2-raw.mp4", startFrom: 100, start: 13653, end: 13878, motion: M([1.1, 1]) },
   { kind: "video", src: "turtle-space2-raw.mp4", startFrom: 200, start: 13878, end: 14067, motion: M([1.1, 1]) },
   { kind: "video", src: "turtle-icefield-raw.mp4", startFrom: 226, start: 14067, end: 14257, motion: M([1, 1.12]) },
   { kind: "video", src: "turtle-bird-raw.mp4", startFrom: 409, start: 14257, end: 14446, motion: M([1.1, 1]) },
@@ -821,6 +821,20 @@ const OpeningCloseFade: React.FC<{ totalDuration: number }> = ({ totalDuration }
 };
 
 // ---------------------------------------------------------------------------
+// Sparse sound-effect accents — a handful of cues only, never wall-to-wall.
+// ---------------------------------------------------------------------------
+
+type SfxCue = { at: number; src: string; volume: number; durationInFrames: number };
+
+const SFX_CUES: SfxCue[] = [
+  { at: 0, src: "sfx-whoosh.mp3", volume: 0.45, durationInFrames: 50 },
+  { at: 2689, src: "sfx-braam.mp3", volume: 0.32, durationInFrames: 90 },
+  { at: 5317, src: "sfx-camera.mp3", volume: 0.4, durationInFrames: 45 },
+  { at: 7873, src: "sfx-camera.mp3", volume: 0.4, durationInFrames: 45 },
+  { at: 12070, src: "sfx-braam.mp3", volume: 0.32, durationInFrames: 90 },
+];
+
+// ---------------------------------------------------------------------------
 // Main composition
 // ---------------------------------------------------------------------------
 
@@ -872,6 +886,11 @@ export const TurtleEvolution: React.FC = () => {
         </Sequence>
       ))}
       <Audio src={staticFile("turtle-voiceover.mp3")} />
+      {SFX_CUES.map((cue, i) => (
+        <Sequence key={i} from={cue.at} durationInFrames={cue.durationInFrames}>
+          <Audio src={staticFile(cue.src)} volume={cue.volume} />
+        </Sequence>
+      ))}
       <OpeningCloseFade totalDuration={TURTLE_EVOLUTION_DURATION} />
     </AbsoluteFill>
   );
