@@ -2,6 +2,7 @@ import "./index.css";
 import { Composition } from "remotion";
 import { HelloWorld } from "./HelloWorld";
 import { Logo } from "./HelloWorld/Logo";
+import { EDITED_TRAILER_DURATION, EditedTrailer } from "./EditedTrailer";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -39,6 +40,15 @@ export const RemotionRoot: React.FC = () => {
           logoColor1: "#91dAE2",
           logoColor2: "#86A8E7",
         }}
+      />
+
+      <Composition
+        id="EditedTrailer"
+        component={EditedTrailer}
+        durationInFrames={EDITED_TRAILER_DURATION}
+        fps={24}
+        width={1280}
+        height={720}
       />
     </>
   );
