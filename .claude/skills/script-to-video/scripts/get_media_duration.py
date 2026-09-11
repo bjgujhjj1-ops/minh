@@ -1,22 +1,66 @@
 #!/usr/bin/env python3
-"""Get the duration (in seconds) of an audio/video file without requiring
-ffmpeg/ffprobe to be installed (this sandbox often lacks them).
+"""Get the duration (in seconds) of an audio/video file.
 
-Supports: .wav (exact, via the stdlib `wave` module), .mp4/.mov/.m4a
-(exact, by parsing the `moov/mvhd` box), and .mp3 (approximate, via the
-first frame's declared bitrate + file size — good enough for pacing a
-video edit, not frame-accurate).
-
-If ffprobe IS available on the system, prefer it directly instead of this
-script — it's more accurate for everything. Reach for this script only
-when ffprobe is missing.
+Tries, in order:
+1. `ffprobe` if it's on the system PATH.
+2. `ffmpeg` if it's on the system PATH.
+3. The `imageio_ffmpeg`-bundled static ffmpeg binary (`pip install
+   imageio-ffmpeg`) — this sandbox often lacks a system ffmpeg/ffprobe, and
+   this is the reliable fallback rather than guessing.
+4. Manual parsing (`wave` for .wav, `moov/mvhd` box for .mp4/.mov/.m4a) as a
+   last resort when no ffmpeg binary can be found at all. There is no
+   manual MP3 fallback: a real MP3 frame can be MPEG-1, -2, or -2.5, each
+   with its OWN bitrate/sample-rate table, and it can be VBR — reading one
+   frame's header and extrapolating linearly across the file guesses wrong
+   whenever the actual encoding doesn't match those assumptions. This
+   script used to do exactly that and under-reported a 12:48 file as 7:12
+   (misread an MPEG-2 frame using the MPEG-1 bitrate table). Don't
+   reintroduce that guess — if no ffmpeg binary is available, this script
+   fails loudly for .mp3 instead of returning a wrong number silently.
 
 Usage: python3 get_media_duration.py <path/to/file>
 Prints a single float (seconds) to stdout, or an error to stderr + exit 1.
 """
+import re
+import shutil
 import struct
+import subprocess
 import sys
 import wave
+
+
+def _find_ffmpeg_like_binary() -> str | None:
+    for name in ("ffprobe", "ffmpeg"):
+        path = shutil.which(name)
+        if path:
+            return path
+    try:
+        import imageio_ffmpeg
+
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def ffmpeg_duration(path: str) -> float:
+    binary = _find_ffmpeg_like_binary()
+    if binary is None:
+        raise RuntimeError("no ffprobe/ffmpeg binary found (system or imageio_ffmpeg)")
+
+    if binary.endswith("ffprobe"):
+        out = subprocess.run(
+            [binary, "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", path],
+            capture_output=True, text=True, check=True,
+        )
+        return float(out.stdout.strip())
+
+    # ffmpeg (system or imageio_ffmpeg-bundled): parse "Duration: HH:MM:SS.ss" from stderr.
+    out = subprocess.run([binary, "-i", path], capture_output=True, text=True)
+    match = re.search(r"Duration:\s*(\d+):(\d+):(\d+(?:\.\d+)?)", out.stderr)
+    if not match:
+        raise RuntimeError(f"could not find Duration in ffmpeg output for {path}")
+    h, m, s = match.groups()
+    return int(h) * 3600 + int(m) * 60 + float(s)
 
 
 def wav_duration(path: str) -> float:
@@ -58,55 +102,20 @@ def mp4_duration(path: str) -> float:
     return duration / timescale
 
 
-# MPEG1 Layer III bitrate table (kbps), index 1-14 (0 and 15 are invalid/free).
-_MP3_BITRATES = [0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, 0]
-_MP3_SAMPLERATES = [44100, 48000, 32000, 0]
-
-
-def mp3_duration(path: str) -> float:
-    """Approximate duration from the first valid frame header + file size.
-    Accurate for CBR files; a reasonable estimate for VBR (average bitrate)."""
-    with open(path, "rb") as f:
-        data = f.read()
-
-    # Skip an ID3v2 tag if present.
-    offset = 0
-    if data[:3] == b"ID3":
-        size = (
-            (data[6] & 0x7F) << 21
-            | (data[7] & 0x7F) << 14
-            | (data[8] & 0x7F) << 7
-            | (data[9] & 0x7F)
-        )
-        offset = 10 + size
-
-    for i in range(offset, min(offset + 100_000, len(data) - 4)):
-        if data[i] == 0xFF and (data[i + 1] & 0xE0) == 0xE0:
-            b1, b2 = data[i + 1], data[i + 2]
-            layer_bits = (b1 >> 1) & 0x03
-            if layer_bits != 0x01:  # only handling Layer III (most common)
-                continue
-            bitrate_idx = (b2 >> 4) & 0x0F
-            samplerate_idx = (b2 >> 2) & 0x03
-            bitrate = _MP3_BITRATES[bitrate_idx]
-            samplerate = _MP3_SAMPLERATES[samplerate_idx]
-            if bitrate == 0 or samplerate == 0:
-                continue
-            audio_bytes = len(data) - offset
-            return (audio_bytes * 8) / (bitrate * 1000)
-
-    raise ValueError("could not find a valid MP3 frame header")
-
-
 def get_duration(path: str) -> float:
-    lower = path.lower()
-    if lower.endswith(".wav"):
-        return wav_duration(path)
-    if lower.endswith((".mp4", ".mov", ".m4a", ".m4v")):
-        return mp4_duration(path)
-    if lower.endswith(".mp3"):
-        return mp3_duration(path)
-    raise ValueError(f"unsupported extension for {path} — try ffprobe instead")
+    try:
+        return ffmpeg_duration(path)
+    except Exception as ffmpeg_error:  # noqa: BLE001
+        lower = path.lower()
+        if lower.endswith(".wav"):
+            return wav_duration(path)
+        if lower.endswith((".mp4", ".mov", ".m4a", ".m4v")):
+            return mp4_duration(path)
+        raise RuntimeError(
+            f"no ffmpeg/ffprobe available and no safe manual fallback for {path} "
+            f"(original error: {ffmpeg_error}). Run `pip install imageio-ffmpeg` and retry "
+            "rather than trusting a manual MP3 bitrate guess."
+        ) from ffmpeg_error
 
 
 if __name__ == "__main__":
