@@ -187,6 +187,73 @@ const TitleCard: React.FC = () => {
   );
 };
 
+const CalloutStat: React.FC<{ value: string; label: string; durationInFrames: number }> = ({
+  value,
+  label,
+  durationInFrames,
+}) => {
+  const frame = useCurrentFrame();
+  const opacity = interpolate(frame, [0, 15, durationInFrames - 15, durationInFrames], [0, 1, 1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const y = interpolate(frame, [0, 20], [20, 0], { extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+
+  return (
+    <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "flex-start", padding: "0 0 140px 100px" }}>
+      <div style={{ opacity, transform: `translateY(${y}px)` }}>
+        <div
+          style={{
+            fontFamily: "Arial, sans-serif",
+            fontWeight: 800,
+            fontSize: 72,
+            color: "white",
+            textShadow: "0 4px 20px rgba(0,0,0,0.8)",
+          }}
+        >
+          {value}
+        </div>
+        <div style={{ fontFamily: "Arial, sans-serif", fontSize: 24, color: "#e8c468", letterSpacing: 2, marginTop: 4 }}>
+          {label}
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const CalloutTitle: React.FC<{ title: string; subtitle: string; durationInFrames: number }> = ({
+  title,
+  subtitle,
+  durationInFrames,
+}) => {
+  const frame = useCurrentFrame();
+  const opacity = interpolate(frame, [0, 15, durationInFrames - 15, durationInFrames], [0, 1, 1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const scale = interpolate(frame, [0, 20], [0.92, 1], { extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+
+  return (
+    <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 130 }}>
+      <div
+        style={{
+          opacity,
+          transform: `scale(${scale})`,
+          textAlign: "center",
+          background: "rgba(0,0,0,0.4)",
+          padding: "18px 44px",
+          borderRadius: 10,
+        }}
+      >
+        <div style={{ fontFamily: "Georgia, serif", fontStyle: "italic", fontSize: 46, color: "white" }}>"{title}"</div>
+        <div style={{ fontFamily: "Arial, sans-serif", fontSize: 22, color: "#e8c468", letterSpacing: 3, marginTop: 6 }}>
+          {subtitle}
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
 const ClosingQuote: React.FC<{ startAt: number }> = ({ startAt }) => {
   const frame = useCurrentFrame();
   const local = frame - startAt;
@@ -252,6 +319,12 @@ export const DaVinciSalvatorMundi: React.FC = () => {
         );
       })}
       <Vignette />
+      <Sequence from={700} durationInFrames={160}>
+        <CalloutStat value="450 TRIỆU USD" label="≈ 11.730 TỶ VNĐ" durationInFrames={160} />
+      </Sequence>
+      <Sequence from={1330} durationInFrames={220}>
+        <CalloutTitle title="Salvator Mundi" subtitle="ĐẤNG CỨU THẾ" durationInFrames={220} />
+      </Sequence>
       <Sequence from={SEGMENTS[SEGMENTS.length - 1].start}>
         <ClosingQuote startAt={30} />
       </Sequence>

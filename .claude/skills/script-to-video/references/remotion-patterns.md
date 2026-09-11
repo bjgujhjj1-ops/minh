@@ -131,6 +131,44 @@ const Caption: React.FC<{text: string}> = ({text}) => {
 Match the font, position, and background treatment to the style reference —
 this snippet is a structural starting point, not a fixed look.
 
+## 3a. Call-out text for key numbers, names, and quotes
+
+Per the user's direction: this is separate from (and usually more useful
+than) full-sentence captions. Whenever a line says a number that matters
+(a price, a date, a statistic), a title or proper name worth emphasizing
+("Salvator Mundi" — "Đấng Cứu Thế"), or a quotable line, put it on screen as
+its own animated graphic timed to when it's spoken — not as a caption of
+the whole sentence, but as a highlighted call-out of just that fact. This
+reads as a deliberate editorial choice (the kind you see in real
+documentary/explainer videos) rather than a transcript running underneath.
+`DaVinciSalvatorMundi.tsx`'s `ClosingQuote` component is one example
+(a full quote, bottom-anchored, fading and sliding in); a number or short
+title works the same way but usually reads better placed and sized like a
+stat card rather than a caption bar:
+
+```tsx
+const CalloutNumber: React.FC<{ value: string; label: string; startAt: number }> = ({ value, label, startAt }) => {
+  const frame = useCurrentFrame();
+  const local = frame - startAt;
+  if (local < 0) return null;
+  const opacity = interpolate(local, [0, 15], [0, 1], { extrapolateRight: "clamp" });
+  const scale = interpolate(local, [0, 20], [0.9, 1], { extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+  return (
+    <div style={{ position: "absolute", bottom: 140, left: 100, opacity, transform: `scale(${scale})` }}>
+      <div style={{ fontFamily: "Arial, sans-serif", fontWeight: 800, fontSize: 64, color: "white" }}>{value}</div>
+      <div style={{ fontFamily: "Arial, sans-serif", fontSize: 22, color: "#c9c9c9", letterSpacing: 2 }}>{label}</div>
+    </div>
+  );
+};
+```
+
+Go through the script line by line while planning Step 3 and flag which
+segments have a number, name, or line worth calling out this way — most
+scripts have several. Don't call out every noun; reserve it for the facts
+that are actually the point of the sentence (a record price, the name of
+the artwork, a date that anchors the story) so each one still lands as an
+emphasis rather than becoming visual noise.
+
 ## 4. Voiceover audio
 
 Add one `<Audio>` spanning the whole composition (not per-segment) so it

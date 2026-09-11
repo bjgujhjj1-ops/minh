@@ -94,6 +94,16 @@ speed) rather than copying the ocean-edit look verbatim, and register a new
 `<Composition>` in `my-video/src/Root.tsx` with a duration computed from the
 segment data — not hand-counted.
 
+While going through the script's lines, flag ones with a number worth
+emphasizing (a price, a date, a statistic), a name or title ("Salvator
+Mundi" — "Đấng Cứu Thế"), or a quotable line — these get their own animated
+call-out graphic timed to when they're spoken, per
+`references/remotion-patterns.md` section 3a, not just left to the
+voiceover alone. This is on by default, independent of whether the piece
+also uses full-sentence captions (most scripts don't need those, per
+section 3, but call-outs for the actually-important facts are worth doing
+regardless).
+
 The user has asked for animation to be used generously wherever it makes
 the video better, not held back to the bare minimum — this applies to
 every piece, not just footage. Title text, card/element entrances,
