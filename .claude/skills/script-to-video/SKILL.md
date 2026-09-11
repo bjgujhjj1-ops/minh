@@ -173,13 +173,16 @@ the style the user actually asked to match calls for that exact curiosity-
 hook structure. For anything else — a documentary, an explainer, a story —
 building it in would be adding a style element nobody asked for.
 
-Section 7a has a second opt-in module: flat-vector comparison/scale
-infographics (a balance scale weighing two things against each other, a
-depth ruler with a to-scale silhouette and labeled thresholds) — the
-Kurzgesagt-style graphic explainer look. Reach for it when a script has a
-comparison or scale beat ("nặng bằng...", "sâu tới...") and the style calls
-for hand-drawn-SVG graphics rather than footage; skip it otherwise for the
-same reason as section 7.
+Section 7a has a second module: flat-vector comparison/scale infographics
+(a balance scale weighing two things against each other, a depth ruler with
+a to-scale silhouette and labeled thresholds) — the Kurzgesagt-style
+graphic explainer look. Unlike section 7, this one is **on by default,
+mixed segment-by-segment into any video** per the user's direction: keep
+footage/photos for narrative beats as usual, and switch just the specific
+segment to this graphic treatment whenever a script line makes a comparison
+or states a scale ("nặng bằng...", "sâu tới...", "to gấp..."), then return
+to footage for the next beat. Flag these while deciding footage per segment
+in Step 2, not as a whole-video style decision.
 
 The user has explicitly asked that cuts not feel too fast or abrupt — do
 not turn every `segment_script.py` line into its own cut by default. Read

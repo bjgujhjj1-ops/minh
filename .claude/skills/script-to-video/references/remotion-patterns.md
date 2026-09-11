@@ -396,10 +396,18 @@ how heavy / how deep is X" beats — draw it with plain SVG, no footage or
 icon library needed (avoids any licensing question entirely: hand-drawn
 silhouettes are yours).
 
-Opt-in like section 7 — reach for it specifically when a script has a
-comparison or scale beat ("bằng trọng lượng của...", "sâu tới...") and the
-style calls for this graphic-explainer look, not for a documentary or
-narrative piece.
+Unlike section 7's hook module (an all-or-nothing style choice for the
+whole piece), this one is meant to be **mixed into any video by default**,
+per the user's direction: real footage/photos carry the narrative and
+descriptive beats as usual, and whenever a script line makes a comparison
+or states a scale ("bằng trọng lượng của...", "sâu tới...", "to gấp..."),
+that specific segment switches to this graphic treatment, then the next
+segment goes back to footage. This is exactly how real documentary/science
+channels cut between live footage and infographic explainers — don't treat
+switching to SVG graphics mid-video as a style clash; it's a deliberate,
+expected beat, not a compromise. Flag these beats during Step 2 alongside
+the other segment-by-segment decisions (footage vs. still, call-out or
+not) rather than deciding it up front as a whole-video style choice.
 
 ### Balance scale (weight/quantity comparison)
 
