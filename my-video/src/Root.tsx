@@ -7,6 +7,7 @@ import {
   PEXELS_OCEAN_EDIT_DURATION,
   PexelsOceanEdit,
 } from "./PexelsOceanEdit";
+import { RISE_OF_ROME_DURATION, RiseOfRome } from "./RiseOfRome";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -62,6 +63,15 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         width={1280}
         height={720}
+      />
+
+      <Composition
+        id="RiseOfRome"
+        component={RiseOfRome}
+        durationInFrames={RISE_OF_ROME_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
       />
     </>
   );
