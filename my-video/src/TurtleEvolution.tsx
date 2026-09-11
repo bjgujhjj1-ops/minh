@@ -85,8 +85,6 @@ const CROSSFADE = 18;
 const COLOR_GRADE = "contrast(1.1) saturate(1.1) brightness(1.0)";
 const INK = "#f2f2f2";
 const ACCENT = "#e8342a"; // bold red — the one standout color, used sparingly for the fact that matters
-const TEAL = "#9a9a9a"; // muted steel gray — de-emphasized silhouette/line color (was teal)
-const DANGER = "#7a2b24"; // dull brick red — "cost/negative" tone, distinct from the bright ACCENT red
 const GRAPHIC_BG = "#060606";
 
 // Shared SVG defs (gradients + drop shadow) referenced by url(#id) from every
@@ -146,83 +144,74 @@ const M = (scale: [number, number], extra: Partial<Motion> = {}): Motion => ({ s
 
 const SHOTS: Shot[] = [
   { kind: "graphic", start: 0, end: 211, graphic: "title" },
-  { kind: "video", src: "turtle-crab-raw.mp4", startFrom: 0, start: 211, end: 422, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-seaturtle-raw.mp4", startFrom: 0, start: 422, end: 633, motion: M([1.1, 1]) },
-  { kind: "graphic", start: 633, end: 843, graphic: "textcard", props: { text: "TẠI SAO LÀ... RÙA?" } },
-  { kind: "graphic", start: 843, end: 1091, graphic: "iconrow", props: {
-      title: "BẠN LÀ KỸ SƯ SINH HỌC. BẠN SẼ CHỌN GÌ?",
-      items: [
-        { icon: "wing", label: "Đôi cánh" },
-        { icon: "bolt", label: "Tốc độ phi mã" },
-        { icon: "shield", label: "Bộ giáp bất khả xâm phạm", highlighted: true },
-      ],
-    } },
-  { kind: "video", src: "turtle-beetle-raw.mp4", startFrom: 0, start: 1091, end: 1338, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-crab-raw.mp4", startFrom: 250, start: 1338, end: 1585, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 0, start: 1585, end: 1865, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-fossil3-raw.mp4", startFrom: 0, start: 1865, end: 2145, motion: M([1, 1.12]) },
-  { kind: "graphic", start: 2145, end: 2425, graphic: "ribshell", props: { mode: "formation", title: "MAI RÙA HÌNH THÀNH TỪ XƯƠNG SƯỜN + CỘT SỐNG" } },
-  { kind: "video", src: "turtle-tortoise3-raw.mp4", startFrom: 0, start: 2425, end: 2704, motion: M([1, 1.12]) },
-  { kind: "graphic", start: 2704, end: 2959, graphic: "deeptime" },
-  { kind: "video", src: "turtle-desert-raw.mp4", startFrom: 0, start: 2959, end: 3213, motion: M([1, 1.12]) },
-  { kind: "image", src: "turtle-henodus.jpg", start: 3213, end: 3582, motion: M([1, 1.12]) },
-  { kind: "image", src: "turtle-henodus.jpg", start: 3582, end: 3950, motion: M([1.15, 1.3], { x: [4, -4] }) },
-  { kind: "video", src: "turtle-swamp-raw.mp4", startFrom: 0, start: 3950, end: 4318, motion: M([1.1, 1]) },
-  { kind: "graphic", start: 4318, end: 4539, graphic: "iconrow", props: {
-      title: "PHÁO ĐÀI DI ĐỘNG",
-      items: [
-        { icon: "bolt", label: "Chạy nhanh hơn kẻ săn mồi" },
-        { icon: "shield", label: "Trở nên quá khó để nuốt trôi", highlighted: true },
-      ],
-    } },
-  { kind: "video", src: "turtle-crab-raw.mp4", startFrom: 500, start: 4539, end: 4760, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 0, start: 4760, end: 4980, motion: M([1.1, 1]) },
-  { kind: "image", src: "turtle-eunotosaurus.jpg", start: 4980, end: 5332, motion: M([1, 1.12]) },
-  { kind: "graphic", start: 5332, end: 5683, graphic: "ribshell", props: { mode: "anchor", title: "MỎ NEO ĐÀO HANG, TRƯỚC KHI LÀ GIÁP" } },
-  { kind: "video", src: "turtle-desert-raw.mp4", startFrom: 290, start: 5683, end: 6034, motion: M([1.1, 1]) },
-  { kind: "image", src: "turtle-glyptodon.jpg", start: 6034, end: 6410, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-icefield-raw.mp4", startFrom: 0, start: 6410, end: 6786, motion: M([1.1, 1]) },
-  { kind: "graphic", start: 6786, end: 7161, graphic: "iconrow", props: {
-      title: "KỶ BĂNG HÀ NAM MỸ",
-      items: [
-        { icon: "claw", label: "Chim ăn thịt khổng lồ" },
-        { icon: "claw", label: "Hổ răng kiếm" },
-        { icon: "shield", label: "→ Mai vòm khổng lồ", highlighted: true },
-      ],
-    } },
-  { kind: "image", src: "turtle-cyamodus.jpg", start: 7161, end: 7456, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-coral2-raw.mp4", startFrom: 0, start: 7456, end: 7750, motion: M([1.1, 1]) },
-  { kind: "graphic", start: 7750, end: 8041, graphic: "shoulderblade" },
-  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 400, start: 8041, end: 8332, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-tortoise-long-raw.mp4", startFrom: 300, start: 8332, end: 8622, motion: M([1.1, 1]) },
-  { kind: "graphic", start: 8622, end: 8979, graphic: "iconrow", props: {
-      title: "CÁI GIÁ PHẢI TRẢ",
-      items: [
-        { icon: "lungs", label: "Không thể hít thở bằng cơ hoành", tone: "negative" },
-        { icon: "thermometer", label: "Một \u201ckhối nhiệt\u201d khổng lồ", tone: "negative" },
-      ],
-    } },
-  { kind: "video", src: "turtle-tortoise3-raw.mp4", startFrom: 400, start: 8979, end: 9335, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 0, start: 9335, end: 9691, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-tortoise-long-raw.mp4", startFrom: 300, start: 9691, end: 9946, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 100, start: 9946, end: 10200, motion: M([1.1, 1]) },
-  { kind: "graphic", start: 10200, end: 10454, graphic: "textcard", props: { text: "SỐNG CHẬM • THỌ LÂU" } },
-  { kind: "video", src: "turtle-ladybug-raw.mp4", startFrom: 0, start: 10454, end: 10675, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-crab-raw.mp4", startFrom: 750, start: 10675, end: 10895, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 300, start: 10895, end: 11115, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-seaturtle2-raw.mp4", startFrom: 0, start: 11115, end: 11415, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-seaturtle3-raw.mp4", startFrom: 0, start: 11415, end: 11685, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 200, start: 11685, end: 11995, motion: M([1, 1.12]) },
-  { kind: "graphic", start: 11995, end: 12228, graphic: "stablepoints", props: { label: "RÙA", title: "500 TRIỆU NĂM TIẾN HÓA" } },
-  { kind: "video", src: "turtle-space2-raw.mp4", startFrom: 0, start: 12228, end: 12461, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-space3-raw.mp4", startFrom: 0, start: 12461, end: 12693, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-space-long-raw.mp4", startFrom: 0, start: 12693, end: 13066, motion: M([1, 1.12]) },
-  { kind: "image", src: "turtle-archelon.jpg", start: 13066, end: 13439, motion: M([1.1, 1.25]) },
-  { kind: "video", src: "turtle-rainforest-raw.mp4", startFrom: 0, start: 13439, end: 13812, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-space2-raw.mp4", startFrom: 300, start: 13812, end: 14096, motion: M([1.1, 1]) },
-  { kind: "video", src: "turtle-icefield-raw.mp4", startFrom: 400, start: 14096, end: 14379, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-coral-raw.mp4", startFrom: 0, start: 14379, end: 14608, motion: M([1, 1.12]) },
-  { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 400, start: 14608, end: 14837, motion: M([1.1, 1]) },
+  { kind: "graphic", start: 211, end: 461, graphic: "citation", props: { source: "Wikipedia — Carcinisation", excerpt: "Carcinisation is a form of convergent evolution in which non-crab crustaceans evolve a crab-like body plan.", highlight: "non-crab crustaceans evolve a crab-like body plan" } },
+  { kind: "video", src: "turtle-seaturtle-raw.mp4", startFrom: 0, start: 461, end: 661, motion: M([1.1, 1]) },
+  { kind: "graphic", start: 661, end: 843, graphic: "textcard", props: { text: "TẠI SAO LÀ... RÙA?" } },
+  { kind: "video", src: "turtle-bird-raw.mp4", startFrom: 0, start: 843, end: 1028, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-cheetah-raw.mp4", startFrom: 0, start: 1028, end: 1213, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 0, start: 1213, end: 1399, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-beetle-raw.mp4", startFrom: 0, start: 1399, end: 1585, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 0, start: 1585, end: 1809, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-shelltexture-raw.mp4", startFrom: 0, start: 1809, end: 2033, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-fossil3-raw.mp4", startFrom: 0, start: 2033, end: 2257, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-ribcage-raw.mp4", startFrom: 0, start: 2257, end: 2481, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-tortoise3-raw.mp4", startFrom: 0, start: 2481, end: 2704, motion: M([1.1, 1]) },
+  { kind: "graphic", start: 2704, end: 3004, graphic: "deeptime" },
+  { kind: "video", src: "turtle-desert-raw.mp4", startFrom: 0, start: 3004, end: 3213, motion: M([1, 1.12]) },
+  { kind: "image", src: "turtle-henodus.jpg", start: 3213, end: 3434, motion: M([1, 1.12]) },
+  { kind: "image", src: "turtle-henodus.jpg", start: 3434, end: 3655, motion: M([1.15, 1.3], { x: [4, -4] }) },
+  { kind: "video", src: "turtle-swamp-raw.mp4", startFrom: 0, start: 3655, end: 3876, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-lagoon-raw.mp4", startFrom: 0, start: 3876, end: 4097, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-oceanfloor-raw.mp4", startFrom: 0, start: 4097, end: 4318, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-crab-raw.mp4", startFrom: 0, start: 4318, end: 4484, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 186, start: 4484, end: 4650, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-beetle-raw.mp4", startFrom: 0, start: 4650, end: 4815, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 0, start: 4815, end: 4980, motion: M([1.1, 1]) },
+  { kind: "image", src: "turtle-eunotosaurus.jpg", start: 4980, end: 5260, motion: M([1, 1.12]) },
+  { kind: "graphic", start: 5260, end: 5714, graphic: "citation", props: { source: "Sci-News.com — Paleontology", excerpt: "The earliest beginnings of the turtle shell was not for protection but rather for digging underground to escape the harsh South African environment where these early proto turtles lived, said lead author Dr. Tyler Lyson.", highlight: "was not for protection but rather for digging underground" } },
+  { kind: "video", src: "turtle-desert-raw.mp4", startFrom: 209, start: 5714, end: 6034, motion: M([1.1, 1]) },
+  { kind: "image", src: "turtle-glyptodon.jpg", start: 6034, end: 6260, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-icefield-raw.mp4", startFrom: 0, start: 6260, end: 6486, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-predator-raw.mp4", startFrom: 0, start: 6486, end: 6712, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-cheetah-raw.mp4", startFrom: 185, start: 6712, end: 6937, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-bird-raw.mp4", startFrom: 185, start: 6937, end: 7161, motion: M([1, 1.12]) },
+  { kind: "image", src: "turtle-cyamodus.jpg", start: 7161, end: 7357, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-oceanfloor-raw.mp4", startFrom: 221, start: 7357, end: 7553, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-lagoon-raw.mp4", startFrom: 0, start: 7553, end: 7750, motion: M([1, 1.12]) },
+  { kind: "graphic", start: 7750, end: 8200, graphic: "citation", props: { source: "RIKEN — Research News", excerpt: "Turtle morphology poses a unique puzzle in that the turtle\u2019s scapulae (shoulder blades), situated outside the ribs in other animals, are found inside its shell.", highlight: "situated outside the ribs in other animals, are found inside its shell" } },
+  { kind: "video", src: "turtle-ribcage-raw.mp4", startFrom: 0, start: 8200, end: 8411, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-fossilrock-raw.mp4", startFrom: 0, start: 8411, end: 8622, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-tortoise3-raw.mp4", startFrom: 223, start: 8622, end: 8836, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 352, start: 8836, end: 9050, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-ribcage-raw.mp4", startFrom: 0, start: 9050, end: 9264, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-oceanfloor-raw.mp4", startFrom: 0, start: 9264, end: 9478, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-shelltexture-raw.mp4", startFrom: 224, start: 9478, end: 9691, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-tortoise-long-raw.mp4", startFrom: 0, start: 9691, end: 9881, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 224, start: 9881, end: 10071, motion: M([1.1, 1]) },
+  { kind: "graphic", start: 10071, end: 10261, graphic: "textcard", props: { text: "SỐNG CHẬM • THỌ LÂU" } },
+  { kind: "video", src: "turtle-armadillo-raw.mp4", startFrom: 0, start: 10261, end: 10454, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-ladybug-raw.mp4", startFrom: 0, start: 10454, end: 10619, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-beetle-raw.mp4", startFrom: 0, start: 10619, end: 10784, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 165, start: 10784, end: 10949, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-crab-raw.mp4", startFrom: 166, start: 10949, end: 11115, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-seaturtle2-raw.mp4", startFrom: 0, start: 11115, end: 11335, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-seaturtle3-raw.mp4", startFrom: 0, start: 11335, end: 11555, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-tortoise2-raw.mp4", startFrom: 414, start: 11555, end: 11775, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-tortoise3-raw.mp4", startFrom: 437, start: 11775, end: 11995, motion: M([1.1, 1]) },
+  { kind: "graphic", start: 11995, end: 12295, graphic: "deeptime500" },
+  { kind: "video", src: "turtle-space2-raw.mp4", startFrom: 0, start: 12295, end: 12495, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-space3-raw.mp4", startFrom: 0, start: 12495, end: 12693, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-space-long-raw.mp4", startFrom: 0, start: 12693, end: 12917, motion: M([1, 1.12]) },
+  { kind: "image", src: "turtle-archelon.jpg", start: 12917, end: 13141, motion: M([1.1, 1.25]) },
+  { kind: "video", src: "turtle-rainforest-raw.mp4", startFrom: 0, start: 13141, end: 13365, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-lagoon-raw.mp4", startFrom: 0, start: 13365, end: 13589, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-oceanfloor-raw.mp4", startFrom: 214, start: 13589, end: 13812, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-space2-raw.mp4", startFrom: 200, start: 13812, end: 14001, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-icefield-raw.mp4", startFrom: 226, start: 14001, end: 14190, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-bird-raw.mp4", startFrom: 409, start: 14190, end: 14379, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-coral-raw.mp4", startFrom: 0, start: 14379, end: 14532, motion: M([1, 1.12]) },
+  { kind: "video", src: "turtle-snail-raw.mp4", startFrom: 330, start: 14532, end: 14685, motion: M([1.1, 1]) },
+  { kind: "video", src: "turtle-shelltexture-raw.mp4", startFrom: 437, start: 14685, end: 14837, motion: M([1, 1.12]) },
   { kind: "graphic", start: 14837, end: 15099, graphic: "outrocta" },
 ];
 
@@ -238,17 +227,24 @@ type Callout =
   | { from: number; duration: number; kind: "quote"; text: string };
 
 const CALLOUTS: Callout[] = [
-  { from: 1615, duration: 130, kind: "title", title: "Mai Rùa", subtitle: "XƯƠNG SƯỜN + CỘT SỐNG HỢP NHẤT" },
-  { from: 3255, duration: 130, kind: "title", title: "Henodus", subtitle: "PLACODONT — TRIAS, ~230 TRIỆU NĂM TRƯỚC" },
-  { from: 3627, duration: 150, kind: "stat", value: "GIẢI PHÁP TỐI ƯU", label: "CHO LỐI SỐNG ĐẦM PHÁ NÔNG" },
-  { from: 5015, duration: 130, kind: "title", title: "Eunotosaurus", subtitle: "MỘT TRONG NHỮNG TỔ TIÊN SỚM NHẤT" },
-  { from: 6070, duration: 130, kind: "title", title: "Glyptodon", subtitle: "THÚ CÓ VÚ MANG HÌNH RÙA" },
-  { from: 7195, duration: 130, kind: "title", title: "Cyamodus", subtitle: "HAI LỚP MAI RIÊNG BIỆT" },
-  { from: 10490, duration: 130, kind: "title", title: "Bọ Rùa", subtitle: "CÁNH CỨNG CHE PHỦ TOÀN THÂN" },
-  { from: 11150, duration: 120, kind: "stat", value: "MAI DẸT", label: "GIẢM LỰC CẢN CỦA NƯỚC" },
-  { from: 11725, duration: 120, kind: "stat", value: "MAI VÒM", label: "CHỐNG LỰC CẮN CỦA THÚ DỮ" },
-  { from: 13104, duration: 160, kind: "quote", text: "Chậm mà chắc, bảo thủ nhưng bất diệt." },
-  { from: 13860, duration: 150, kind: "stat", value: "Ở HÀNH TINH KHÁC?", label: "NẾU CÓ SỰ SỐNG, CÓ THỂ CŨNG CÓ “RÙA”" },
+  { from: 863, duration: 140, kind: "stat", value: "ĐÔI CÁNH", label: "LỰA CHỌN 1" },
+  { from: 1048, duration: 140, kind: "stat", value: "TỐC ĐỘ PHI MÃ", label: "LỰA CHỌN 2" },
+  { from: 1233, duration: 150, kind: "stat", value: "BỘ GIÁP", label: "TỰ NHIÊN ĐÃ CHỌN PHƯƠNG ÁN NÀY" },
+  { from: 1829, duration: 180, kind: "title", title: "Mai Rùa", subtitle: "XƯƠNG SƯỜN + CỘT SỐNG HỢP NHẤT" },
+  { from: 3233, duration: 170, kind: "title", title: "Henodus", subtitle: "PLACODONT — TRIAS, ~230 TRIỆU NĂM TRƯỚC" },
+  { from: 3454, duration: 170, kind: "stat", value: "GIẢI PHÁP TỐI ƯU", label: "CHO LỐI SỐNG ĐẦM PHÁ NÔNG" },
+  { from: 4338, duration: 130, kind: "title", title: "Pháo Đài Di Động", subtitle: "CHIẾN LƯỢC SINH TỒN" },
+  { from: 5000, duration: 170, kind: "title", title: "Eunotosaurus", subtitle: "MỘT TRONG NHỮNG TỔ TIÊN SỚM NHẤT" },
+  { from: 6054, duration: 170, kind: "title", title: "Glyptodon", subtitle: "THÚ CÓ VÚ MANG HÌNH RÙA" },
+  { from: 6506, duration: 170, kind: "stat", value: "KỶ BĂNG HÀ", label: "CHIM ĂN THỊT KHỔNG LỒ • HỔ RĂNG KIẾM" },
+  { from: 7181, duration: 150, kind: "title", title: "Cyamodus", subtitle: "HAI LỚP MAI RIÊNG BIỆT" },
+  { from: 9070, duration: 170, kind: "stat", value: "KHÔNG CƠ HOÀNH", label: "PHẢI DÙNG CƠ BỤNG ĐỂ THỞ" },
+  { from: 9498, duration: 170, kind: "stat", value: "KHỐI NHIỆT KHỔNG LỒ", label: "MAI LỚN NÓNG/NGUỘI RẤT CHẬM" },
+  { from: 10474, duration: 130, kind: "title", title: "Bọ Rùa", subtitle: "CÁNH CỨNG CHE PHỦ TOÀN THÂN" },
+  { from: 11135, duration: 170, kind: "stat", value: "MAI DẸT", label: "GIẢM LỰC CẢN CỦA NƯỚC" },
+  { from: 11575, duration: 170, kind: "stat", value: "MAI VÒM", label: "CHỐNG LỰC CẮN CỦA THÚ DỮ" },
+  { from: 12947, duration: 170, kind: "quote", text: "Chậm mà chắc, bảo thủ nhưng bất diệt." },
+  { from: 13832, duration: 150, kind: "stat", value: "Ở HÀNH TINH KHÁC?", label: "NẾU CÓ SỰ SỐNG, CÓ THỂ CŨNG CÓ “RÙA”" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -301,49 +297,6 @@ const GraphicFade: React.FC<{ durationInFrames: number; children: React.ReactNod
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
   return <AbsoluteFill style={{ opacity }}>{children}</AbsoluteFill>;
-};
-
-// ---------------------------------------------------------------------------
-// Icons (simple flat vector glyphs, hand-drawn — no icon library / licensing)
-// ---------------------------------------------------------------------------
-
-const ICON_PATHS: Record<string, React.ReactNode> = {
-  shield: <path d="M0,-42 L36,-25 L36,8 Q36,42 0,58 Q-36,42 -36,8 L-36,-25 Z" />,
-  bolt: <polygon points="8,-42 -20,8 0,8 -10,42 24,-6 2,-6" />,
-  wing: <path d="M-42,12 Q-14,-42 42,-30 Q10,-8 32,22 Q0,4 -18,26 Q-30,6 -42,12 Z" />,
-  lungs: (
-    <>
-      <ellipse cx="-16" cy="4" rx="17" ry="28" />
-      <ellipse cx="16" cy="4" rx="17" ry="28" />
-      <rect x="-4" y="-26" width="8" height="18" />
-    </>
-  ),
-  thermometer: (
-    <>
-      <rect x="-8" y="-42" width="16" height="62" rx="8" />
-      <circle cx="0" cy="30" r="17" />
-    </>
-  ),
-  claw: (
-    <>
-      <polygon points="-24,-40 -14,4 -34,4" />
-      <polygon points="0,-44 10,4 -10,4" />
-      <polygon points="24,-40 34,4 14,4" />
-    </>
-  ),
-};
-
-const Icon: React.FC<{ name: string; size?: number; tone?: "muted" | "accent" | "negative" }> = ({
-  name,
-  size = 1,
-  tone = "muted",
-}) => {
-  const gradientId = tone === "accent" ? "redGrad" : tone === "negative" ? "darkRedGrad" : "steelGrad";
-  return (
-    <g transform={`scale(${size})`} fill={`url(#${gradientId})`} filter="url(#dropShadow)">
-      {ICON_PATHS[name]}
-    </g>
-  );
 };
 
 // ---------------------------------------------------------------------------
@@ -423,271 +376,14 @@ const GraphicTextCard: React.FC<{ durationInFrames: number; text: string }> = ({
 };
 
 // ---------------------------------------------------------------------------
-// Graphic: icon choice / comparison row
+// Graphic: deep-time card (reusable big-number stat, e.g. "230 TRIỆU NĂM")
 // ---------------------------------------------------------------------------
 
-type IconRowItem = { icon: string; label: string; highlighted?: boolean; tone?: "negative" };
-
-const GraphicIconRow: React.FC<{ durationInFrames: number; title: string; items: IconRowItem[] }> = ({
+const GraphicDeepTime: React.FC<{ durationInFrames: number; value: string; label: string }> = ({
   durationInFrames,
-  title,
-  items,
+  value,
+  label,
 }) => {
-  const frame = useCurrentFrame();
-  const titleOpacity = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
-  const titleY = interpolate(frame, [0, 20], [-16, 0], { extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
-
-  return (
-    <GraphicFade durationInFrames={durationInFrames}>
-      <AbsoluteFill style={{ background: GRAPHIC_BG, justifyContent: "center", alignItems: "center" }}>
-        <div
-          style={{
-            position: "absolute",
-            top: 100,
-            opacity: titleOpacity,
-            transform: `translateY(${titleY}px)`,
-            fontFamily: FONT_BODY,
-            fontWeight: 800,
-            fontSize: 40,
-            color: ACCENT,
-            letterSpacing: 3,
-            textAlign: "center",
-            maxWidth: 1500,
-          }}
-        >
-          {title}
-        </div>
-        <div style={{ display: "flex", gap: 90, alignItems: "flex-end" }}>
-          {items.map((item, i) => {
-            const stagger = 20 + i * 14;
-            const localScale = interpolate(frame, [stagger, stagger + 25], [0.6, 1], {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
-              easing: Easing.out(Easing.back(1.6)),
-            });
-            const localOpacity = interpolate(frame, [stagger, stagger + 20], [0, 1], {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
-            });
-            const pop = item.highlighted
-              ? interpolate(frame, [stagger + 40, stagger + 65], [1, 1.18], {
-                  extrapolateLeft: "clamp",
-                  extrapolateRight: "clamp",
-                  easing: Easing.out(Easing.cubic),
-                })
-              : 1;
-            const tone: "muted" | "accent" | "negative" =
-              item.tone === "negative" ? "negative" : item.highlighted ? "accent" : "muted";
-            return (
-              <div
-                key={i}
-                style={{
-                  opacity: localOpacity,
-                  transform: `scale(${localScale * pop})`,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  width: 260,
-                }}
-              >
-                <svg width="140" height="140" viewBox="-70 -70 140 140">
-                  <Icon name={item.icon} tone={tone} />
-                </svg>
-                <div
-                  style={{
-                    marginTop: 20,
-                    fontFamily: FONT_BODY,
-                    fontWeight: item.highlighted ? 800 : 600,
-                    fontSize: 24,
-                    color: item.highlighted ? ACCENT : INK,
-                    textAlign: "center",
-                  }}
-                >
-                  {item.label}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </AbsoluteFill>
-    </GraphicFade>
-  );
-};
-
-// ---------------------------------------------------------------------------
-// Graphic: rib -> shell diagram (shared by formation / anchor / embryo modes)
-// ---------------------------------------------------------------------------
-
-const GraphicRibShell: React.FC<{ durationInFrames: number; mode: string; title: string }> = ({
-  durationInFrames,
-  mode,
-  title,
-}) => {
-  const frame = useCurrentFrame();
-  const progress = interpolate(frame, [20, durationInFrames - 40], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.inOut(Easing.cubic),
-  });
-  const titleOpacity = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
-  const ribCount = 6;
-  const spineX = 0;
-
-  return (
-    <GraphicFade durationInFrames={durationInFrames}>
-      <AbsoluteFill style={{ background: GRAPHIC_BG, justifyContent: "center", alignItems: "center" }}>
-        <div
-          style={{
-            position: "absolute",
-            top: 90,
-            opacity: titleOpacity,
-            fontFamily: FONT_BODY,
-            fontWeight: 800,
-            fontSize: 34,
-            color: ACCENT,
-            letterSpacing: 2,
-            textAlign: "center",
-            maxWidth: 1400,
-          }}
-        >
-          {title}
-        </div>
-        <svg width="700" height="700" viewBox="-350 -350 700 700">
-          {/* spine */}
-          <line x1={spineX} y1={-220} x2={spineX} y2={220} stroke={INK} strokeWidth={10} strokeLinecap="round" opacity={0.9} />
-          {/* ribs: start hanging down close to spine, rotate outward + up into a fused dome arc */}
-          {Array.from({ length: ribCount }).map((_, i) => {
-            const t = i / (ribCount - 1);
-            const yPos = -170 + t * 340;
-            const startAngle = 165; // hanging down, close to vertical
-            const endAngle = 60; // swept outward/up, tip reaching toward the dome line
-            const angle = interpolate(progress, [0, 1], [startAngle, endAngle]);
-            const length = interpolate(progress, [0, 1], [90, 230]);
-            const rad = (angle * Math.PI) / 180;
-            const x2 = spineX + Math.cos(rad) * length;
-            const y2 = yPos - Math.sin(rad) * length * 0.4;
-            return (
-              <g key={i}>
-                <line x1={spineX} y1={yPos} x2={x2} y2={y2} stroke="url(#steelGrad)" strokeWidth={12} strokeLinecap="round" filter="url(#dropShadow)" />
-                <line x1={-spineX} y1={yPos} x2={-x2} y2={y2} stroke="url(#steelGrad)" strokeWidth={12} strokeLinecap="round" filter="url(#dropShadow)" />
-              </g>
-            );
-          })}
-          {/* dome arc appears once ribs are fused */}
-          <path
-            d="M-280,60 Q0,-260 280,60"
-            fill="none"
-            stroke="url(#redGrad)"
-            strokeWidth={8}
-            strokeDasharray={800}
-            strokeDashoffset={interpolate(progress, [0.7, 1], [800, 0], { extrapolateLeft: "clamp" })}
-            opacity={0.9}
-          />
-          {mode === "anchor" && (
-            <g opacity={interpolate(frame, [30, 55], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>
-              <circle cx={260} cy={30} r={14} fill="url(#redGrad)" filter="url(#dropShadow)" />
-              <text x={260} y={80} fill={ACCENT} fontSize={22} fontFamily={FONT_BODY} textAnchor="middle">
-                MỎ NEO
-              </text>
-            </g>
-          )}
-          {mode === "embryo" && (
-            <g opacity={interpolate(frame, [40, 65], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}>
-              <ellipse cx="0" cy="0" rx="330" ry="330" fill="none" stroke={INK} strokeWidth={3} strokeDasharray="10 12" opacity={0.35} />
-              <text x={0} y={-300} fill={DANGER} fontSize={22} fontFamily={FONT_BODY} textAnchor="middle">
-                PROTEIN CHẶN CƠ GIỮA CÁC XƯƠNG SƯỜN
-              </text>
-            </g>
-          )}
-        </svg>
-      </AbsoluteFill>
-    </GraphicFade>
-  );
-};
-
-// ---------------------------------------------------------------------------
-// Graphic: shoulder blade integration
-// ---------------------------------------------------------------------------
-
-const GraphicShoulderBlade: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
-  const frame = useCurrentFrame();
-  const progress = interpolate(frame, [30, durationInFrames - 50], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.inOut(Easing.cubic),
-  });
-  const scapulaX = interpolate(progress, [0, 1], [-260, -60]);
-  const arrowOpacity = interpolate(frame, [40, 60], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-
-  return (
-    <GraphicFade durationInFrames={durationInFrames}>
-      <AbsoluteFill style={{ background: GRAPHIC_BG, justifyContent: "center", alignItems: "center" }}>
-        <div
-          style={{
-            position: "absolute",
-            top: 90,
-            fontFamily: FONT_BODY,
-            fontWeight: 800,
-            fontSize: 34,
-            color: ACCENT,
-            letterSpacing: 2,
-            textAlign: "center",
-            maxWidth: 1400,
-          }}
-        >
-          XƯƠNG BẢ VAI ĐI VÀO BÊN TRONG LỒNG NGỰC
-        </div>
-        <svg width="800" height="600" viewBox="-400 -300 800 600">
-          {/* ribcage oval */}
-          <ellipse cx={0} cy={0} rx={230} ry={200} fill="none" stroke="url(#steelGrad)" strokeWidth={10} />
-          {Array.from({ length: 5 }).map((_, i) => (
-            <ellipse key={i} cx={0} cy={-140 + i * 65} rx={220 - i * 6} ry={26} fill="none" stroke="url(#steelGrad)" strokeWidth={4} opacity={0.5} />
-          ))}
-          {/* scapula (paddle shape) sliding from outside the ribcage to inside */}
-          <g transform={`translate(${scapulaX}, -20) rotate(-20)`} filter="url(#dropShadow)">
-            <path d="M0,-70 Q40,-70 40,-20 L40,50 Q40,80 0,80 Q-30,80 -30,40 L-30,-30 Q-30,-70 0,-70 Z" fill="url(#redGrad)" />
-          </g>
-          <text x={scapulaX} y={130} fill={ACCENT} fontSize={22} fontFamily={FONT_BODY} textAnchor="middle">
-            XƯƠNG BẢ VAI
-          </text>
-          <path
-            d="M-260,-140 Q-160,-200 -60,-150"
-            fill="none"
-            stroke={INK}
-            strokeWidth={4}
-            markerEnd="url(#arrow)"
-            opacity={arrowOpacity}
-          />
-          <defs>
-            <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
-              <path d="M0,0 L6,3 L0,6 Z" fill={INK} />
-            </marker>
-          </defs>
-        </svg>
-        <div
-          style={{
-            position: "absolute",
-            bottom: 90,
-            fontFamily: FONT_BODY,
-            fontSize: 22,
-            color: INK,
-            opacity: 0.85,
-            maxWidth: 1100,
-            textAlign: "center",
-          }}
-        >
-          Độc nhất vô nhị trong toàn bộ giới động vật có xương sống
-        </div>
-      </AbsoluteFill>
-    </GraphicFade>
-  );
-};
-
-// ---------------------------------------------------------------------------
-// Graphic: deep-time card (230 million years ago / Triassic)
-// ---------------------------------------------------------------------------
-
-const GraphicDeepTime: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
   const frame = useCurrentFrame();
   const markerX = interpolate(frame, [15, 50], [1500, 260], {
     extrapolateLeft: "clamp",
@@ -710,131 +406,29 @@ const GraphicDeepTime: React.FC<{ durationInFrames: number }> = ({ durationInFra
           <circle cx={markerX} cy={60} r={16} fill="url(#redGrad)" filter="url(#dropShadow)" />
         </svg>
         <div style={{ textAlign: "center", transform: `scale(${numberScale})` }}>
-          <div style={{ fontFamily: FONT_HEAD, fontWeight: 900, fontSize: 96, color: INK }}>230 TRIỆU NĂM</div>
-          <div style={{ fontFamily: FONT_BODY, fontSize: 30, color: ACCENT, letterSpacing: 4, marginTop: 10 }}>
-            KỶ TRIAS — SỰ BÙNG NỔ HÌNH THÁI BÒ SÁT
+          <div
+            style={{
+              fontFamily: FONT_HEAD,
+              fontSize: 96,
+              color: "white",
+              WebkitTextStroke: "3px black",
+              textShadow: "0 0 30px rgba(255,255,255,0.5), 0 6px 14px rgba(0,0,0,0.8)",
+            }}
+          >
+            {value}
           </div>
-        </div>
-      </AbsoluteFill>
-    </GraphicFade>
-  );
-};
-
-// ---------------------------------------------------------------------------
-// Graphic: stable points (adaptive landscape metaphor)
-// ---------------------------------------------------------------------------
-
-const GraphicStablePoints: React.FC<{ durationInFrames: number; label: string; title: string }> = ({
-  durationInFrames,
-  label,
-  title,
-}) => {
-  const frame = useCurrentFrame();
-  const t = interpolate(frame, [20, durationInFrames - 60], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.inOut(Easing.cubic),
-  });
-  // landscape: two shallow valleys and one deep valley (the "turtle" solution) near x=760
-  const path =
-    "M40,120 C160,40 260,220 380,140 C500,60 620,260 760,300 C900,260 1020,60 1140,140 C1220,190 1300,120 1360,110";
-  const ballX = interpolate(t, [0, 1], [80, 760]);
-  const ballY = interpolate(t, [0, 0.5, 1], [110, 60, 300]);
-
-  return (
-    <GraphicFade durationInFrames={durationInFrames}>
-      <AbsoluteFill style={{ background: GRAPHIC_BG, justifyContent: "center", alignItems: "center" }}>
-        <div
-          style={{
-            position: "absolute",
-            top: 100,
-            fontFamily: FONT_BODY,
-            fontWeight: 800,
-            fontSize: 34,
-            color: ACCENT,
-            letterSpacing: 2,
-          }}
-        >
-          {title}
-        </div>
-        <svg width="1400" height="420" viewBox="0 0 1400 420">
-          <path d={path} fill="none" stroke="url(#steelGrad)" strokeWidth={6} opacity={0.8} />
-          <circle cx={ballX} cy={ballY - 22} r={20} fill="url(#redGrad)" filter="url(#dropShadow)" />
-          <text
-            x={760}
-            y={360}
-            fill={ACCENT}
-            fontSize={28}
-            fontWeight={800}
-            fontFamily={FONT_HEAD}
-            textAnchor="middle"
-            opacity={interpolate(t, [0.85, 1], [0, 1], { extrapolateLeft: "clamp" })}
+          <div
+            style={{
+              fontFamily: FONT_BODY,
+              fontWeight: 800,
+              fontSize: 26,
+              color: ACCENT,
+              WebkitTextStroke: "1px black",
+              letterSpacing: 3,
+              marginTop: 12,
+            }}
           >
             {label}
-          </text>
-        </svg>
-      </AbsoluteFill>
-    </GraphicFade>
-  );
-};
-
-// ---------------------------------------------------------------------------
-// Graphic: HOX gene
-// ---------------------------------------------------------------------------
-
-const GraphicHox: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
-  const frame = useCurrentFrame();
-  const flip = interpolate(frame, [40, 80], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
-  const rungs = 10;
-
-  return (
-    <GraphicFade durationInFrames={durationInFrames}>
-      <AbsoluteFill style={{ background: GRAPHIC_BG, justifyContent: "center", alignItems: "center" }}>
-        <div
-          style={{
-            position: "absolute",
-            top: 90,
-            fontFamily: FONT_BODY,
-            fontWeight: 800,
-            fontSize: 34,
-            color: ACCENT,
-            letterSpacing: 2,
-          }}
-        >
-          GEN HOX — BẢN ĐỒ CƠ THỂ
-        </div>
-        <svg width="500" height="560" viewBox="-250 -280 500 560">
-          {Array.from({ length: rungs }).map((_, i) => {
-            const y = -240 + i * 48;
-            const phase = (frame / 20 + i * 0.6) % (Math.PI * 2);
-            const x1 = Math.sin(phase) * 90;
-            const x2 = Math.sin(phase + Math.PI) * 90;
-            const isHox = i === 4;
-            return (
-              <g key={i}>
-                <line x1={x1} y1={y} x2={x2} y2={y} stroke={isHox ? ACCENT : INK} strokeWidth={isHox ? 8 : 4} opacity={isHox ? 1 : 0.6} />
-                <circle cx={x1} cy={y} r={9} fill={isHox ? ACCENT : TEAL} />
-                <circle cx={x2} cy={y} r={9} fill={isHox ? ACCENT : TEAL} />
-              </g>
-            );
-          })}
-          <text x={140} y={-192} fill={ACCENT} fontSize={26} fontWeight={800} fontFamily={FONT_HEAD}>
-            HOX
-          </text>
-        </svg>
-        <div style={{ display: "flex", gap: 60, alignItems: "center", position: "absolute", bottom: 110 }}>
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", opacity: 1 - flip }}>
-            <svg width="90" height="90" viewBox="-45 -45 90 90">
-              <rect x={-6} y={-40} width={12} height={80} fill="url(#steelGrad)" filter="url(#dropShadow)" />
-            </svg>
-            <div style={{ color: INK, fontFamily: FONT_BODY, fontSize: 20 }}>KHUNG ĐỠ</div>
-          </div>
-          <div style={{ color: INK, fontSize: 40 }}>→</div>
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", opacity: flip }}>
-            <svg width="90" height="90" viewBox="-45 -45 90 90">
-              <Icon name="shield" tone="accent" size={0.8} />
-            </svg>
-            <div style={{ color: ACCENT, fontFamily: FONT_BODY, fontSize: 20, fontWeight: 700 }}>LỚP BẢO VỆ</div>
           </div>
         </div>
       </AbsoluteFill>
@@ -842,126 +436,20 @@ const GraphicHox: React.FC<{ durationInFrames: number }> = ({ durationInFrames }
   );
 };
 
-// ---------------------------------------------------------------------------
-// Graphic: pH buffer bank
-// ---------------------------------------------------------------------------
-
-const GraphicPhBuffer: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
+const GraphicCitation: React.FC<{
+  durationInFrames: number;
+  source: string;
+  excerpt: string;
+  highlight: string;
+}> = ({ durationInFrames, source, excerpt, highlight }) => {
   const frame = useCurrentFrame();
-  const neutralize = interpolate(frame, [30, 90], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
-  const needleAngle = interpolate(neutralize, [0, 1], [-50, 10]);
-  const dropY = interpolate(frame % 60, [0, 60], [-160, 20]);
-  const gaugeColor = neutralize > 0.5 ? TEAL : DANGER;
-
-  return (
-    <GraphicFade durationInFrames={durationInFrames}>
-      <AbsoluteFill style={{ background: GRAPHIC_BG, justifyContent: "center", alignItems: "center" }}>
-        <div
-          style={{
-            position: "absolute",
-            top: 90,
-            fontFamily: FONT_BODY,
-            fontWeight: 800,
-            fontSize: 34,
-            color: ACCENT,
-            letterSpacing: 2,
-            textAlign: "center",
-          }}
-        >
-          MAI RÙA: NGÂN HÀNG HÓA CHẤT
-        </div>
-        <svg width="900" height="560" viewBox="-450 -280 900 560">
-          {/* shell dome container */}
-          <path d="M-260,140 Q0,-220 260,140 Z" fill="none" stroke="url(#steelGrad)" strokeWidth={10} />
-          {/* acid drop */}
-          <circle cx={-40} cy={dropY} r={14} fill={DANGER} opacity={dropY < 20 ? 1 : 0} />
-          <text x={0} y={190} fill={INK} fontSize={22} fontFamily={FONT_BODY} textAnchor="middle" opacity={0.85}>
-            CaCO₃ + Phốt phát trung hòa axit lactic
-          </text>
-          {/* pH gauge */}
-          <g transform="translate(180, 40)">
-            <path d="M-90,0 A90,90 0 0 1 90,0" fill="none" stroke={INK} strokeWidth={8} opacity={0.5} />
-            <line
-              x1={0}
-              y1={0}
-              x2={Math.cos((needleAngle * Math.PI) / 180) * 80}
-              y2={Math.sin((needleAngle * Math.PI) / 180) * 80}
-              stroke={gaugeColor}
-              strokeWidth={6}
-              strokeLinecap="round"
-            />
-            <circle cx={0} cy={0} r={8} fill={gaugeColor} />
-            <text x={0} y={40} fill={gaugeColor} fontSize={22} fontWeight={800} fontFamily={FONT_BODY} textAnchor="middle">
-              pH
-            </text>
-          </g>
-        </svg>
-      </AbsoluteFill>
-    </GraphicFade>
-  );
-};
-
-// ---------------------------------------------------------------------------
-// Graphic: scale comparison (Archelon vs. human)
-// ---------------------------------------------------------------------------
-
-const GraphicScaleCompare: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
-  const frame = useCurrentFrame();
-  const grow = interpolate(frame, [15, 55], [0.3, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.back(1.3)) });
-  const labelOpacity = interpolate(frame, [50, 75], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-
-  return (
-    <GraphicFade durationInFrames={durationInFrames}>
-      <AbsoluteFill style={{ background: GRAPHIC_BG, justifyContent: "center", alignItems: "center" }}>
-        <div
-          style={{
-            position: "absolute",
-            top: 90,
-            fontFamily: FONT_BODY,
-            fontWeight: 800,
-            fontSize: 34,
-            color: ACCENT,
-            letterSpacing: 2,
-          }}
-        >
-          Archelon — RÙA BIỂN KHỔNG LỒ
-        </div>
-        <svg width="1200" height="560" viewBox="0 0 1200 560">
-          {/* baseline */}
-          <line x1={100} y1={420} x2={1100} y2={420} stroke={INK} strokeWidth={3} opacity={0.4} />
-          {/* human silhouette, fixed scale */}
-          <g transform="translate(220, 420)">
-            <circle cx={0} cy={-165} r={22} fill="url(#steelGrad)" />
-            <rect x={-16} y={-142} width={32} height={110} rx={12} fill="url(#steelGrad)" />
-          </g>
-          <text x={220} y={530} fill="#9fb8bd" fontSize={20} fontFamily={FONT_BODY} textAnchor="middle">
-            ~1.7 m
-          </text>
-          {/* archelon silhouette, scaled up to represent ~4m */}
-          <g transform={`translate(700, 420) scale(${grow})`} filter="url(#dropShadow)">
-            <ellipse cx={0} cy={-70} rx={220} ry={90} fill="url(#redGrad)" />
-            <circle cx={-210} cy={-95} r={40} fill="url(#redGrad)" />
-            <polygon points="180,-100 260,-150 250,-60" fill="url(#redGrad)" />
-            <polygon points="-40,10 20,70 -100,60" fill="url(#redGrad)" />
-            <polygon points="60,10 120,60 0,70" fill="url(#redGrad)" />
-          </g>
-          <text x={700} y={530} fill={ACCENT} fontSize={26} fontWeight={800} fontFamily={FONT_HEAD} textAnchor="middle" opacity={labelOpacity}>
-            4 MÉT
-          </text>
-        </svg>
-      </AbsoluteFill>
-    </GraphicFade>
-  );
-};
-
-// ---------------------------------------------------------------------------
-// Graphic: source citation card (Odontochelys, 2008)
-// ---------------------------------------------------------------------------
-
-const GraphicCitation: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
-  const frame = useCurrentFrame();
-  const sweep = interpolate(frame, [20, 70], [0, 100], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const sweep = interpolate(frame, [25, 95], [0, 100], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const cardScale = interpolate(frame, [0, 20], [0.94, 1], { extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+
+  const idx = excerpt.indexOf(highlight);
+  const before = idx >= 0 ? excerpt.slice(0, idx) : excerpt;
+  const mid = idx >= 0 ? excerpt.slice(idx, idx + highlight.length) : "";
+  const after = idx >= 0 ? excerpt.slice(idx + highlight.length) : "";
 
   return (
     <GraphicFade durationInFrames={durationInFrames}>
@@ -969,21 +457,28 @@ const GraphicCitation: React.FC<{ durationInFrames: number }> = ({ durationInFra
         <div
           style={{
             transform: `scale(${cardScale})`,
-            width: 1000,
+            width: 1120,
             background: "white",
-            borderRadius: 14,
-            padding: 48,
-            boxShadow: "0 30px 80px rgba(0,0,0,0.6)",
+            borderRadius: 6,
+            padding: "52px 58px 34px",
+            boxShadow: "0 30px 90px rgba(0,0,0,0.65)",
           }}
         >
-          <div style={{ fontFamily: FONT_BODY, fontSize: 16, color: "#888", marginBottom: 14 }}>
-            HỒ SƠ HÓA THẠCH · TRUNG QUỐC · 2008
+          <div style={{ fontFamily: "Georgia, serif", fontSize: 29, lineHeight: 1.65, color: "#161616" }}>
+            {before}
+            <span style={{ background: `linear-gradient(90deg, #ffe066 ${sweep}%, transparent ${sweep}%)` }}>{mid}</span>
+            {after}
           </div>
-          <div style={{ fontFamily: "Georgia, serif", fontSize: 28, lineHeight: 1.55, color: "#111", position: "relative" }}>
-            <span style={{ background: `linear-gradient(90deg, #ffe066 ${sweep}%, transparent ${sweep}%)` }}>
-              Odontochelys semitestacea — &quot;rùa có răng và nửa mai&quot; — 220 triệu năm tuổi, có mai bụng nhưng
-              chưa có mai lưng.
-            </span>
+          <div
+            style={{
+              marginTop: 24,
+              borderTop: "1px solid #e2e2e2",
+              paddingTop: 12,
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <div style={{ fontFamily: FONT_BODY, fontSize: 15, color: "#8a8a8a", fontStyle: "italic" }}>Nguồn: {source}</div>
           </div>
         </div>
       </AbsoluteFill>
@@ -1015,70 +510,68 @@ const GraphicOutroCta: React.FC<{ durationInFrames: number }> = ({ durationInFra
   );
 };
 
-// ---------------------------------------------------------------------------
-// Graphic: final outro
-// ---------------------------------------------------------------------------
+const GraphicDeepTime230: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => (
+  <GraphicDeepTime durationInFrames={durationInFrames} value="230 TRIỆU NĂM" label="KỶ TRIAS — SỰ BÙNG NỔ HÌNH THÁI BÒ SÁT" />
+);
 
-const GraphicOutro: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
-  const frame = useCurrentFrame();
-  const opacity = interpolate(frame, [0, 25], [0, 1], { extrapolateRight: "clamp" });
-  return (
-    <GraphicFade durationInFrames={durationInFrames}>
-      <AbsoluteFill style={{ background: GRAPHIC_BG, justifyContent: "center", alignItems: "center" }}>
-        <div style={{ opacity, textAlign: "center", maxWidth: 1400 }}>
-          <div style={{ fontFamily: "Georgia, serif", fontStyle: "italic", fontSize: 44, color: INK, lineHeight: 1.4 }}>
-            &quot;Chiếc vòm là cấu trúc chịu lực tốt nhất trong kiến trúc.&quot;
-          </div>
-          <div style={{ marginTop: 24, fontFamily: FONT_BODY, fontSize: 24, color: ACCENT, letterSpacing: 4 }}>
-            RÙA HÓA — THẾ GIỚI CỔ ĐẠI
-          </div>
-        </div>
-      </AbsoluteFill>
-    </GraphicFade>
-  );
-};
+const GraphicDeepTime500: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => (
+  <GraphicDeepTime durationInFrames={durationInFrames} value="500 TRIỆU NĂM" label="LỊCH SỬ TIẾN HÓA CỦA SỰ SỐNG TRÊN TRÁI ĐẤT" />
+);
 
 const GRAPHICS: Record<string, React.FC<{ durationInFrames: number; [key: string]: unknown }>> = {
   title: GraphicTitle,
   textcard: GraphicTextCard as React.FC<{ durationInFrames: number; [key: string]: unknown }>,
-  iconrow: GraphicIconRow as unknown as React.FC<{ durationInFrames: number; [key: string]: unknown }>,
-  ribshell: GraphicRibShell as unknown as React.FC<{ durationInFrames: number; [key: string]: unknown }>,
-  shoulderblade: GraphicShoulderBlade,
-  deeptime: GraphicDeepTime,
-  stablepoints: GraphicStablePoints as unknown as React.FC<{ durationInFrames: number; [key: string]: unknown }>,
-  hox: GraphicHox,
-  phbuffer: GraphicPhBuffer,
-  scalecompare: GraphicScaleCompare,
-  citation: GraphicCitation,
+  deeptime: GraphicDeepTime230,
+  deeptime500: GraphicDeepTime500,
+  citation: GraphicCitation as unknown as React.FC<{ durationInFrames: number; [key: string]: unknown }>,
   outrocta: GraphicOutroCta,
-  outro: GraphicOutro,
 };
 
 // ---------------------------------------------------------------------------
 // Callout overlays
 // ---------------------------------------------------------------------------
 
-const CalloutTitle: React.FC<{ title: string; subtitle: string; durationInFrames: number }> = ({ title, subtitle, durationInFrames }) => {
+const CalloutTitle: React.FC<{ title: string; subtitle: string; durationInFrames: number }> = ({
+  title,
+  subtitle,
+  durationInFrames,
+}) => {
   const frame = useCurrentFrame();
   const opacity = interpolate(frame, [0, 15, durationInFrames - 15, durationInFrames], [0, 1, 1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const scale = interpolate(frame, [0, 20], [0.92, 1], { extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+  const scale = interpolate(frame, [0, 20], [0.9, 1], { extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
   return (
-    <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 120 }}>
-      <div
-        style={{
-          opacity,
-          transform: `scale(${scale})`,
-          textAlign: "center",
-          background: "rgba(0,0,0,0.45)",
-          padding: "16px 40px",
-          borderRadius: 10,
-        }}
-      >
-        <div style={{ fontFamily: "Georgia, serif", fontStyle: "italic", fontSize: 42, color: "white" }}>{title}</div>
-        <div style={{ fontFamily: FONT_BODY, fontSize: 20, color: ACCENT, letterSpacing: 3, marginTop: 6 }}>{subtitle}</div>
+    <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 130 }}>
+      <div style={{ opacity, transform: `scale(${scale})`, textAlign: "center" }}>
+        <div
+          style={{
+            fontFamily: FONT_HEAD,
+            fontSize: 60,
+            color: "white",
+            WebkitTextStroke: "3px black",
+            textShadow: "0 0 26px rgba(255,255,255,0.55), 0 6px 12px rgba(0,0,0,0.85)",
+            textTransform: "uppercase",
+          }}
+        >
+          {title}
+        </div>
+        {subtitle ? (
+          <div
+            style={{
+              marginTop: 10,
+              fontFamily: FONT_BODY,
+              fontWeight: 800,
+              fontSize: 22,
+              color: ACCENT,
+              WebkitTextStroke: "1.5px black",
+              letterSpacing: 2,
+            }}
+          >
+            {subtitle}
+          </div>
+        ) : null}
       </div>
     </AbsoluteFill>
   );
@@ -1090,14 +583,34 @@ const CalloutStat: React.FC<{ value: string; label: string; durationInFrames: nu
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const y = interpolate(frame, [0, 20], [20, 0], { extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+  const y = interpolate(frame, [0, 20], [24, 0], { extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
   return (
     <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "flex-start", padding: "0 0 130px 90px" }}>
       <div style={{ opacity, transform: `translateY(${y}px)` }}>
-        <div style={{ fontFamily: FONT_HEAD, fontWeight: 800, fontSize: 56, color: "white", textShadow: "0 4px 20px rgba(0,0,0,0.8)" }}>
+        <div
+          style={{
+            fontFamily: FONT_HEAD,
+            fontSize: 54,
+            color: "white",
+            WebkitTextStroke: "3px black",
+            textShadow: "0 0 26px rgba(255,255,255,0.55), 0 6px 12px rgba(0,0,0,0.85)",
+            textTransform: "uppercase",
+          }}
+        >
           {value}
         </div>
-        <div style={{ fontFamily: FONT_BODY, fontSize: 22, color: ACCENT, letterSpacing: 2, marginTop: 4, maxWidth: 700 }}>
+        <div
+          style={{
+            marginTop: 6,
+            fontFamily: FONT_BODY,
+            fontWeight: 800,
+            fontSize: 21,
+            color: ACCENT,
+            WebkitTextStroke: "1px black",
+            letterSpacing: 1,
+            maxWidth: 720,
+          }}
+        >
           {label}
         </div>
       </div>
@@ -1113,21 +626,20 @@ const CalloutQuote: React.FC<{ text: string; durationInFrames: number }> = ({ te
   });
   const y = interpolate(frame, [0, 25], [24, 0], { extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
   return (
-    <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 110 }}>
+    <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 120 }}>
       <div
         style={{
           opacity,
           transform: `translateY(${y}px)`,
           maxWidth: 1300,
           textAlign: "center",
-          fontFamily: "Georgia, serif",
-          fontSize: 36,
+          fontFamily: FONT_BODY,
           fontStyle: "italic",
+          fontWeight: 700,
+          fontSize: 34,
           color: "white",
-          textShadow: "0 4px 20px rgba(0,0,0,0.8)",
-          padding: "22px 44px",
-          background: "rgba(0,0,0,0.35)",
-          borderRadius: 12,
+          WebkitTextStroke: "2px black",
+          textShadow: "0 0 22px rgba(255,255,255,0.5), 0 6px 12px rgba(0,0,0,0.85)",
         }}
       >
         &quot;{text}&quot;
@@ -1137,6 +649,7 @@ const CalloutQuote: React.FC<{ text: string; durationInFrames: number }> = ({ te
 };
 
 // ---------------------------------------------------------------------------
+// Vignette + opening/closing fade// ---------------------------------------------------------------------------
 // Vignette + opening/closing fade
 // ---------------------------------------------------------------------------
 
