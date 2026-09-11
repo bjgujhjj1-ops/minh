@@ -14,6 +14,7 @@ import {
   DA_VINCI_SALVATOR_MUNDI_DURATION,
   DaVinciSalvatorMundi,
 } from "./DaVinciSalvatorMundi";
+import { TURTLE_EVOLUTION_DURATION, TurtleEvolution } from "./TurtleEvolution";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -102,6 +103,15 @@ export const RemotionRoot: React.FC = () => {
         id="DaVinciSalvatorMundi"
         component={DaVinciSalvatorMundi}
         durationInFrames={DA_VINCI_SALVATOR_MUNDI_DURATION}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      <Composition
+        id="TurtleEvolution"
+        component={TurtleEvolution}
+        durationInFrames={TURTLE_EVOLUTION_DURATION}
         fps={30}
         width={1920}
         height={1080}
