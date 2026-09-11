@@ -58,10 +58,16 @@ spine the rest of the pipeline hangs off of.
 For every segment, read the text and decide what it should look like on
 screen — not a literal keyword match, but the visual that best serves the
 line's meaning and the style's tone. Then follow
-`references/footage-sourcing.md` to search Pexels (Pixabay as fallback) with
-`WebSearch`/`WebFetch` and download each asset into `my-video/public/`.
-That file also covers picking video vs. still, handling abstract lines with
-no literal visual, and avoiding repetitive shots.
+`references/footage-sourcing.md` to search Pexels — via `scripts/pexels_search.py`
+and the API key in `my-video/.env` when one is set, falling back to
+`WebSearch`/`WebFetch` page-scraping otherwise (Pixabay as a further
+fallback) — and download each asset into `my-video/public/`. That file also
+covers picking video vs. still, handling abstract lines with no literal
+visual, avoiding repetitive shots, and — importantly — actually looking at
+extracted frames before committing to a clip rather than trusting a search
+result's title (a past run picked footage described as generic countryside
+and coastline that turned out to have modern cars and resort buildings in
+frame, breaking a period piece).
 
 Keep a clear record of which downloaded file belongs to which segment index
 — you'll need it in the next step, and it's easy to lose track past a
