@@ -94,6 +94,19 @@ speed) rather than copying the ocean-edit look verbatim, and register a new
 `<Composition>` in `my-video/src/Root.tsx` with a duration computed from the
 segment data — not hand-counted.
 
+The user has asked for animation to be used generously wherever it makes
+the video better, not held back to the bare minimum — this applies to
+every piece, not just footage. Title text, card/element entrances,
+connecting lines or arrows, numbers or labels, transitions between
+sections: animate them (fade + scale, slide, a drawn-in stroke, a staged
+sequence of entrances) rather than having them snap into place statically.
+`ConceptMapDemo.tsx` is a concrete example — the title eases in, each card
+scales and fades in on its own beat, and the connecting arrows draw
+themselves in with an animated stroke-dashoffset rather than appearing
+instantly. Match the animation style to what fits the piece (a fast-cut
+style wants snappier motion, a slow documentary wants gentler eases) but
+default to adding motion, not skipping it.
+
 That same reference file's section 7 has a fake-video-card hook + fast
 multi-panel montage module, built for a specific clickbait-facts style seen
 in one reference clip. It is opt-in, not a default: reach for it only when
